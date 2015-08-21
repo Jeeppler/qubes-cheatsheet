@@ -1,126 +1,126 @@
 ## Core latex/pdflatex auxiliary files:
-*.aux
-*.lof
-*.log
-*.lot
-*.fls
-*.out
-*.toc
+build/*.aux
+build/*.lof
+build/*.log
+build/*.lot
+build/*.fls
+build/*.out
+build/*.toc
 
 ## Intermediate documents:
-*.dvi
+build/*.dvi
 *-converted-to.*
 # these rules might exclude image files for figures etc.
-# *.ps
-# *.eps
-# *.pdf
+# build/*.ps
+# build/*.eps
+# build/*.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
-*.bbl
-*.bcf
-*.blg
+build/*.bbl
+build/*.bcf
+build/*.blg
 *-blx.aux
 *-blx.bib
-*.brf
-*.run.xml
+build/*.brf
+build/*.run.xml
 
 ## Build tool auxiliary files:
-*.fdb_latexmk
-*.synctex
-*.synctex.gz
-*.synctex.gz(busy)
-*.pdfsync
+build/*.fdb_latexmk
+build/*.synctex
+build/*.synctex.gz
+build/*.synctex.gz(busy)
+build/*.pdfsync
 
 ## Auxiliary and intermediate files from other packages:
 
 # algorithms
-*.alg
-*.loa
+build/*.alg
+build/*.loa
 
 # achemso
-acs-*.bib
+acs-build/*.bib
 
 # amsthm
-*.thm
+build/*.thm
 
 # beamer
-*.nav
-*.snm
-*.vrb
+build/*.nav
+build/*.snm
+build/*.vrb
 
 #(e)ledmac/(e)ledpar
-*.end
-*.[1-9]
-*.[1-9][0-9]
-*.[1-9][0-9][0-9]
-*.[1-9]R
-*.[1-9][0-9]R
-*.[1-9][0-9][0-9]R
-*.eledsec[1-9]
-*.eledsec[1-9]R
-*.eledsec[1-9][0-9]
-*.eledsec[1-9][0-9]R
-*.eledsec[1-9][0-9][0-9]
-*.eledsec[1-9][0-9][0-9]R
+build/*.end
+build/*.[1-9]
+build/*.[1-9][0-9]
+build/*.[1-9][0-9][0-9]
+build/*.[1-9]R
+build/*.[1-9][0-9]R
+build/*.[1-9][0-9][0-9]R
+build/*.eledsec[1-9]
+build/*.eledsec[1-9]R
+build/*.eledsec[1-9][0-9]
+build/*.eledsec[1-9][0-9]R
+build/*.eledsec[1-9][0-9][0-9]
+build/*.eledsec[1-9][0-9][0-9]R
 
 # glossaries
-*.acn
-*.acr
-*.glg
-*.glo
-*.gls
+build/*.acn
+build/*.acr
+build/*.glg
+build/*.glo
+build/*.gls
 
 # gnuplottex
 *-gnuplottex-*
 
 # hyperref
-*.brf
+build/*.brf
 
 # knitr
 *-concordance.tex
-*.tikz
+build/*.tikz
 *-tikzDictionary
 
 # listings
-*.lol
+build/*.lol
 
 # makeidx
-*.idx
-*.ilg
-*.ind
-*.ist
+build/*.idx
+build/*.ilg
+build/*.ind
+build/*.ist
 
 # minitoc
-*.maf
-*.mtc
-*.mtc0
+build/*.maf
+build/*.mtc
+build/*.mtc0
 
 # minted
 _minted*
-*.pyg
+build/*.pyg
 
 # morewrites
-*.mw
+build/*.mw
 
 # nomencl
-*.nlo
+build/*.nlo
 
 # sagetex
-*.sagetex.sage
-*.sagetex.py
-*.sagetex.scmd
+build/*.sagetex.sage
+build/*.sagetex.py
+build/*.sagetex.scmd
 
 # sympy
-*.sout
-*.sympy
-sympy-plots-for-*.tex/
+build/*.sout
+build/*.sympy
+sympy-plots-for-build/*.tex/
 
 # todonotes
-*.tdo
+build/*.tdo
 
 # xindy
-*.xdy
+build/*.xdy
 
 # WinEdt
-*.bak
-*.sav
+build/*.bak
+build/*.sav
