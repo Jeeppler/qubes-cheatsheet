@@ -1,0 +1,151 @@
+\documentclass[10pt,a4paper,landscape,twocolumn]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+%Additional commands
+\newcommand{\desc}[2]{\noindent #1 - \textit{#2} \\}
+\newcommand{\usage}[1]{ Usage: \\ \texttt{#1} \\}
+\newenvironment{examplebox}{e. g.: \\}{}
+\newcommand{\example}[2]{\texttt{#1} \\ \textit{#2} \\}
+\newcommand{\vm}[1]{\textbf{#1} vm}
+\newenvironment{cmdblock}{}{\\}
+\newcommand{\n}{$\hookleftarrow$ \\ }
+
+%
+\title{Qubes OS Cheatsheet}
+\author{Jeremias Eppler}
+\begin{document}
+\maketitle
+\subsection*{VM Management}
+\begin{cmdblock}
+	\desc{qvm-start}{starts a vm}
+	\usage{qvm-start [options] $<$vm-name$>$}
+	\begin{examplebox}
+		\example{qvm-start personal}{starts the \vm{personal}}
+		\example{qvm-start ubuntu \n --cdrom personal:/home/user/ \n Downloads/ubuntu-14.04.iso}{starts the \vm{ubuntu} with cdrom}
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-run}{runs a specific command on a vm}
+	\usage{qvm-run [options] [$<$vm-name$>$] [$<$cmd$>$]}
+	\begin{examplebox}
+		\example{qvm-run personal xterm}{runs xterm on \vm{personal}}
+		\example{qvm-run personal xterm --pass-io}{runs xterm and passes all sdtin/stdout/stderr to the terminal}
+		\example{qvm-run personal "sudo yum update" --pass-io --nogui}{pass a specific command directly to the VM}
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-block}{list/set VM PCI devices}
+	\usage{
+		qvm-block -l [options]\\
+		qvm-block -a [options] $<$device$>$ $<$vm-name$>$\\
+		qvm-block -d [options] $<$device$>$\\
+		qvm-block -d [options] $<$vm-name$>$
+	}
+	\begin{examplebox}
+		\example{qvm-block -A personal dom0:/home/user/extradisks/data.img}{attaches an additional storage for the \vm{personal} }
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-prefs}{list/set various per-VM properties}
+	\usage{
+		qvm-prefs -l [options] $<$vm-name$>$\\
+		qvm-prefs -s [options] $<$vm-name> $<$property$>$ [...]
+	}
+	\begin{examplebox}
+		\example{qvm-prefs win7-copy}{lists the preferences of the \vm{win7-copy} }
+		\example{qvm-prefs win7-copy -s mac 00:16:3E:5E:6C:05}{set a new network cards mac}
+		\example{qvm-prefs lab-win7 -s qrexec\textunderscore installed true}{sets the qrexec installed preference}
+		\example{qvm-prefs lab-win7 -s qrexec\textunderscore timeout 120}{usefull for windows hvm based vms}
+		\example{qvm-prefs lab-win7 -s default\textunderscore user joanna}{sets the login user}
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-ls}{list VMs and various information about their state}
+	\usage{qvm-ls [options] $<$vm-name$>$}
+	\begin{examplebox}
+		\example{qvm-ls}{lists all vms}
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-sync-appmenus}{updates desktop file templates for given StandaloneVM or TemplateVM}
+	\usage{qvm-sync-appmenus [options] $<$vm-name$>$}
+	\begin{examplebox}
+		\example{qvm-sync-appmenus archlinux-template}{useful for custom .desktop files or distributions not using yum}
+	\end{examplebox}
+\end{cmdblock}
+
+\begin{cmdblock}
+	\desc{qvm-ls}{list VMs and various information about their state}
+	\usage{qvm-ls [options] $<$vm-name$>$}
+	\begin{examplebox}
+		\example{qvm-ls -n}{Show network addresses assigned to VMs}
+		\example{qvm-ls -d}{Show VM disk utilization statistics}
+	\end{examplebox}
+\end{cmdblock}
+
+\subsection*{Dom0}
+\begin{cmdblock}
+	\desc{qubes-dom0-update}{updates software in dom0}
+	\usage{ qubes-dom0-update [--clean][--check-only][--gui] [$<$yum opts$>$][$<$pkg list$>$]}
+	\begin{examplebox}
+		\example{sudo qubes-dom0-update}{updates dom0}
+		\example{sudo qubes-dom0-update qubes-windows-tools}{install the windows tools}
+	\end{examplebox}
+\end{cmdblock}
+
+\subsection*{Copy from \& to Dom0}
+Copy from Dom0 to VM:\\
+\begin{verbatim}
+cat /path/to/file_in_dom0 | 
+ qvm-run --pass-io <dst_domain> 
+  'cat > /path/to/file_name_in_appvm'
+\end{verbatim}
+Copy from VM to Dom0:\\
+\begin{verbatim}
+qvm-run --pass-io <src_domain> 
+ 'cat /path/to/file_in_src_domain' >
+  /path/to/file_name_in_dom0
+\end{verbatim}
+
+\subsection*{DomU}
+
+\subsection*{Shortcuts}
+Copy text between VM A and B.\\
+\textit{On VM A (source):}
+\begin{enumerate}
+	\item CTRL+C
+	\item CTRL+SHIFT+C
+\end{enumerate}
+\textit{On VM B (destination):}
+\begin{enumerate}
+	\item CTRL+SHIFT+V
+	\item CTRL+V
+\end{enumerate}
+
+\subsection*{Grow disk}
+sudo resize2fs /dev/xvdb
+
+\subsection*{VM $\leftrightarrow$ VM Networking}
+Make sure:
+\begin{itemize}
+	\item Both VMs are connected to the same firewall VM
+	\item Qubes IP addresses are assigned to both VMs
+	\item Both VMs are started
+\end{itemize}
+\subsubsection*{For the current session}
+In the firewall VM's terminal:
+\begin{verbatim}
+sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
+\end{verbatim}
+
+\end{document}
+
