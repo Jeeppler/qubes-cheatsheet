@@ -16,7 +16,6 @@
 
 %
 \title{Qubes OS Cheatsheet}
-\author{Jeremias Eppler}
 \begin{document}
 \maketitle
 \subsection*{VM Management}
@@ -144,7 +143,8 @@ Make sure:
 \subsubsection*{For the current session}
 In the firewall VM's terminal:
 \begin{verbatim}
-sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
+sudo iptables -I FORWARD 2 -s <IP address of A> 
+  -d <IP address of B> -j ACCEPT
 \end{verbatim}
 
 \end{document}
