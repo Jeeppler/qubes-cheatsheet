@@ -106,6 +106,17 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 
 `sudo qubes-dom0-update qubes-windows-tools` - *install the windows tools*
 
+#### qubes-hcl-report
+\- *generates a report about the hardware information*
+
+usage: `qubes-hcl-report [<vm-name>]`
+
+\--- 
+
+`qubes-hcl-report` - *prints the hardware information on the console (terminal)*
+
+`qubes-hcl-report personal` - *sends the hardware information to the personal-vm under ```/home/user``` *
+
 ### DomU {.unnumbered}
 
 ### Copy from & to Dom0 {.unnumbered}
