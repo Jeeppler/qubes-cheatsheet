@@ -172,8 +172,14 @@ qvm-run --pass-io <src_domain>
 4. `CTRL+V`
 
 ### Grow disk {.unnumbered}
+#### qvm-grow-private
+\- *increase private storage capacity of a specified VM*
 
-* In the VM: `sudo resize2fs /dev/xvdb`
+usage: `qvm-grow-private <vm-name> <size>`
+
+##### Example
+* In dom0 konsole: `qvm-grow-private personal 40GB`
+* In the personal VM: `sudo resize2fs /dev/xvdb`
 
 ### VM -> VM Networking {.unnumbered}
 Make sure:
