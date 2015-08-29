@@ -3,6 +3,7 @@
 if [[ `command -v pandoc` ]]
 then
   pandoc -s -o qubes-cheatsheet.pdf qubes-cheatsheet.md 
+  pandoc -s -o qubes-cheatsheet.html qubes-cheatsheet.md
 else 
   echo "The command pandoc could not be found in the PATH!\n"
 fi
