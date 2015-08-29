@@ -122,6 +122,9 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 usage: `xl subcommand [args]`
 
+\--- 
+
+
 `xl dmesg` - *Dom0 dmesg output (first place to look for warning or error messages)*
 
 `xl top` - *Monitor host and domains in realtime*
@@ -133,6 +136,8 @@ usage: `xl subcommand [args]`
 \- Copy file from one VM to another VM
 
 usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
+
+\--- 
 
 `qvm-copy-to-vm work Documents` - *copy the `Documents` folder to the work VM*
 
