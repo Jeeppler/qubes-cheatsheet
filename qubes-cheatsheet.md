@@ -117,7 +117,31 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 `qubes-hcl-report personal` - *sends the hardware information to the personal-vm under ```/home/user``` *
 
+#### xl
+\- *Xen management tool, based on LibXenlight*
+
+usage: `xl subcommand [args]`
+
+`xl dmesg` - *Dom0 dmesg output (first place to look for warning or error messages)*
+`xl top` - *Monitor host and domains in realtime*
+
+
 ### DomU {.unnumbered}
+
+
+### Copy files between two AppVM's
+#### qvm-copy-to-vm
+\- Copy file from one VM to another VM
+
+usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
+
+`qvm-copy-to-vm work Documents` - *copy the `Documents` folder to the work VM*
+`qvm-copy-to-vm personal text.txt` - *copy the `text.txt` file to the personal VM*
+
+##### Example
+- Open a terminal in AppVM A (e. g. your personal vm)
+- Let's assume we want to copy the `Documents` folder to AppVM B (e. g. your work VM)
+- The command would be: `qvm-copy-to-vm work Documents`
 
 ### Copy from & to Dom0 {.unnumbered}
 Copy from: **Dom0 -> VM**
