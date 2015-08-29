@@ -83,7 +83,7 @@ usage: `qvm-start [options] <vm-name>`
 
 `qvm-start personal` - *starts the personal-vm*
 
-`qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso` - *starts the ubuntu-vm*
+`qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso` - *starts the ubuntu-vm with the ubuntu installation CD*
 
 #### qvm-sync-appmenus
 \- *updates desktop file templates for given StandaloneVM or TemplateVM*
@@ -143,10 +143,22 @@ usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file
 
 `qvm-copy-to-vm personal text.txt` - *copy the `text.txt` file to the personal VM*
 
-##### Example
+**Example**
+
 - Open a terminal in AppVM A (e. g. your personal vm)
 - Let's assume we want to copy the `Documents` folder to AppVM B (e. g. your work VM)
 - The command would be: `qvm-copy-to-vm work Documents`
+
+### DomU and Dom0
+
+#### List installed qubes packages
+
+\---
+
+**Fedora**
+
+In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
+
 
 ### Copy from & to Dom0 {.unnumbered}
 Copy from: **Dom0 -> VM**
@@ -182,7 +194,8 @@ qvm-run --pass-io <src_domain>
 
 usage: `qvm-grow-private <vm-name> <size>`
 
-##### Example
+**Example**
+
 * In dom0 konsole: `qvm-grow-private personal 40GB`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
@@ -214,3 +227,11 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
 ```
 2. Copy RPM-Package to Dom0
 3. In Dom0: `sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm`
+
+### Create VM from VMware or VirtualBox images
+1. Download the image in an AppVM
+2. Install `qemu-img` tools - *e. g. `yum install qemu-img` for fedora*
+3. Convert the image to a raw format: 
+ * VMware: `qemu-img convert ReactOS.vmdk -O raw reactos.img`
+ * VirtualBox: `qemu-img convert ReactOS.vdi -O raw reactos.img`
+
