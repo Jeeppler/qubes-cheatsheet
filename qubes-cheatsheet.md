@@ -123,6 +123,7 @@ usage: `qubes-hcl-report [<vm-name>]`
 usage: `xl subcommand [args]`
 
 `xl dmesg` - *Dom0 dmesg output (first place to look for warning or error messages)*
+
 `xl top` - *Monitor host and domains in realtime*
 
 
