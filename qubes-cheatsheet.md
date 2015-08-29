@@ -129,14 +129,13 @@ usage: `xl subcommand [args]`
 
 ### DomU {.unnumbered}
 
-
-### Copy files between two AppVM's
 #### qvm-copy-to-vm
 \- Copy file from one VM to another VM
 
 usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
 
 `qvm-copy-to-vm work Documents` - *copy the `Documents` folder to the work VM*
+
 `qvm-copy-to-vm personal text.txt` - *copy the `text.txt` file to the personal VM*
 
 ##### Example
@@ -194,7 +193,7 @@ Firewall VM's terminal:
 sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
 
-### Templates
+### Templates {.unnumbered}
 #### Fedora Minimal
 \- *Fedora minimal template*
 
