@@ -1,18 +1,9 @@
----
-title: Qubes OS Cheatsheet
-date: 
-documentclass: scrartcl
-fontsize: 10pt
-geometry: verbose,a4paper,tmargin=0.5cm,bmargin=0.5cm,lmargin=0.5cm,rmargin=0.5cm
----
-
-
-### VM Management {.unnumbered}
+### VM Management
 
 #### qvm-block
 \- list/set VM PCI devices
 
-usage: 
+usage:
 
 * `qvm-block -l [options]`
 
@@ -22,7 +13,7 @@ usage:
 
 * `qvm-block -d [options] <vm-name>`
 
-\---
+\-\-\-
 
 `qvm-block -A personal dom0:/home/user/extradisks/data.img` - *attaches an additional storage for the personal-vm*
 
@@ -31,7 +22,7 @@ usage:
 
 usage: `qvm-ls [options] <vm-name>`
 
-\--- 
+\-\-\-
 
 `qvm-ls` - *lists all vms*
 
@@ -42,13 +33,13 @@ usage: `qvm-ls [options] <vm-name>`
 #### qvm-prefs
 \- *list/set various per-VM properties*
 
-usage: 
+usage:
 
 * `qvm-prefs -l [options] <vm-name>`
 
 * `qvm-prefs -s [options] <vm-name> <property> [...]`
 
-\--- 
+\-\-\-
 
 `qvm-prefs win7-copy` - *lists the preferences of the win7-copy*
 
@@ -60,12 +51,12 @@ usage:
 
 `qvm-prefs lab-win7 -s default_user joanna` - *sets the login user*
 
-#### qvm-run 
+#### qvm-run
 \- *runs a specific command on a vm*
 
 usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
-\--- 
+\-\-\-
 
 `qvm-run personal xterm` - *runs xterm on personal*
 
@@ -79,7 +70,7 @@ usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
 usage: `qvm-start [options] <vm-name>`
 
-\--- 
+\-\-\-
 
 `qvm-start personal` - *starts the personal-vm*
 
@@ -90,17 +81,17 @@ usage: `qvm-start [options] <vm-name>`
 
 usage: `qvm-sync-appmenus [options] <vm-name>`
 
-\--- 
+\-\-\-
 
 `qvm-sync-appmenus archlinux-template` - *useful for custom .desktop files or distributions not using yum*
 
-### Dom0 {.unnumbered}
+### Dom0
 #### qubes-dom0-update
 \- *updates software in dom0*
 
 usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>]`
 
-\--- 
+\-\-\-
 
 `sudo qubes-dom0-update` - *updates dom0*
 
@@ -111,7 +102,7 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 
 usage: `qubes-hcl-report [<vm-name>]`
 
-\--- 
+\-\-\-
 
 `qubes-hcl-report` - *prints the hardware information on the console (terminal)*
 
@@ -122,7 +113,7 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 usage: `xl subcommand [args]`
 
-\--- 
+\-\-\-
 
 
 `xl dmesg` - *Dom0 dmesg output (first place to look for warning or error messages)*
@@ -130,14 +121,14 @@ usage: `xl subcommand [args]`
 `xl top` - *Monitor host and domains in realtime*
 
 
-### DomU {.unnumbered}
+### DomU
 
 #### qvm-copy-to-vm
 \- Copy file from one VM to another VM
 
 usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
 
-\--- 
+\-\-\-
 
 `qvm-copy-to-vm work Documents` - *copy the `Documents` folder to the work VM*
 
@@ -153,30 +144,30 @@ usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file
 
 #### List installed qubes packages
 
-\---
+\-\-\-
 
 **Fedora**
 
 In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 
 
-### Copy from & to Dom0 {.unnumbered}
+### Copy from & to Dom0
 Copy from: **Dom0 -> VM**
 ```
-cat /path/to/file_in_dom0 | 
- qvm-run --pass-io <dst_domain> 
+cat /path/to/file_in_dom0 |
+ qvm-run --pass-io <dst_domain>
   'cat > /path/to/file_name_in_appvm'
 ```
-\---
+\-\-\-
 
 Copy from: **VM -> Dom0**
 ```
-qvm-run --pass-io <src_domain> 
+qvm-run --pass-io <src_domain>
  'cat /path/to/file_in_src_domain' >
   /path/to/file_name_in_dom0
 ```
 
-### Copy text between VM A and B {.unnumbered}
+### Copy text between VM A and B
 
 *On VM A (source):*
 
@@ -188,7 +179,7 @@ qvm-run --pass-io <src_domain>
 3. `CTRL+SHIFT+V`
 4. `CTRL+V`
 
-### Grow disk {.unnumbered}
+### Grow disk
 #### qvm-grow-private
 \- *increase private storage capacity of a specified VM*
 
@@ -199,7 +190,7 @@ usage: `qvm-grow-private <vm-name> <size>`
 * In dom0 konsole: `qvm-grow-private personal 40GB`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
-### VM -> VM Networking {.unnumbered}
+### VM -> VM Networking
 Make sure:
 
 * Both VMs are connected to the same firewall VM
@@ -211,7 +202,7 @@ Firewall VM's terminal:
 sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
 
-### Templates {.unnumbered}
+### Templates
 #### Fedora Minimal
 \- *Fedora minimal template*
 
@@ -220,7 +211,7 @@ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 #### Archlinux Minimal
 \- *Archlinux minimal template*
 
-1. In a VM: 
+1. In a VM:
 ```
 wget http://olivier.medoc.free.fr/rpm/noarch/
 qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
@@ -231,7 +222,6 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
 ### Create VM from VMware or VirtualBox images
 1. Download the image in an AppVM
 2. Install `qemu-img` tools - *e. g. `yum install qemu-img` for fedora*
-3. Convert the image to a raw format: 
- * VMware: `qemu-img convert ReactOS.vmdk -O raw reactos.img`
- * VirtualBox: `qemu-img convert ReactOS.vdi -O raw reactos.img`
-
+3. Convert the image to a raw format:
+    * VMware: `qemu-img convert ReactOS.vmdk -O raw reactos.img`
+    * VirtualBox: `qemu-img convert ReactOS.vdi -O raw reactos.img`

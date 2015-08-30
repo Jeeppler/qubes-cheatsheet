@@ -1,17 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Qubes OS Cheatsheet</title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
 </head>
 <body>
-<div id="header">
+<header>
 <h1 class="title">Qubes OS Cheatsheet</h1>
-</div>
-<h3 id="vm-management" class="unnumbered">VM Management</h3>
+</header>
+<h3 id="vm-management">VM Management</h3>
 <h4 id="qvm-block">qvm-block</h4>
 <p>- list/set VM PCI devices</p>
 <p>usage:</p>
@@ -61,7 +64,7 @@
 <p>usage: <code>qvm-sync-appmenus [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-sync-appmenus archlinux-template</code> - <em>useful for custom .desktop files or distributions not using yum</em></p>
-<h3 id="dom0" class="unnumbered">Dom0</h3>
+<h3 id="dom0">Dom0</h3>
 <h4 id="qubes-dom0-update">qubes-dom0-update</h4>
 <p>- <em>updates software in dom0</em></p>
 <p>usage: <code>qubes-dom0-update [--clean][--check-only][--gui] [&lt;yum opts&gt;][&lt;pkg list&gt;]</code></p>
@@ -80,7 +83,7 @@
 <p>---</p>
 <p><code>xl dmesg</code> - <em>Dom0 dmesg output (first place to look for warning or error messages)</em></p>
 <p><code>xl top</code> - <em>Monitor host and domains in realtime</em></p>
-<h3 id="domu" class="unnumbered">DomU</h3>
+<h3 id="domu">DomU</h3>
 <h4 id="qvm-copy-to-vm">qvm-copy-to-vm</h4>
 <p>- Copy file from one VM to another VM</p>
 <p>usage: <code>qvm-copy-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
@@ -90,7 +93,7 @@
 <p><strong>Example</strong></p>
 <ul>
 <li>Open a terminal in AppVM A (e. g. your personal vm)</li>
-<li>Let's assume we want to copy the <code>Documents</code> folder to AppVM B (e. g. your work VM)</li>
+<li>Let’s assume we want to copy the <code>Documents</code> folder to AppVM B (e. g. your work VM)</li>
 <li>The command would be: <code>qvm-copy-to-vm work Documents</code></li>
 </ul>
 <h3 id="domu-and-dom0">DomU and Dom0</h3>
@@ -98,28 +101,28 @@
 <p>---</p>
 <p><strong>Fedora</strong></p>
 <p>In VM or Dom0: <code>rpm -qa \*qubes-\*</code> - <em>list (qubes-) installed packages</em></p>
-<h3 id="copy-from-to-dom0" class="unnumbered">Copy from &amp; to Dom0</h3>
+<h3 id="copy-from-to-dom0">Copy from &amp; to Dom0</h3>
 <p>Copy from: <strong>Dom0 -&gt; VM</strong></p>
-<pre><code>cat /path/to/file_in_dom0 | 
- qvm-run --pass-io &lt;dst_domain&gt; 
+<pre><code>cat /path/to/file_in_dom0 |
+ qvm-run --pass-io &lt;dst_domain&gt;
   &#39;cat &gt; /path/to/file_name_in_appvm&#39;</code></pre>
 <p>---</p>
 <p>Copy from: <strong>VM -&gt; Dom0</strong></p>
-<pre><code>qvm-run --pass-io &lt;src_domain&gt; 
+<pre><code>qvm-run --pass-io &lt;src_domain&gt;
  &#39;cat /path/to/file_in_src_domain&#39; &gt;
   /path/to/file_name_in_dom0</code></pre>
-<h3 id="copy-text-between-vm-a-and-b" class="unnumbered">Copy text between VM A and B</h3>
+<h3 id="copy-text-between-vm-a-and-b">Copy text between VM A and B</h3>
 <p><em>On VM A (source):</em></p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><code>CTRL+C</code></li>
 <li><code>CTRL+SHIFT+C</code></li>
 </ol>
 <p><em>On VM B (destination):</em></p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="3" type="1">
 <li><code>CTRL+SHIFT+V</code></li>
 <li><code>CTRL+V</code></li>
 </ol>
-<h3 id="grow-disk" class="unnumbered">Grow disk</h3>
+<h3 id="grow-disk">Grow disk</h3>
 <h4 id="qvm-grow-private">qvm-grow-private</h4>
 <p>- <em>increase private storage capacity of a specified VM</em></p>
 <p>usage: <code>qvm-grow-private &lt;vm-name&gt; &lt;size&gt;</code></p>
@@ -128,22 +131,22 @@
 <li>In dom0 konsole: <code>qvm-grow-private personal 40GB</code></li>
 <li>In the personal VM: <code>sudo resize2fs /dev/xvdb</code></li>
 </ul>
-<h3 id="vm---vm-networking" class="unnumbered">VM -&gt; VM Networking</h3>
+<h3 id="vm---vm-networking">VM -&gt; VM Networking</h3>
 <p>Make sure:</p>
 <ul>
 <li>Both VMs are connected to the same firewall VM</li>
 <li>Qubes IP addresses are assigned to both VMs</li>
 <li>Both VMs are started</li>
 </ul>
-<p>Firewall VM's terminal:</p>
+<p>Firewall VM’s terminal:</p>
 <pre><code>sudo iptables -I FORWARD 2 -s &lt;IP address of A&gt; -d &lt;IP address of B&gt; -j ACCEPT</code></pre>
-<h3 id="templates" class="unnumbered">Templates</h3>
+<h3 id="templates">Templates</h3>
 <h4 id="fedora-minimal">Fedora Minimal</h4>
 <p>- <em>Fedora minimal template</em></p>
 <p><code>sudo qubes-dom0-update qubes-template-fedora-21-minimal</code> - <em>installs the fedora-21-minimal template</em></p>
 <h4 id="archlinux-minimal">Archlinux Minimal</h4>
 <p>- <em>Archlinux minimal template</em></p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><p>In a VM:</p>
 <pre><code>wget http://olivier.medoc.free.fr/rpm/noarch/
 qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
@@ -151,14 +154,14 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
 <li><p>In Dom0: <code>sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></p></li>
 </ol>
 <h3 id="create-vm-from-vmware-or-virtualbox-images">Create VM from VMware or VirtualBox images</h3>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Download the image in an AppVM</li>
 <li>Install <code>qemu-img</code> tools - <em>e. g. <code>yum install qemu-img</code> for fedora</em></li>
-<li>Convert the image to a raw format:</li>
-</ol>
+<li>Convert the image to a raw format:
 <ul>
 <li>VMware: <code>qemu-img convert ReactOS.vmdk -O raw reactos.img</code></li>
 <li>VirtualBox: <code>qemu-img convert ReactOS.vdi -O raw reactos.img</code></li>
-</ul>
+</ul></li>
+</ol>
 </body>
 </html>
