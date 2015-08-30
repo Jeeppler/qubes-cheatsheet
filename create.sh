@@ -6,7 +6,7 @@ then
   # outputs the qubes cheat sheet as PDF file
   pandoc metadata.yaml qubes-cheatsheet.md -s -o qubes-cheatsheet.pdf
 
-  # outputs the qubes cheat sheet as HTML file
+  # outputs the qubes cheat sheet as HTML (HTML5) file
   pandoc metadata.yaml qubes-cheatsheet.md -s -S -t html5  -o qubes-cheatsheet.html
 
   # outputs the qubes cheat sheet as plain text
