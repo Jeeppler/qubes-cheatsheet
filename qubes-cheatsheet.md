@@ -225,6 +225,11 @@ usage: `qvm-grow-private <vm-name> <size>`
 * In dom0 konsole: `qvm-grow-private personal 40GB`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
+### AppVMs and TMPFS
+\- *Enlarge /tmp if you run out of space on the default ~200MB*
+
+`sudo mount -o remount,size=1024M /tmp` - *enlarge the space to 1024MB*
+
 ### VM -> VM Networking
 Make sure:
 
