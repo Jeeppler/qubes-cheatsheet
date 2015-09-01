@@ -17,6 +17,15 @@ usage:
 
 `qvm-block -A personal dom0:/home/user/extradisks/data.img` - *attaches an additional storage for the personal-vm*
 
+#### qvm-clone
+\- *clones an existing VM by copying all its disk files*
+
+usage: `qvm-clone [options] <existing-vm-name> <new-clone-vm-name>`
+
+\-\-\-
+
+`qvm-clone fedora-21 fedora-21-dev` - *create a clone of fedora-21 called fedora-21-dev*
+
 #### qvm-firewall
 \- *manage VM's firewall rules*
 
