@@ -237,6 +237,17 @@ In Firewall VM terminal:
 sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
 
+#### Add USB Wifi card to sys-net VM 
+
+The bus and device number can be different than shown in this example:
+
+1. `qvm-pci -l sys-net` - *list all attached pci devices of sys-net*
+2. `lsusb` - *e. g.* **Bus 003** *Device 003: ID 148f:2870 Ralink Technology, Corp. RT2870 Wireless Adapter*
+3. `readlink /sys/bus/usb/devices/003` - *Important Bus 003 -> 003*
+4. The result of readlink: `../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3` - *Important 00:12.2*
+5. `qvm-pci -a sys-net 00:12.2` - *attach USB device 00:12.2 to sys-net*
+6. `qvm-pci -l sys-ne` - *check if device 00:12.2* is 
+
 ### Templates
 #### Fedora
 \- *Fedora template specific*
@@ -273,6 +284,30 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 - updating template: 
   1. `apt-get update`
   2. `apt-get dist-upgrade`
+
+#### Qubes OS + Whonix
+\- *Whonix is an debian based OS focused on anonymity, privacy and security*
+
+Whonix has to parts:
+1. Whonix-Gateway (uses TOR for all connections to the outside world)
+2. Whonix-Workstation (for application)
+
+**Install Whonix**
+
+Whonix-Gateway TemplateVM Binary Install @Dom0:
+
+`sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental`
+
+Whonix-Workstation TemplateVM Binary Install @Dom0:
+1. `export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]`
+2. `sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws`
+
+**Next Steps**
+1. Create a Whonix-gateway ProxyVM, through Qubes VM Manager
+2. Create a Whonix-workstation AppVM, through Qubes VM Manager
+3. Update your Whonix-Gateway and Whonix-Workstation TemplateVMs (how to -> see debian)
+4. (Re)Start Whonix-Gateway ProxyVM
+5. Start Whonix-Workstation AppVM
 
 #### Archlinux Minimal
 \- *Archlinux minimal template*
