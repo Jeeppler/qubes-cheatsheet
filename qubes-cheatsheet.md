@@ -108,10 +108,21 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 `qubes-hcl-report personal` - *sends the hardware information to the personal-vm under ```/home/user``` *
 
+#### virsh
+\- *management user tool for libvirt (hypervisor abstraction)*
+
+usage: `virsh -c xen:/// <command> [<vm-name>]`
+
+**Example**
+
+- In Dom0 terminal: `virsh -c xen:/// console personal`
+- 
+- The command would be: `qvm-copy-to-vm work Documents`
+
 #### xl
 \- *Xen management tool, based on LibXenlight*
 
-usage: `xl subcommand [args]`
+usage: `xl <subcommand> [<args>]`
 
 \-\-\-
 
@@ -197,7 +208,7 @@ Make sure:
 * Qubes IP addresses are assigned to both VMs
 * Both VMs are started
 
-Firewall VM's terminal:
+In Firewall VM terminal:
 ```
 sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
@@ -207,6 +218,12 @@ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 \- *Fedora minimal template*
 
 `sudo qubes-dom0-update qubes-template-fedora-21-minimal` - *installs the fedora-21-minimal template*
+
+#### Debian
+\- *Debian templates*
+
+- `sudo qubes-dom0-update qubes-template-debian-7` - *Debian 7 "Wheezy"*
+- `sudo qubes-dom0-update qubes-template-debian-8` - *Debian 8 "Jessie"*
 
 #### Archlinux Minimal
 \- *Archlinux minimal template*
