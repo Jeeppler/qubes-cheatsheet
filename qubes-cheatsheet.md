@@ -22,7 +22,11 @@ usage:
 
 usage: `qvm-firewall -l [-n] <vm-name>`
 
+\-\-\-
 
+`qvm-firewall -l personal` - *displays the firewall settings for the personal-vm*
+
+`qvm-firewall -l -n fedora-21` - *displays the firewall settings for the personal-vm with port numbers*
 
 #### qvm-ls
 \- *list VMs and various information about their state*
