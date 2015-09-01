@@ -1,7 +1,7 @@
 ### VM Management
 
 #### qvm-block
-\- list/set VM PCI devices
+\- *list/set VM PCI devices*
 
 usage:
 
@@ -16,6 +16,13 @@ usage:
 \-\-\-
 
 `qvm-block -A personal dom0:/home/user/extradisks/data.img` - *attaches an additional storage for the personal-vm*
+
+#### qvm-firewall
+\- *manage VM's firewall rules*
+
+usage: `qvm-firewall -l [-n] <vm-name>`
+
+
 
 #### qvm-ls
 \- *list VMs and various information about their state*
@@ -221,6 +228,14 @@ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 #### Fedora
 \- *Fedora template specific*
 
+**Updating, Searching & Installing Packages**
+
+- installing packages: `yum install <package-name>`
+- search for a package: `yum search <package-or-word>`
+- updating template: `yum update`
+
+**Repositories**
+
 Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories`
 
 `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion` - ENABLE RPMFusion, (already covers RPMFusion signing keys)
@@ -233,11 +248,23 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 #### Debian
 \- *Debian templates*
 
+**Installing the Template**
+
 - `sudo qubes-dom0-update qubes-template-debian-7` - *Debian 7 "Wheezy"*
 - `sudo qubes-dom0-update qubes-template-debian-8` - *Debian 8 "Jessie"*
 
+**Updating, Searching & Installing Packages**
+
+- installing packages: `apt-get install <package-name>`
+- search for a package: `apt-cache search <package-or-word>`
+- updating template: 
+  1. `apt-get update`
+  2. `apt-get dist-upgrade`
+
 #### Archlinux Minimal
 \- *Archlinux minimal template*
+
+**Installing the Template**
 
 1. In a VM:
 ```
@@ -246,6 +273,13 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
 ```
 2. Copy RPM-Package to Dom0
 3. In Dom0: `sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm`
+
+**Updating, Searching & Installing Packages**
+
+- installing packages: `pacman -S <package-name> [<package-name-2>...<package-name-n>]`
+- search for a package: `pacman -Ss <package-or-word>`
+- updating template: `pacman -Syyu`
+
 
 ### Create VM from VMware or VirtualBox images
 1. Download the image in an AppVM
