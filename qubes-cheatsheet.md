@@ -115,9 +115,13 @@ usage: `virsh -c xen:/// <command> [<vm-name>]`
 
 **Example**
 
+Why? *Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.*
+
 - In Dom0 terminal: `virsh -c xen:/// console personal`
-- 
-- The command would be: `qvm-copy-to-vm work Documents`
+
+- username: **root** without a password
+
+*(and when #1130 would be implmented the same for "user")*
 
 #### xl
 \- *Xen management tool, based on LibXenlight*
@@ -214,6 +218,13 @@ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
 
 ### Templates
+#### Fedora
+\- *Fedora template specific*
+
+Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories`
+
+`Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion` - ENABLE RPMFusion, (already covers RPMFusion signing keys)
+
 #### Fedora Minimal
 \- *Fedora minimal template*
 
