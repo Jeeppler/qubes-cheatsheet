@@ -135,7 +135,7 @@ usage: `virsh -c xen:/// <command> [<vm-name>]`
 
 **Example**
 
-Why? *Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.*
+*Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.*
 
 - In Dom0 terminal: `virsh -c xen:/// console personal`
 
@@ -226,7 +226,8 @@ usage: `qvm-grow-private <vm-name> <size>`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
 ### AppVMs and TMPFS
-\- *Enlarge /tmp if you run out of space on the default ~200MB*
+
+Enlarge /tmp if you run out of space on the default ~200MB
 
 `sudo mount -o remount,size=1024M /tmp` - *enlarge the space to 1024MB*
 
@@ -243,6 +244,7 @@ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 ```
 
 #### Add USB Wifi card to sys-net VM 
+\* - *attach a USB Wifi card to sys-net VM* 
 
 The bus and device number can be different than shown in this example:
 
@@ -287,13 +289,14 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 - installing packages: `apt-get install <package-name>`
 - search for a package: `apt-cache search <package-or-word>`
 - updating template: 
-  1. `apt-get update`
-  2. `apt-get dist-upgrade`
+	1. `apt-get update`
+	2. `apt-get dist-upgrade`
 
 #### Qubes OS + Whonix
 \- *Whonix is an debian based OS focused on anonymity, privacy and security*
 
 Whonix has to parts:
+
 1. Whonix-Gateway (uses TOR for all connections to the outside world)
 2. Whonix-Workstation (for application)
 
@@ -304,10 +307,12 @@ Whonix-Gateway TemplateVM Binary Install @Dom0:
 `sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental`
 
 Whonix-Workstation TemplateVM Binary Install @Dom0:
+
 1. `export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]`
 2. `sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws`
 
 **Next Steps**
+
 1. Create a Whonix-gateway ProxyVM, through Qubes VM Manager
 2. Create a Whonix-workstation AppVM, through Qubes VM Manager
 3. Update your Whonix-Gateway and Whonix-Workstation TemplateVMs (how to -> see debian)

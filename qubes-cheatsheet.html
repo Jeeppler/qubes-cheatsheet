@@ -16,7 +16,7 @@
 </header>
 <h3 id="vm-management">VM Management</h3>
 <h4 id="qvm-block">qvm-block</h4>
-<p>- list/set VM PCI devices</p>
+<p>- <em>list/set VM PCI devices</em></p>
 <p>usage:</p>
 <ul>
 <li><p><code>qvm-block -l [options]</code></p></li>
@@ -26,6 +26,17 @@
 </ul>
 <p>---</p>
 <p><code>qvm-block -A personal dom0:/home/user/extradisks/data.img</code> - <em>attaches an additional storage for the personal-vm</em></p>
+<h4 id="qvm-clone">qvm-clone</h4>
+<p>- <em>clones an existing VM by copying all its disk files</em></p>
+<p>usage: <code>qvm-clone [options] &lt;existing-vm-name&gt; &lt;new-clone-vm-name&gt;</code></p>
+<p>---</p>
+<p><code>qvm-clone fedora-21 fedora-21-dev</code> - <em>create a clone of fedora-21 called fedora-21-dev</em></p>
+<h4 id="qvm-firewall">qvm-firewall</h4>
+<p>- <em>manage VM’s firewall rules</em></p>
+<p>usage: <code>qvm-firewall -l [-n] &lt;vm-name&gt;</code></p>
+<p>---</p>
+<p><code>qvm-firewall -l personal</code> - <em>displays the firewall settings for the personal-vm</em></p>
+<p><code>qvm-firewall -l -n fedora-21</code> - <em>displays the firewall settings for the personal-vm with port numbers</em></p>
 <h4 id="qvm-ls">qvm-ls</h4>
 <p>- <em>list VMs and various information about their state</em></p>
 <p>usage: <code>qvm-ls [options] &lt;vm-name&gt;</code></p>
@@ -77,9 +88,19 @@
 <p>---</p>
 <p><code>qubes-hcl-report</code> - <em>prints the hardware information on the console (terminal)</em></p>
 <p><code>qubes-hcl-report personal</code> - <em>sends the hardware information to the personal-vm under <code>/home/user</code> </em></p>
+<h4 id="virsh">virsh</h4>
+<p>- <em>management user tool for libvirt (hypervisor abstraction)</em></p>
+<p>usage: <code>virsh -c xen:/// &lt;command&gt; [&lt;vm-name&gt;]</code></p>
+<p><strong>Example</strong></p>
+<p><em>Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.</em></p>
+<ul>
+<li><p>In Dom0 terminal: <code>virsh -c xen:/// console personal</code></p></li>
+<li><p>username: <strong>root</strong> without a password</p></li>
+</ul>
+<p><em>(and when #1130 would be implmented the same for “user”)</em></p>
 <h4 id="xl">xl</h4>
 <p>- <em>Xen management tool, based on LibXenlight</em></p>
-<p>usage: <code>xl subcommand [args]</code></p>
+<p>usage: <code>xl &lt;subcommand&gt; [&lt;args&gt;]</code></p>
 <p>---</p>
 <p><code>xl dmesg</code> - <em>Dom0 dmesg output (first place to look for warning or error messages)</em></p>
 <p><code>xl top</code> - <em>Monitor host and domains in realtime</em></p>
@@ -131,6 +152,9 @@
 <li>In dom0 konsole: <code>qvm-grow-private personal 40GB</code></li>
 <li>In the personal VM: <code>sudo resize2fs /dev/xvdb</code></li>
 </ul>
+<h3 id="appvms-and-tmpfs">AppVMs and TMPFS</h3>
+<p>Enlarge /tmp if you run out of space on the default ~200MB</p>
+<p><code>sudo mount -o remount,size=1024M /tmp</code> - <em>enlarge the space to 1024MB</em></p>
 <h3 id="vm---vm-networking">VM -&gt; VM Networking</h3>
 <p>Make sure:</p>
 <ul>
@@ -138,14 +162,77 @@
 <li>Qubes IP addresses are assigned to both VMs</li>
 <li>Both VMs are started</li>
 </ul>
-<p>Firewall VM’s terminal:</p>
+<p>In Firewall VM terminal:</p>
 <pre><code>sudo iptables -I FORWARD 2 -s &lt;IP address of A&gt; -d &lt;IP address of B&gt; -j ACCEPT</code></pre>
+<h4 id="add-usb-wifi-card-to-sys-net-vm">Add USB Wifi card to sys-net VM</h4>
+<p>* - <em>attach a USB Wifi card to sys-net VM</em></p>
+<p>The bus and device number can be different than shown in this example:</p>
+<ol type="1">
+<li><code>qvm-pci -l sys-net</code> - <em>list all attached pci devices of sys-net</em></li>
+<li><code>lsusb</code> - <em>e. g.</em> <strong>Bus 003</strong> <em>Device 003: ID 148f:2870 Ralink Technology, Corp. RT2870 Wireless Adapter</em></li>
+<li><code>readlink /sys/bus/usb/devices/003</code> - <em>Important Bus 003 -&gt; 003</em></li>
+<li>The result of readlink: <code>../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3</code> - <em>Important 00:12.2</em></li>
+<li><code>qvm-pci -a sys-net 00:12.2</code> - <em>attach USB device 00:12.2 to sys-net</em></li>
+<li><code>qvm-pci -l sys-ne</code> - <em>check if device 00:12.2</em> is</li>
+</ol>
 <h3 id="templates">Templates</h3>
+<h4 id="fedora">Fedora</h4>
+<p>- <em>Fedora template specific</em></p>
+<p><strong>Updating, Searching &amp; Installing Packages</strong></p>
+<ul>
+<li>installing packages: <code>yum install &lt;package-name&gt;</code></li>
+<li>search for a package: <code>yum search &lt;package-or-word&gt;</code></li>
+<li>updating template: <code>yum update</code></li>
+</ul>
+<p><strong>Repositories</strong></p>
+<p>Repositories: <code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable third party repositories</code></p>
+<p><code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable RPMFusion</code> - ENABLE RPMFusion, (already covers RPMFusion signing keys)</p>
 <h4 id="fedora-minimal">Fedora Minimal</h4>
 <p>- <em>Fedora minimal template</em></p>
 <p><code>sudo qubes-dom0-update qubes-template-fedora-21-minimal</code> - <em>installs the fedora-21-minimal template</em></p>
+<h4 id="debian">Debian</h4>
+<p>- <em>Debian templates</em></p>
+<p><strong>Installing the Template</strong></p>
+<ul>
+<li><code>sudo qubes-dom0-update qubes-template-debian-7</code> - <em>Debian 7 “Wheezy”</em></li>
+<li><code>sudo qubes-dom0-update qubes-template-debian-8</code> - <em>Debian 8 “Jessie”</em></li>
+</ul>
+<p><strong>Updating, Searching &amp; Installing Packages</strong></p>
+<ul>
+<li>installing packages: <code>apt-get install &lt;package-name&gt;</code></li>
+<li>search for a package: <code>apt-cache search &lt;package-or-word&gt;</code></li>
+<li>updating template:
+<ol type="1">
+<li><code>apt-get update</code></li>
+<li><code>apt-get dist-upgrade</code></li>
+</ol></li>
+</ul>
+<h4 id="qubes-os-whonix">Qubes OS + Whonix</h4>
+<p>- <em>Whonix is an debian based OS focused on anonymity, privacy and security</em></p>
+<p>Whonix has to parts:</p>
+<ol type="1">
+<li>Whonix-Gateway (uses TOR for all connections to the outside world)</li>
+<li>Whonix-Workstation (for application)</li>
+</ol>
+<p><strong>Install Whonix</strong></p>
+<p>Whonix-Gateway TemplateVM Binary Install <span class="citation" data-cites="Dom0">@Dom0</span>:</p>
+<p><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental</code></p>
+<p>Whonix-Workstation TemplateVM Binary Install <span class="citation" data-cites="Dom0">@Dom0</span>:</p>
+<ol type="1">
+<li><code>export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]</code></li>
+<li><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws</code></li>
+</ol>
+<p><strong>Next Steps</strong></p>
+<ol type="1">
+<li>Create a Whonix-gateway ProxyVM, through Qubes VM Manager</li>
+<li>Create a Whonix-workstation AppVM, through Qubes VM Manager</li>
+<li>Update your Whonix-Gateway and Whonix-Workstation TemplateVMs (how to -&gt; see debian)</li>
+<li>(Re)Start Whonix-Gateway ProxyVM</li>
+<li>Start Whonix-Workstation AppVM</li>
+</ol>
 <h4 id="archlinux-minimal">Archlinux Minimal</h4>
 <p>- <em>Archlinux minimal template</em></p>
+<p><strong>Installing the Template</strong></p>
 <ol type="1">
 <li><p>In a VM:</p>
 <pre><code>wget http://olivier.medoc.free.fr/rpm/noarch/
@@ -153,6 +240,12 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
 <li>Copy RPM-Package to Dom0</li>
 <li><p>In Dom0: <code>sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></p></li>
 </ol>
+<p><strong>Updating, Searching &amp; Installing Packages</strong></p>
+<ul>
+<li>installing packages: <code>pacman -S &lt;package-name&gt; [&lt;package-name-2&gt;...&lt;package-name-n&gt;]</code></li>
+<li>search for a package: <code>pacman -Ss &lt;package-or-word&gt;</code></li>
+<li>updating template: <code>pacman -Syyu</code></li>
+</ul>
 <h3 id="create-vm-from-vmware-or-virtualbox-images">Create VM from VMware or VirtualBox images</h3>
 <ol type="1">
 <li>Download the image in an AppVM</li>

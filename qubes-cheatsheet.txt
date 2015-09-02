@@ -19,6 +19,31 @@ usage:
 qvm-block -A personal dom0:/home/user/extradisks/data.img - attaches an
 additional storage for the personal-vm
 
+qvm-clone
+
+- clones an existing VM by copying all its disk files
+
+usage: qvm-clone [options] <existing-vm-name> <new-clone-vm-name>
+
+---
+
+qvm-clone fedora-21 fedora-21-dev - create a clone of fedora-21 called
+fedora-21-dev
+
+qvm-firewall
+
+- manage VM’s firewall rules
+
+usage: qvm-firewall -l [-n] <vm-name>
+
+---
+
+qvm-firewall -l personal - displays the firewall settings for the
+personal-vm
+
+qvm-firewall -l -n fedora-21 - displays the firewall settings for the
+personal-vm with port numbers
+
 qvm-ls
 
 - list VMs and various information about their state
@@ -127,11 +152,28 @@ qubes-hcl-report - prints the hardware information on the console
 qubes-hcl-report personal - sends the hardware information to the
 personal-vm under /home/user
 
+virsh
+
+- management user tool for libvirt (hypervisor abstraction)
+
+usage: virsh -c xen:/// <command> [<vm-name>]
+
+Example
+
+Why? Connect if GUI/qrexec does not work for any reason. This way you
+can restart/investigate a failed service.
+
+-   In Dom0 terminal: virsh -c xen:/// console personal
+
+-   username: root without a password
+
+(and when #1130 would be implmented the same for “user”)
+
 xl
 
 - Xen management tool, based on LibXenlight
 
-usage: xl subcommand [args]
+usage: xl <subcommand> [<args>]
 
 ---
 
@@ -214,6 +256,12 @@ Example
 -   In dom0 konsole: qvm-grow-private personal 40GB
 -   In the personal VM: sudo resize2fs /dev/xvdb
 
+AppVMs and TMPFS
+
+Enlarge /tmp if you run out of space on the default ~200MB
+
+sudo mount -o remount,size=1024M /tmp - enlarge the space to 1024MB
+
 VM -> VM Networking
 
 Make sure:
@@ -222,11 +270,45 @@ Make sure:
 -   Qubes IP addresses are assigned to both VMs
 -   Both VMs are started
 
-Firewall VM’s terminal:
+In Firewall VM terminal:
 
     sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
 
+Add USB Wifi card to sys-net VM
+
+* - attach a USB Wifi card to sys-net VM
+
+The bus and device number can be different than shown in this example:
+
+1.  qvm-pci -l sys-net - list all attached pci devices of sys-net
+2.  lsusb - e. g. Bus 003 Device 003: ID 148f:2870 Ralink Technology,
+    Corp. RT2870 Wireless Adapter
+3.  readlink /sys/bus/usb/devices/003 - Important Bus 003 -> 003
+4.  The result of readlink:
+    ../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3 - Important
+    00:12.2
+5.  qvm-pci -a sys-net 00:12.2 - attach USB device 00:12.2 to sys-net
+6.  qvm-pci -l sys-ne - check if device 00:12.2 is
+
 Templates
+
+Fedora
+
+- Fedora template specific
+
+Updating, Searching & Installing Packages
+
+-   installing packages: yum install <package-name>
+-   search for a package: yum search <package-or-word>
+-   updating template: yum update
+
+Repositories
+
+Repositories:
+Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories
+
+Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion
+- ENABLE RPMFusion, (already covers RPMFusion signing keys)
 
 Fedora Minimal
 
@@ -235,9 +317,58 @@ Fedora Minimal
 sudo qubes-dom0-update qubes-template-fedora-21-minimal - installs the
 fedora-21-minimal template
 
+Debian
+
+- Debian templates
+
+Installing the Template
+
+-   sudo qubes-dom0-update qubes-template-debian-7 - Debian 7 “Wheezy”
+-   sudo qubes-dom0-update qubes-template-debian-8 - Debian 8 “Jessie”
+
+Updating, Searching & Installing Packages
+
+-   installing packages: apt-get install <package-name>
+-   search for a package: apt-cache search <package-or-word>
+-   updating template:
+    1.  apt-get update
+    2.  apt-get dist-upgrade
+
+Qubes OS + Whonix
+
+- Whonix is an debian based OS focused on anonymity, privacy and
+security
+
+Whonix has to parts:
+
+1.  Whonix-Gateway (uses TOR for all connections to the outside world)
+2.  Whonix-Workstation (for application)
+
+Install Whonix
+
+Whonix-Gateway TemplateVM Binary Install @Dom0:
+
+sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental
+
+Whonix-Workstation TemplateVM Binary Install @Dom0:
+
+1.  export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]
+2.  sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws
+
+Next Steps
+
+1.  Create a Whonix-gateway ProxyVM, through Qubes VM Manager
+2.  Create a Whonix-workstation AppVM, through Qubes VM Manager
+3.  Update your Whonix-Gateway and Whonix-Workstation TemplateVMs (how
+    to -> see debian)
+4.  (Re)Start Whonix-Gateway ProxyVM
+5.  Start Whonix-Workstation AppVM
+
 Archlinux Minimal
 
 - Archlinux minimal template
+
+Installing the Template
 
 1.  In a VM:
 
@@ -247,6 +378,13 @@ Archlinux Minimal
 2.  Copy RPM-Package to Dom0
 3.  In Dom0:
     sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
+
+Updating, Searching & Installing Packages
+
+-   installing packages:
+    pacman -S <package-name> [<package-name-2>...<package-name-n>]
+-   search for a package: pacman -Ss <package-or-word>
+-   updating template: pacman -Syyu
 
 Create VM from VMware or VirtualBox images
 
