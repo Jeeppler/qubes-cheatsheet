@@ -119,6 +119,8 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 
 `sudo qubes-dom0-update --action=search qubes-template` - *search for all qubes templates*
 
+`sudo qubes-dom0-update kernel-3.19*` - *install the official Fedora kernel-3.19\* with  Xen support*
+
 #### qubes-hcl-report
 \- *generates a report about the hardware information*
 
