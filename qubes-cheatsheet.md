@@ -117,6 +117,8 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 
 `sudo qubes-dom0-update qubes-windows-tools` - *install the windows tools*
 
+`sudo qubes-dom0-update --action=search qubes-template` - *search for all qubes templates*
+
 #### qubes-hcl-report
 \- *generates a report about the hardware information*
 
