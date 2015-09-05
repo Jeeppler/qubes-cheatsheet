@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+# This BASH script generates different output files by calling pandoc
+
 # check if pandoc is installed
 if [[ `command -v pandoc` ]]
 then

@@ -10,7 +10,7 @@ This cheat sheet contains commands and examples for [Qubes OS](https://www.qubes
 
 - **Text: [qubes-cheatsheet.txt](https://github.com/Jeeppler/qubes-cheatsheet/raw/master/qubes-cheatsheet.txt)**
 
-*The files are generated with the help of [`create.sh`](https://github.com/Jeeppler/qubes-cheatsheet/blob/master/create.sh)*
+*The files are generated with the help of [`generate.sh`](https://github.com/Jeeppler/qubes-cheatsheet/blob/master/generate.sh)*
 
 ## Other formats
 
