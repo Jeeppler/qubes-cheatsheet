@@ -129,6 +129,10 @@
 <pre><code>cat /path/to/file_in_dom0 |
  qvm-run --pass-io &lt;dst_domain&gt;
   &#39;cat &gt; /path/to/file_name_in_appvm&#39;</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code>@dom0 Pictures]$ cat my-screenshot.png | 
+qvm-run --pass-io personal 
+&#39;cat &gt; /home/user/my-screenshot.png&#39;</code></pre>
 <p>---</p>
 <p>Copy from: <strong>VM -&gt; Dom0</strong></p>
 <pre><code>qvm-run --pass-io &lt;src_domain&gt;

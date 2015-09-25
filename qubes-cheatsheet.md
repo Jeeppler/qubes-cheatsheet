@@ -197,6 +197,13 @@ cat /path/to/file_in_dom0 |
  qvm-run --pass-io <dst_domain>
   'cat > /path/to/file_name_in_appvm'
 ```
+
+**Example:**
+```
+@dom0 Pictures]$ cat my-screenshot.png | 
+qvm-run --pass-io personal 
+'cat > /home/user/my-screenshot.png'
+```
 \-\-\-
 
 Copy from: **VM -> Dom0**
