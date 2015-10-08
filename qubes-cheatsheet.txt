@@ -215,8 +215,6 @@ DomU and Dom0
 
 List installed qubes packages
 
----
-
 Fedora
 
 In VM or Dom0: rpm -qa \*qubes-\* - list (qubes-) installed packages

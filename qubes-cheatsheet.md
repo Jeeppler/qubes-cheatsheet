@@ -183,8 +183,6 @@ usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file
 
 #### List installed qubes packages
 
-\-\-\-
-
 **Fedora**
 
 In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
