@@ -161,7 +161,8 @@ qvm-run --pass-io personal
 <h3 id="appvms-and-tmpfs">AppVMs and TMPFS</h3>
 <p>Enlarge /tmp if you run out of space on the default ~200MB</p>
 <p><code>sudo mount -o remount,size=1024M /tmp</code> - <em>enlarge the space to 1024MB</em></p>
-<h3 id="vm---vm-networking">VM -&gt; VM Networking</h3>
+<h3 id="inter-vm-networking">Inter VM Networking</h3>
+<p>- <em>Does not expose services to the outside world!</em></p>
 <p>Make sure:</p>
 <ul>
 <li>Both VMs are connected to the same firewall VM</li>
@@ -169,7 +170,26 @@ qvm-run --pass-io personal
 <li>Both VMs are started</li>
 </ul>
 <p>In Firewall VM terminal:</p>
-<pre><code>sudo iptables -I FORWARD 2 -s &lt;IP address of A&gt; -d &lt;IP address of B&gt; -j ACCEPT</code></pre>
+<pre><code>$ sudo iptables -I FORWARD 2 -s &lt;IP address of A&gt; -d &lt;IP address of B&gt; -j ACCEPT</code></pre>
+<ul>
+<li>The connection will be unidirectional <code>A -&gt; B</code></li>
+<li>Optional: Bidirectional <code>A &lt;-&gt; B</code></li>
+</ul>
+<p>In Firewall VM terminal:</p>
+<pre><code>$ sudo iptables -I FORWARD 2 -s &lt;IP address of B&gt; -d &lt;IP address of A&gt; -j ACCEPT</code></pre>
+<ul>
+<li>Check your settings (e. g. using ping)</li>
+<li>Persist your settings:</li>
+</ul>
+<pre><code>Assume:
+  IP of A: 10.137.2.10
+  IP of B: 10.137.2.11</code></pre>
+<p>In Firewall VM terminal:</p>
+<pre><code>$ sudo bash
+# echo &quot;iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT&quot; &gt;&gt; /rw/config/qubes_firewall_user_script
+#chmod +x /rw/config/qubes_firewall_user_script</code></pre>
+<p>for bidirectional access:</p>
+<pre><code># echo &quot;iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT&quot; &gt;&gt; /rw/config/qubes_firewall_user_script</code></pre>
 <h4 id="add-usb-wifi-card-to-sys-net-vm">Add USB Wifi card to sys-net VM</h4>
 <p>* - <em>attach a USB Wifi card to sys-net VM</em></p>
 <p>The bus and device number can be different than shown in this example:</p>
@@ -240,11 +260,9 @@ qvm-run --pass-io personal
 <p>- <em>Archlinux minimal template</em></p>
 <p><strong>Installing the Template</strong></p>
 <ol type="1">
-<li><p>In a VM:</p>
-<pre><code>wget http://olivier.medoc.free.fr/rpm/noarch/
-qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
+<li>In a VM: <sub>~</sub> wget http://olivier.medoc.free.fr/rpm/noarch/ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm <sub>~</sub></li>
 <li>Copy RPM-Package to Dom0</li>
-<li><p>In Dom0: <code>sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></p></li>
+<li>In Dom0: <code>sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></li>
 </ol>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <ul>

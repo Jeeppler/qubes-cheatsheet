@@ -130,7 +130,7 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 `qubes-hcl-report` - *prints the hardware information on the console (terminal)*
 
-`qubes-hcl-report personal` - *sends the hardware information to the personal-vm under ```/home/user``` *
+`qubes-hcl-report personal` - *sends the hardware information to the personal-vm under `/home/user` *
 
 #### virsh
 \- *management user tool for libvirt (hypervisor abstraction)*
@@ -192,26 +192,30 @@ In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 
 ### Copy from & to Dom0
 Copy from: **Dom0 -> VM**
-```
+
+~~~
 cat /path/to/file_in_dom0 |
  qvm-run --pass-io <dst_domain>
   'cat > /path/to/file_name_in_appvm'
-```
+~~~
 
 **Example:**
-```
+
+~~~
 @dom0 Pictures]$ cat my-screenshot.png | 
 qvm-run --pass-io personal 
 'cat > /home/user/my-screenshot.png'
-```
+~~~
+
 \-\-\-
 
 Copy from: **VM -> Dom0**
-```
+
+~~~
 qvm-run --pass-io <src_domain>
  'cat /path/to/file_in_src_domain' >
   /path/to/file_name_in_dom0
-```
+~~~
 
 ### Copy text between VM A and B
 
@@ -243,7 +247,7 @@ Enlarge /tmp if you run out of space on the default ~200MB
 `sudo mount -o remount,size=1024M /tmp` - *enlarge the space to 1024MB*
 
 ### Inter VM Networking
-\- *Does
+\- *Does not expose services to the outside world!*
 
 Make sure:
 
@@ -252,35 +256,42 @@ Make sure:
 * Both VMs are started
 
 In Firewall VM terminal:
-```
+
+~~~
 $ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
-```
+~~~
+
 * The connection will be unidirectional `A -> B`
 * Optional: Bidirectional `A <-> B`
 
 In Firewall VM terminal:
-```
+
+~~~
 $ sudo iptables -I FORWARD 2 -s <IP address of B> -d <IP address of A> -j ACCEPT
-```
+~~~
 
 * Check your settings (e. g. using ping)
 * Persist your settings:
-```
+
+~~~
 Assume:
   IP of A: 10.137.2.10
   IP of B: 10.137.2.11
-```
+~~~
+
 In Firewall VM terminal:
-```
+
+~~~
 $ sudo bash
 # echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
-# chmod +x /rw/config/qubes_firewall_user_script
+#chmod +x /rw/config/qubes_firewall_user_script
+~~~
 
-```
-for Bidirectional access:
-```
+for bidirectional access:
+
+~~~
 # echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
-```
+~~~
 
 #### Add USB Wifi card to sys-net VM 
 \* - *attach a USB Wifi card to sys-net VM* 
@@ -364,10 +375,10 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 **Installing the Template**
 
 1. In a VM:
-```
+~~~
 wget http://olivier.medoc.free.fr/rpm/noarch/
 qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
-```
+~~~
 2. Copy RPM-Package to Dom0
 3. In Dom0: `sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm`
 
