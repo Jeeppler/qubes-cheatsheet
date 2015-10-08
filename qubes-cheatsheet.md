@@ -373,10 +373,12 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 **Installing the Template**
 
 1. In a VM:
-~~~
-wget http://olivier.medoc.free.fr/rpm/noarch/
-qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
-~~~
+
+    ~~~
+    wget http://olivier.medoc.free.fr/rpm/noarch/
+    qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
+    ~~~
+
 2. Copy RPM-Package to Dom0
 3. In Dom0: `sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm`
 

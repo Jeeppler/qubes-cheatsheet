@@ -6,7 +6,7 @@ This cheat sheet contains commands and examples for [Qubes OS](https://www.qubes
 
 - **PDF: [qubes-cheatsheet.pdf](https://github.com/Jeeppler/qubes-cheatsheet/raw/master/qubes-cheatsheet.pdf)**
 
-- **HTML: [qubes-cheatsheet.html](https://github.com/Jeeppler/qubes-cheatsheet/raw/master/qubes-cheatsheet.html)**
+- **HTML: [qubes-cheatsheet.html](https://htmlpreview.github.io/?https://github.com/Jeeppler/qubes-cheatsheet/blob/master/qubes-cheatsheet.html)**
 
 - **Text: [qubes-cheatsheet.txt](https://github.com/Jeeppler/qubes-cheatsheet/raw/master/qubes-cheatsheet.txt)**
 
