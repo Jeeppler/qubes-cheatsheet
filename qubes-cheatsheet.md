@@ -242,7 +242,9 @@ Enlarge /tmp if you run out of space on the default ~200MB
 
 `sudo mount -o remount,size=1024M /tmp` - *enlarge the space to 1024MB*
 
-### VM -> VM Networking
+### Inter VM Networking
+\- *Does
+
 Make sure:
 
 * Both VMs are connected to the same firewall VM
@@ -251,7 +253,33 @@ Make sure:
 
 In Firewall VM terminal:
 ```
-sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
+$ sudo iptables -I FORWARD 2 -s <IP address of A> -d <IP address of B> -j ACCEPT
+```
+* The connection will be unidirectional `A -> B`
+* Optional: Bidirectional `A <-> B`
+
+In Firewall VM terminal:
+```
+$ sudo iptables -I FORWARD 2 -s <IP address of B> -d <IP address of A> -j ACCEPT
+```
+
+* Check your settings (e. g. using ping)
+* Persist your settings:
+```
+Assume:
+  IP of A: 10.137.2.10
+  IP of B: 10.137.2.11
+```
+In Firewall VM terminal:
+```
+$ sudo bash
+# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
+# chmod +x /rw/config/qubes_firewall_user_script
+
+```
+for Bidirectional access:
+```
+# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
 ```
 
 #### Add USB Wifi card to sys-net VM 
@@ -348,7 +376,6 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
 - installing packages: `pacman -S <package-name> [<package-name-2>...<package-name-n>]`
 - search for a package: `pacman -Ss <package-or-word>`
 - updating template: `pacman -Syyu`
-
 
 ### Create VM from VMware or VirtualBox images
 1. Download the image in an AppVM
