@@ -14,6 +14,9 @@
 <header>
 <h1 class="title">Qubes OS Cheatsheet</h1>
 </header>
+<h2 id="qubes-cheatsheet">Qubes Cheatsheet</h2>
+<p><em>a summary of useful qubes commands</em></p>
+<p>version: 2</p>
 <h3 id="vm-management">VM Management</h3>
 <h4 id="qvm-block">qvm-block</h4>
 <p>- <em>list/set VM PCI devices</em></p>
@@ -30,13 +33,13 @@
 <p>- <em>clones an existing VM by copying all its disk files</em></p>
 <p>usage: <code>qvm-clone [options] &lt;existing-vm-name&gt; &lt;new-clone-vm-name&gt;</code></p>
 <p>---</p>
-<p><code>qvm-clone fedora-21 fedora-21-dev</code> - <em>create a clone of fedora-21 called fedora-21-dev</em></p>
+<p><code>qvm-clone fedora-23 fedora-23-dev</code> - <em>create a clone of fedora-21 called fedora-21-dev</em></p>
 <h4 id="qvm-firewall">qvm-firewall</h4>
 <p>- <em>manage VM’s firewall rules</em></p>
 <p>usage: <code>qvm-firewall -l [-n] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-firewall -l personal</code> - <em>displays the firewall settings for the personal-vm</em></p>
-<p><code>qvm-firewall -l -n fedora-21</code> - <em>displays the firewall settings for the personal-vm with port numbers</em></p>
+<p><code>qvm-firewall -l -n fedora-23</code> - <em>displays the firewall settings for the personal-vm with port numbers</em></p>
 <h4 id="qvm-ls">qvm-ls</h4>
 <p>- <em>list VMs and various information about their state</em></p>
 <p>usage: <code>qvm-ls [options] &lt;vm-name&gt;</code></p>
@@ -56,25 +59,36 @@
 <p><code>qvm-prefs win7-copy -s mac 00:16:3E:5E:6C:05</code> - <em>sets a new mac for the network card</em></p>
 <p><code>qvm-prefs lab-win7 -s qrexec_installed true</code> - <em>sets the qrexec to installed</em></p>
 <p><code>qvm-prefs lab-win7 -s qrexec_timeout 120</code> - <em>usefull for windows hvm based vms</em></p>
-<p><code>qvm-prefs lab-win7 -s default_user joanna</code> - <em>sets the login user</em></p>
+<p><code>qvm-prefs lab-win7 -s default_user joanna</code> - <em>sets the login user to joanna</em></p>
 <h4 id="qvm-run">qvm-run</h4>
 <p>- <em>runs a specific command on a vm</em></p>
 <p>usage: <code>qvm-run [options] [&lt;vm-name&gt;] [&lt;cmd&gt;]</code></p>
 <p>---</p>
 <p><code>qvm-run personal xterm</code> - <em>runs xterm on personal</em></p>
 <p><code>qvm-run personal xterm --pass-io</code> - <em>runs xterm and passes all sdtin/stdout/stderr to the terminal</em></p>
-<p><code>qvm-run personal &quot;sudo yum update&quot; --pass-io --nogui</code> - <em>pass a specific command directly to the VM</em></p>
+<p><code>qvm-run personal &quot;sudo dnf update&quot; --pass-io --nogui</code> - <em>pass a specific command directly to the VM</em></p>
 <h4 id="qvm-start">qvm-start</h4>
 <p>- <em>starts a vm</em></p>
 <p>usage: <code>qvm-start [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-start personal</code> - <em>starts the personal-vm</em></p>
 <p><code>qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso</code> - <em>starts the ubuntu-vm with the ubuntu installation CD</em></p>
+<h4 id="qvm-shutdown">qvm-shutdown</h4>
+<p>- <em>shutdowns a vm</em></p>
+<p>usage: <code>qvm-shutdown [options] &lt;vm-name&gt;</code></p>
+<p>---</p>
+<p><code>qvm-shutdown personal</code> - <em>shutdowns the personal-vm</em></p>
+<p><code>qvm-shutdown --all</code> - <em>shutdowns all VM’s</em></p>
+<h4 id="qvm-kill">qvm-kill</h4>
+<p>- <em>kills a VM - same as pulling out the power cord - immediate shutdown</em></p>
+<p>usage: <code>qvm-kill [options] &lt;vm-name&gt;</code></p>
+<p>---</p>
+<p><code>qvm-kill personal</code> - <em>pull the power cord for the personal-vm - immediate shutdown</em></p>
 <h4 id="qvm-sync-appmenus">qvm-sync-appmenus</h4>
 <p>- <em>updates desktop file templates for given StandaloneVM or TemplateVM</em></p>
 <p>usage: <code>qvm-sync-appmenus [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
-<p><code>qvm-sync-appmenus archlinux-template</code> - <em>useful for custom .desktop files or distributions not using yum</em></p>
+<p><code>qvm-sync-appmenus archlinux-template</code> - <em>useful for custom .desktop files or distributions not using dnf</em></p>
 <h3 id="dom0">Dom0</h3>
 <h4 id="qubes-dom0-update">qubes-dom0-update</h4>
 <p>- <em>updates software in dom0</em></p>
@@ -129,8 +143,8 @@
  qvm-run --pass-io &lt;dst_domain&gt;
   &#39;cat &gt; /path/to/file_name_in_appvm&#39;</code></pre>
 <p><strong>Example:</strong></p>
-<pre><code>@dom0 Pictures]$ cat my-screenshot.png | 
-qvm-run --pass-io personal 
+<pre><code>@dom0 Pictures]$ cat my-screenshot.png |
+qvm-run --pass-io personal
 &#39;cat &gt; /home/user/my-screenshot.png&#39;</code></pre>
 <p>---</p>
 <p>Copy from: <strong>VM -&gt; Dom0</strong></p>
@@ -204,12 +218,20 @@ qvm-run --pass-io personal
 <h4 id="fedora">Fedora</h4>
 <p>- <em>Fedora template specific</em></p>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
+<p>Fedora &gt; 21</p>
+<ul>
+<li>installing packages: <code>dnf install &lt;package-name&gt;</code></li>
+<li>search for a package: <code>dnf search &lt;package-or-word&gt;</code></li>
+<li>updating template: <code>dnf update</code></li>
+</ul>
+<p>Fedora &lt;= 21</p>
 <ul>
 <li>installing packages: <code>yum install &lt;package-name&gt;</code></li>
 <li>search for a package: <code>yum search &lt;package-or-word&gt;</code></li>
 <li>updating template: <code>yum update</code></li>
 </ul>
 <p><strong>Repositories</strong></p>
+<p><em>NOTE: Does not work anymore under fedora 23</em></p>
 <p>Repositories: <code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable third party repositories</code></p>
 <p><code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable RPMFusion</code> - ENABLE RPMFusion, (already covers RPMFusion signing keys)</p>
 <h4 id="fedora-minimal">Fedora Minimal</h4>
@@ -274,7 +296,7 @@ qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
 <h3 id="create-vm-from-vmware-or-virtualbox-images">Create VM from VMware or VirtualBox images</h3>
 <ol type="1">
 <li>Download the image in an AppVM</li>
-<li>Install <code>qemu-img</code> tools - <em>e. g. <code>yum install qemu-img</code> for fedora</em></li>
+<li>Install <code>qemu-img</code> tools - <em>e. g. <code>dnf install qemu-img</code> for fedora</em></li>
 <li>Convert the image to a raw format:
 <ul>
 <li>VMware: <code>qemu-img convert ReactOS.vmdk -O raw reactos.img</code></li>

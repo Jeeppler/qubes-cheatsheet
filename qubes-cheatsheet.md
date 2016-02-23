@@ -1,7 +1,7 @@
 ## Qubes Cheatsheet ##
-\- *a summary of useful qubes commands*
+*a summary of useful qubes commands*
 
-Version: 1.x
+version: 2
 
 ### VM Management
 
@@ -29,7 +29,7 @@ usage: `qvm-clone [options] <existing-vm-name> <new-clone-vm-name>`
 
 \-\-\-
 
-`qvm-clone fedora-21 fedora-21-dev` - *create a clone of fedora-21 called fedora-21-dev*
+`qvm-clone fedora-23 fedora-23-dev` - *create a clone of fedora-21 called fedora-21-dev*
 
 #### qvm-firewall
 \- *manage VM's firewall rules*
@@ -40,7 +40,7 @@ usage: `qvm-firewall -l [-n] <vm-name>`
 
 `qvm-firewall -l personal` - *displays the firewall settings for the personal-vm*
 
-`qvm-firewall -l -n fedora-21` - *displays the firewall settings for the personal-vm with port numbers*
+`qvm-firewall -l -n fedora-23` - *displays the firewall settings for the personal-vm with port numbers*
 
 #### qvm-ls
 \- *list VMs and various information about their state*
@@ -113,13 +113,13 @@ usage: `qvm-shutdown [options] <vm-name>`
 `qvm-shutdown --all` - *shutdowns all VM's*
 
 #### qvm-kill
-\- *kills a vm - immediat shutdown of a VM*
+\- *kills a VM - same as pulling out the power cord - immediate shutdown*
 
 usage: `qvm-kill [options] <vm-name>`
 
 \-\-\-
 
-`qvm-kill personal` - *shuts the personal-vm immediatly down*
+`qvm-kill personal` - *pull the power cord for the personal-vm - immediate shutdown*
 
 
 #### qvm-sync-appmenus
@@ -349,6 +349,8 @@ Fedora <= 21
 
 **Repositories**
 
+*NOTE: Does not work anymore under fedora 23*
+
 Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories`
 
 `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion` - ENABLE RPMFusion, (already covers RPMFusion signing keys)
@@ -424,7 +426,7 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 
 ### Create VM from VMware or VirtualBox images
 1. Download the image in an AppVM
-2. Install `qemu-img` tools - *e. g. `yum install qemu-img` for fedora*
+2. Install `qemu-img` tools - *e. g. `dnf install qemu-img` for fedora*
 3. Convert the image to a raw format:
     * VMware: `qemu-img convert ReactOS.vmdk -O raw reactos.img`
     * VirtualBox: `qemu-img convert ReactOS.vdi -O raw reactos.img`
