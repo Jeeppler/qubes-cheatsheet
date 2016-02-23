@@ -82,7 +82,7 @@ usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
 `qvm-run personal xterm --pass-io` - *runs xterm and passes all sdtin/stdout/stderr to the terminal*
 
-`qvm-run personal "sudo yum update" --pass-io --nogui` - *pass a specific command directly to the VM*
+`qvm-run personal "sudo dnf update" --pass-io --nogui` - *pass a specific command directly to the VM*
 
 
 #### qvm-start
@@ -329,6 +329,14 @@ The bus and device number can be different than shown in this example:
 \- *Fedora template specific*
 
 **Updating, Searching & Installing Packages**
+
+Fedora > 21
+
+- installing packages: `dnf install <package-name>`
+- search for a package: `dnf search <package-or-word>`
+- updating template: `dnf update`
+
+Fedora <= 21
 
 - installing packages: `yum install <package-name>`
 - search for a package: `yum search <package-or-word>`
