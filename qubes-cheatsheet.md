@@ -1,7 +1,7 @@
 ## Qubes Cheatsheet ##
 *a summary of useful qubes commands*
 
-version: 2
+version: 2.0
 
 ### VM Management
 
