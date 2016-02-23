@@ -69,7 +69,7 @@ usage:
 
 `qvm-prefs lab-win7 -s qrexec_timeout 120` - *usefull for windows hvm based vms*
 
-`qvm-prefs lab-win7 -s default_user joanna` - *sets the login user*
+`qvm-prefs lab-win7 -s default_user joanna` - *sets the login user to joanna*
 
 #### qvm-run
 \- *runs a specific command on a vm*
@@ -95,6 +95,27 @@ usage: `qvm-start [options] <vm-name>`
 `qvm-start personal` - *starts the personal-vm*
 
 `qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso` - *starts the ubuntu-vm with the ubuntu installation CD*
+
+#### qvm-shutdown
+\- *shutdowns a vm*
+
+usage: `qvm-shutdown [options] <vm-name>`
+
+\-\-\-
+
+`qvm-shutdown personal` - *shutdowns the personal-vm*
+
+`qvm-shutdown --all` - *shutdowns all VM's*
+
+#### qvm-kill
+\- *kills a vm - immediat shutdown of a VM*
+
+usage: `qvm-kill [options] <vm-name>`
+
+\-\-\-
+
+`qvm-kill personal` - *shuts the personal-vm immediatly down*
+
 
 #### qvm-sync-appmenus
 \- *updates desktop file templates for given StandaloneVM or TemplateVM*
@@ -200,8 +221,8 @@ cat /path/to/file_in_dom0 |
 **Example:**
 
 ~~~
-@dom0 Pictures]$ cat my-screenshot.png | 
-qvm-run --pass-io personal 
+@dom0 Pictures]$ cat my-screenshot.png |
+qvm-run --pass-io personal
 'cat > /home/user/my-screenshot.png'
 ~~~
 
@@ -291,8 +312,8 @@ for bidirectional access:
 # echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
 ~~~
 
-#### Add USB Wifi card to sys-net VM 
-\* - *attach a USB Wifi card to sys-net VM* 
+#### Add USB Wifi card to sys-net VM
+\* - *attach a USB Wifi card to sys-net VM*
 
 The bus and device number can be different than shown in this example:
 
@@ -301,7 +322,7 @@ The bus and device number can be different than shown in this example:
 3. `readlink /sys/bus/usb/devices/003` - *Important Bus 003 -> 003*
 4. The result of readlink: `../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3` - *Important 00:12.2*
 5. `qvm-pci -a sys-net 00:12.2` - *attach USB device 00:12.2 to sys-net*
-6. `qvm-pci -l sys-ne` - *check if device 00:12.2* is 
+6. `qvm-pci -l sys-ne` - *check if device 00:12.2* is
 
 ### Templates
 #### Fedora
@@ -336,7 +357,7 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 
 - installing packages: `apt-get install <package-name>`
 - search for a package: `apt-cache search <package-or-word>`
-- updating template: 
+- updating template:
 	1. `apt-get update`
 	2. `apt-get dist-upgrade`
 

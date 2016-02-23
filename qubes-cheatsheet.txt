@@ -2,7 +2,7 @@ VM Management
 
 qvm-block
 
-- list/set VM PCI devices
+- _list/set VM PCI devices_
 
 usage:
 
@@ -16,51 +16,51 @@ usage:
 
 ---
 
-qvm-block -A personal dom0:/home/user/extradisks/data.img - attaches an
-additional storage for the personal-vm
+qvm-block -A personal dom0:/home/user/extradisks/data.img - _attaches an
+additional storage for the personal-vm_
 
 qvm-clone
 
-- clones an existing VM by copying all its disk files
+- _clones an existing VM by copying all its disk files_
 
 usage: qvm-clone [options] <existing-vm-name> <new-clone-vm-name>
 
 ---
 
-qvm-clone fedora-21 fedora-21-dev - create a clone of fedora-21 called
-fedora-21-dev
+qvm-clone fedora-21 fedora-21-dev - _create a clone of fedora-21 called
+fedora-21-dev_
 
 qvm-firewall
 
-- manage VM’s firewall rules
+- _manage VM’s firewall rules_
 
 usage: qvm-firewall -l [-n] <vm-name>
 
 ---
 
-qvm-firewall -l personal - displays the firewall settings for the
-personal-vm
+qvm-firewall -l personal - _displays the firewall settings for the
+personal-vm_
 
-qvm-firewall -l -n fedora-21 - displays the firewall settings for the
-personal-vm with port numbers
+qvm-firewall -l -n fedora-21 - _displays the firewall settings for the
+personal-vm with port numbers_
 
 qvm-ls
 
-- list VMs and various information about their state
+- _list VMs and various information about their state_
 
 usage: qvm-ls [options] <vm-name>
 
 ---
 
-qvm-ls - lists all vms
+qvm-ls - _lists all vms_
 
-qvm-ls -n - show network addresses assigned to VMs
+qvm-ls -n - _show network addresses assigned to VMs_
 
-qvm-ls -d - show VM disk utilization statistics
+qvm-ls -d - _show VM disk utilization statistics_
 
 qvm-prefs
 
-- list/set various per-VM properties
+- _list/set various per-VM properties_
 
 usage:
 
@@ -70,123 +70,123 @@ usage:
 
 ---
 
-qvm-prefs win7-copy - lists the preferences of the win7-copy
+qvm-prefs win7-copy - _lists the preferences of the win7-copy_
 
-qvm-prefs win7-copy -s mac 00:16:3E:5E:6C:05 - sets a new mac for the
-network card
+qvm-prefs win7-copy -s mac 00:16:3E:5E:6C:05 - _sets a new mac for the
+network card_
 
-qvm-prefs lab-win7 -s qrexec_installed true - sets the qrexec to
-installed
+qvm-prefs lab-win7 -s qrexec_installed true - _sets the qrexec to
+installed_
 
-qvm-prefs lab-win7 -s qrexec_timeout 120 - usefull for windows hvm based
-vms
+qvm-prefs lab-win7 -s qrexec_timeout 120 - _usefull for windows hvm
+based vms_
 
-qvm-prefs lab-win7 -s default_user joanna - sets the login user
+qvm-prefs lab-win7 -s default_user joanna - _sets the login user_
 
 qvm-run
 
-- runs a specific command on a vm
+- _runs a specific command on a vm_
 
 usage: qvm-run [options] [<vm-name>] [<cmd>]
 
 ---
 
-qvm-run personal xterm - runs xterm on personal
+qvm-run personal xterm - _runs xterm on personal_
 
-qvm-run personal xterm --pass-io - runs xterm and passes all
-sdtin/stdout/stderr to the terminal
+qvm-run personal xterm --pass-io - _runs xterm and passes all
+sdtin/stdout/stderr to the terminal_
 
-qvm-run personal "sudo yum update" --pass-io --nogui - pass a specific
-command directly to the VM
+qvm-run personal "sudo yum update" --pass-io --nogui - _pass a specific
+command directly to the VM_
 
 qvm-start
 
-- starts a vm
+- _starts a vm_
 
 usage: qvm-start [options] <vm-name>
 
 ---
 
-qvm-start personal - starts the personal-vm
+qvm-start personal - _starts the personal-vm_
 
-qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso
-- starts the ubuntu-vm with the ubuntu installation CD
+qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso -
+_starts the ubuntu-vm with the ubuntu installation CD_
 
 qvm-sync-appmenus
 
-- updates desktop file templates for given StandaloneVM or TemplateVM
+- _updates desktop file templates for given StandaloneVM or TemplateVM_
 
 usage: qvm-sync-appmenus [options] <vm-name>
 
 ---
 
-qvm-sync-appmenus archlinux-template - useful for custom .desktop files
-or distributions not using yum
+qvm-sync-appmenus archlinux-template - _useful for custom .desktop files
+or distributions not using yum_
 
 Dom0
 
 qubes-dom0-update
 
-- updates software in dom0
+- _updates software in dom0_
 
 usage:
 qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>]
 
 ---
 
-sudo qubes-dom0-update - updates dom0
+sudo qubes-dom0-update - _updates dom0_
 
-sudo qubes-dom0-update qubes-windows-tools - install the windows tools
+sudo qubes-dom0-update qubes-windows-tools - _install the windows tools_
 
-sudo qubes-dom0-update --action=search qubes-template - search for all
-qubes templates
+sudo qubes-dom0-update --action=search qubes-template - _search for all
+qubes templates_
 
-sudo qubes-dom0-update kernel-3.19* - install the official Fedora
-kernel-3.19* with Xen support
+sudo qubes-dom0-update kernel-3.19* - _install the official Fedora
+kernel-3.19* with Xen support_
 
 qubes-hcl-report
 
-- generates a report about the hardware information
+- _generates a report about the hardware information_
 
 usage: qubes-hcl-report [<vm-name>]
 
 ---
 
-qubes-hcl-report - prints the hardware information on the console
-(terminal)
+qubes-hcl-report - _prints the hardware information on the console
+(terminal)_
 
-qubes-hcl-report personal - sends the hardware information to the
-personal-vm under /home/user
+qubes-hcl-report personal - _sends the hardware information to the
+personal-vm under /home/user _
 
 virsh
 
-- management user tool for libvirt (hypervisor abstraction)
+- _management user tool for libvirt (hypervisor abstraction)_
 
 usage: virsh -c xen:/// <command> [<vm-name>]
 
-Example
+EXAMPLE
 
-Why? Connect if GUI/qrexec does not work for any reason. This way you
-can restart/investigate a failed service.
+_Why? Connect if GUI/qrexec does not work for any reason. This way you
+can restart/investigate a failed service._
 
 -   In Dom0 terminal: virsh -c xen:/// console personal
 
--   username: root without a password
+-   username: ROOT without a password
 
-(and when #1130 would be implmented the same for “user”)
+_(and when #1130 would be implmented the same for “user”)_
 
 xl
 
-- Xen management tool, based on LibXenlight
+- _Xen management tool, based on LibXenlight_
 
 usage: xl <subcommand> [<args>]
 
 ---
 
-xl dmesg - Dom0 dmesg output (first place to look for warning or error
-messages)
+xl dmesg - _Dom0 dmesg output (first place to look for warning or error
+messages)_
 
-xl top - Monitor host and domains in realtime
+xl top - _Monitor host and domains in realtime_
 
 DomU
 
@@ -194,17 +194,18 @@ qvm-copy-to-vm
 
 - Copy file from one VM to another VM
 
-usage: qvm-copy-to-vm <vm-name> <file> [<file+>] - file can be a single
-file or a folder
+usage: qvm-copy-to-vm <vm-name> <file> [<file+>] - _file_ can be a
+single file or a folder
 
 ---
 
-qvm-copy-to-vm work Documents - copy the Documents folder to the work VM
+qvm-copy-to-vm work Documents - _copy the Documents folder to the work
+VM_
 
-qvm-copy-to-vm personal text.txt - copy the text.txt file to the
-personal VM
+qvm-copy-to-vm personal text.txt - _copy the text.txt file to the
+personal VM_
 
-Example
+EXAMPLE
 
 -   Open a terminal in AppVM A (e. g. your personal vm)
 -   Let’s assume we want to copy the Documents folder to AppVM B (e. g.
@@ -215,19 +216,19 @@ DomU and Dom0
 
 List installed qubes packages
 
-Fedora
+FEDORA
 
-In VM or Dom0: rpm -qa \*qubes-\* - list (qubes-) installed packages
+In VM or Dom0: rpm -qa \*qubes-\* - _list (qubes-) installed packages_
 
 Copy from & to Dom0
 
-Copy from: Dom0 -> VM
+Copy from: DOM0 -> VM
 
     cat /path/to/file_in_dom0 |
      qvm-run --pass-io <dst_domain>
       'cat > /path/to/file_name_in_appvm'
 
-Example:
+EXAMPLE:
 
     @dom0 Pictures]$ cat my-screenshot.png | 
     qvm-run --pass-io personal 
@@ -235,7 +236,7 @@ Example:
 
 ---
 
-Copy from: VM -> Dom0
+Copy from: VM -> DOM0
 
     qvm-run --pass-io <src_domain>
      'cat /path/to/file_in_src_domain' >
@@ -243,12 +244,12 @@ Copy from: VM -> Dom0
 
 Copy text between VM A and B
 
-On VM A (source):
+_On VM A (source):_
 
 1.  CTRL+C
 2.  CTRL+SHIFT+C
 
-On VM B (destination):
+_On VM B (destination):_
 
 3.  CTRL+SHIFT+V
 4.  CTRL+V
@@ -257,11 +258,11 @@ Grow disk
 
 qvm-grow-private
 
-- increase private storage capacity of a specified VM
+- _increase private storage capacity of a specified VM_
 
 usage: qvm-grow-private <vm-name> <size>
 
-Example
+EXAMPLE
 
 -   In dom0 konsole: qvm-grow-private personal 40GB
 -   In the personal VM: sudo resize2fs /dev/xvdb
@@ -270,11 +271,11 @@ AppVMs and TMPFS
 
 Enlarge /tmp if you run out of space on the default ~200MB
 
-sudo mount -o remount,size=1024M /tmp - enlarge the space to 1024MB
+sudo mount -o remount,size=1024M /tmp - _enlarge the space to 1024MB_
 
 Inter VM Networking
 
-- Does not expose services to the outside world!
+- _Does not expose services to the outside world!_
 
 Make sure:
 
@@ -312,57 +313,57 @@ for bidirectional access:
 
 Add USB Wifi card to sys-net VM
 
-* - attach a USB Wifi card to sys-net VM
+* - _attach a USB Wifi card to sys-net VM_
 
 The bus and device number can be different than shown in this example:
 
-1.  qvm-pci -l sys-net - list all attached pci devices of sys-net
-2.  lsusb - e. g. Bus 003 Device 003: ID 148f:2870 Ralink Technology,
-    Corp. RT2870 Wireless Adapter
-3.  readlink /sys/bus/usb/devices/003 - Important Bus 003 -> 003
+1.  qvm-pci -l sys-net - _list all attached pci devices of sys-net_
+2.  lsusb - _e. g._ BUS 003 _Device 003: ID 148f:2870 Ralink Technology,
+    Corp. RT2870 Wireless Adapter_
+3.  readlink /sys/bus/usb/devices/003 - _Important Bus 003 -> 003_
 4.  The result of readlink:
-    ../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3 - Important
-    00:12.2
-5.  qvm-pci -a sys-net 00:12.2 - attach USB device 00:12.2 to sys-net
-6.  qvm-pci -l sys-ne - check if device 00:12.2 is
+    ../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3 - _Important
+    00:12.2_
+5.  qvm-pci -a sys-net 00:12.2 - _attach USB device 00:12.2 to sys-net_
+6.  qvm-pci -l sys-ne - _check if device 00:12.2_ is
 
 Templates
 
 Fedora
 
-- Fedora template specific
+- _Fedora template specific_
 
-Updating, Searching & Installing Packages
+UPDATING, SEARCHING & INSTALLING PACKAGES
 
 -   installing packages: yum install <package-name>
 -   search for a package: yum search <package-or-word>
 -   updating template: yum update
 
-Repositories
+REPOSITORIES
 
 Repositories:
 Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories
 
-Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion
-- ENABLE RPMFusion, (already covers RPMFusion signing keys)
+Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion -
+ENABLE RPMFusion, (already covers RPMFusion signing keys)
 
 Fedora Minimal
 
-- Fedora minimal template
+- _Fedora minimal template_
 
-sudo qubes-dom0-update qubes-template-fedora-21-minimal - installs the
-fedora-21-minimal template
+sudo qubes-dom0-update qubes-template-fedora-21-minimal - _installs the
+fedora-21-minimal template_
 
 Debian
 
-- Debian templates
+- _Debian templates_
 
-Installing the Template
+INSTALLING THE TEMPLATE
 
--   sudo qubes-dom0-update qubes-template-debian-7 - Debian 7 “Wheezy”
--   sudo qubes-dom0-update qubes-template-debian-8 - Debian 8 “Jessie”
+-   sudo qubes-dom0-update qubes-template-debian-7 - _Debian 7 “Wheezy”_
+-   sudo qubes-dom0-update qubes-template-debian-8 - _Debian 8 “Jessie”_
 
-Updating, Searching & Installing Packages
+UPDATING, SEARCHING & INSTALLING PACKAGES
 
 -   installing packages: apt-get install <package-name>
 -   search for a package: apt-cache search <package-or-word>
@@ -372,15 +373,15 @@ Updating, Searching & Installing Packages
 
 Qubes OS + Whonix
 
-- Whonix is an debian based OS focused on anonymity, privacy and
-security
+- _Whonix is an debian based OS focused on anonymity, privacy and
+security_
 
 Whonix has to parts:
 
 1.  Whonix-Gateway (uses TOR for all connections to the outside world)
 2.  Whonix-Workstation (for application)
 
-Install Whonix
+INSTALL WHONIX
 
 Whonix-Gateway TemplateVM Binary Install @Dom0:
 
@@ -391,7 +392,7 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 1.  export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]
 2.  sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws
 
-Next Steps
+NEXT STEPS
 
 1.  Create a Whonix-gateway ProxyVM, through Qubes VM Manager
 2.  Create a Whonix-workstation AppVM, through Qubes VM Manager
@@ -402,9 +403,9 @@ Next Steps
 
 Archlinux Minimal
 
-- Archlinux minimal template
+- _Archlinux minimal template_
 
-Installing the Template
+INSTALLING THE TEMPLATE
 
 1.  In a VM:
 
@@ -415,7 +416,7 @@ Installing the Template
 3.  In Dom0:
     sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
 
-Updating, Searching & Installing Packages
+UPDATING, SEARCHING & INSTALLING PACKAGES
 
 -   installing packages:
     pacman -S <package-name> [<package-name-2>...<package-name-n>]
@@ -425,7 +426,7 @@ Updating, Searching & Installing Packages
 Create VM from VMware or VirtualBox images
 
 1.  Download the image in an AppVM
-2.  Install qemu-img tools - e. g. yum install qemu-img for fedora
+2.  Install qemu-img tools - _e. g. yum install qemu-img for fedora_
 3.  Convert the image to a raw format:
     -   VMware: qemu-img convert ReactOS.vmdk -O raw reactos.img
     -   VirtualBox: qemu-img convert ReactOS.vdi -O raw reactos.img
