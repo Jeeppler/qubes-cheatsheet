@@ -1,3 +1,8 @@
+## Qubes Cheatsheet ##
+\- *a summary of useful qubes commands*
+
+Version: 1.x
+
 ### VM Management
 
 #### qvm-block
@@ -124,7 +129,7 @@ usage: `qvm-sync-appmenus [options] <vm-name>`
 
 \-\-\-
 
-`qvm-sync-appmenus archlinux-template` - *useful for custom .desktop files or distributions not using yum*
+`qvm-sync-appmenus archlinux-template` - *useful for custom .desktop files or distributions not using dnf*
 
 ### Dom0
 #### qubes-dom0-update
