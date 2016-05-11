@@ -1,7 +1,7 @@
 ## Qubes Cheatsheet ##
 *a summary of useful qubes commands*
 
-version: 2.0
+version: 2.1
 
 ### VM Management
 
@@ -132,6 +132,7 @@ usage: `qvm-sync-appmenus [options] <vm-name>`
 `qvm-sync-appmenus archlinux-template` - *useful for custom .desktop files or distributions not using dnf*
 
 ### Dom0
+
 #### qubes-dom0-update
 \- *updates software in dom0*
 
@@ -142,8 +143,6 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 `sudo qubes-dom0-update` - *updates dom0*
 
 `sudo qubes-dom0-update qubes-windows-tools` - *install the windows tools*
-
-`sudo qubes-dom0-update --action=search qubes-template` - *search for all qubes templates*
 
 `sudo qubes-dom0-update kernel-3.19*` - *install the official Fedora kernel-3.19\* with  Xen support*
 
@@ -215,7 +214,25 @@ In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 
 
 ### Copy from & to Dom0
-Copy from: **Dom0 -> VM**
+
+#### Dom0 -> VM
+
+##### Qubes 3.1+
+\- *Windows + Linux*
+
+`dom0` console: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
+
+
+**Example:**
+
+~~~
+qvm-copy-to-vm personal screenshot-qubes-gui.png
+~~~
+
+The file will be in the `personal` VM in the `/home/user/QubesIncoming/dom0` folder
+
+##### Qubes < 3.1
+\- *Linux only*
 
 ~~~
 cat /path/to/file_in_dom0 |
@@ -233,7 +250,7 @@ qvm-run --pass-io personal
 
 \-\-\-
 
-Copy from: **VM -> Dom0**
+#### VM -> Dom0
 
 ~~~
 qvm-run --pass-io <src_domain>
@@ -379,7 +396,7 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 #### Qubes OS + Whonix
 \- *Whonix is an debian based OS focused on anonymity, privacy and security*
 
-Whonix has to parts:
+Whonix has two parts:
 
 1. Whonix-Gateway (uses TOR for all connections to the outside world)
 2. Whonix-Workstation (for application)
@@ -425,6 +442,7 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 - updating template: `pacman -Syyu`
 
 ### Create VM from VMware or VirtualBox images
+
 1. Download the image in an AppVM
 2. Install `qemu-img` tools - *e. g. `dnf install qemu-img` for fedora*
 3. Convert the image to a raw format:

@@ -3,7 +3,7 @@ Qubes Cheatsheet
 
 _a summary of useful qubes commands_
 
-version: 2.0
+version: 2.1
 
 VM Management
 
@@ -169,9 +169,6 @@ sudo qubes-dom0-update - _updates dom0_
 
 sudo qubes-dom0-update qubes-windows-tools - _install the windows tools_
 
-sudo qubes-dom0-update --action=search qubes-template - _search for all
-qubes templates_
-
 sudo qubes-dom0-update kernel-3.19* - _install the official Fedora
 kernel-3.19* with Xen support_
 
@@ -253,7 +250,25 @@ In VM or Dom0: rpm -qa \*qubes-\* - _list (qubes-) installed packages_
 
 Copy from & to Dom0
 
-Copy from: DOM0 -> VM
+Dom0 -> VM
+
+Qubes 3.1+
+
+- _Windows + Linux_
+
+dom0 console: qvm-copy-to-vm <vm-name> <file> [<file+>] - _file_ can be
+a single file or a folder
+
+EXAMPLE:
+
+    qvm-copy-to-vm personal screenshot-qubes-gui.png
+
+The file will be in the personal VM in the /home/user/QubesIncoming/dom0
+folder
+
+Qubes < 3.1
+
+- _Linux only_
 
     cat /path/to/file_in_dom0 |
      qvm-run --pass-io <dst_domain>
@@ -267,7 +282,7 @@ EXAMPLE:
 
 ---
 
-Copy from: VM -> DOM0
+VM -> Dom0
 
     qvm-run --pass-io <src_domain>
      'cat /path/to/file_in_src_domain' >
@@ -417,7 +432,7 @@ Qubes OS + Whonix
 - _Whonix is an debian based OS focused on anonymity, privacy and
 security_
 
-Whonix has to parts:
+Whonix has two parts:
 
 1.  Whonix-Gateway (uses TOR for all connections to the outside world)
 2.  Whonix-Workstation (for application)

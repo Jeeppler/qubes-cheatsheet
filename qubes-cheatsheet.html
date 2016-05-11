@@ -16,7 +16,7 @@
 </header>
 <h2 id="qubes-cheatsheet">Qubes Cheatsheet</h2>
 <p><em>a summary of useful qubes commands</em></p>
-<p>version: 2.0</p>
+<p>version: 2.1</p>
 <h3 id="vm-management">VM Management</h3>
 <h4 id="qvm-block">qvm-block</h4>
 <p>- <em>list/set VM PCI devices</em></p>
@@ -96,7 +96,6 @@
 <p>---</p>
 <p><code>sudo qubes-dom0-update</code> - <em>updates dom0</em></p>
 <p><code>sudo qubes-dom0-update qubes-windows-tools</code> - <em>install the windows tools</em></p>
-<p><code>sudo qubes-dom0-update --action=search qubes-template</code> - <em>search for all qubes templates</em></p>
 <p><code>sudo qubes-dom0-update kernel-3.19*</code> - <em>install the official Fedora kernel-3.19* with Xen support</em></p>
 <h4 id="qubes-hcl-report">qubes-hcl-report</h4>
 <p>- <em>generates a report about the hardware information</em></p>
@@ -138,7 +137,15 @@
 <p><strong>Fedora</strong></p>
 <p>In VM or Dom0: <code>rpm -qa \*qubes-\*</code> - <em>list (qubes-) installed packages</em></p>
 <h3 id="copy-from-to-dom0">Copy from &amp; to Dom0</h3>
-<p>Copy from: <strong>Dom0 -&gt; VM</strong></p>
+<h4 id="dom0---vm">Dom0 -&gt; VM</h4>
+<h5 id="qubes-3.1">Qubes 3.1+</h5>
+<p>- <em>Windows + Linux</em></p>
+<p><code>dom0</code> console: <code>qvm-copy-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
+<p><strong>Example:</strong></p>
+<pre><code>qvm-copy-to-vm personal screenshot-qubes-gui.png</code></pre>
+<p>The file will be in the <code>personal</code> VM in the <code>/home/user/QubesIncoming/dom0</code> folder</p>
+<h5 id="qubes-3.1-1">Qubes &lt; 3.1</h5>
+<p>- <em>Linux only</em></p>
 <pre><code>cat /path/to/file_in_dom0 |
  qvm-run --pass-io &lt;dst_domain&gt;
   &#39;cat &gt; /path/to/file_name_in_appvm&#39;</code></pre>
@@ -147,7 +154,7 @@
 qvm-run --pass-io personal
 &#39;cat &gt; /home/user/my-screenshot.png&#39;</code></pre>
 <p>---</p>
-<p>Copy from: <strong>VM -&gt; Dom0</strong></p>
+<h4 id="vm---dom0">VM -&gt; Dom0</h4>
 <pre><code>qvm-run --pass-io &lt;src_domain&gt;
  &#39;cat /path/to/file_in_src_domain&#39; &gt;
   /path/to/file_name_in_dom0</code></pre>
@@ -256,7 +263,7 @@ qvm-run --pass-io personal
 </ul>
 <h4 id="qubes-os-whonix">Qubes OS + Whonix</h4>
 <p>- <em>Whonix is an debian based OS focused on anonymity, privacy and security</em></p>
-<p>Whonix has to parts:</p>
+<p>Whonix has two parts:</p>
 <ol type="1">
 <li>Whonix-Gateway (uses TOR for all connections to the outside world)</li>
 <li>Whonix-Workstation (for application)</li>
