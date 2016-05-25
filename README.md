@@ -4,6 +4,8 @@ This cheat sheet contains commands and examples for [Qubes OS](https://www.qubes
 
 ## Downloads
 
+- **Markdown (Text): [qubes-cheatsheet.md](https://github.com/Jeeppler/qubes-cheatsheet/blob/master/qubes-cheatsheet.md)
+
 - **PDF: [qubes-cheatsheet.pdf](https://github.com/Jeeppler/qubes-cheatsheet/raw/master/qubes-cheatsheet.pdf)**
 
 - **HTML: [qubes-cheatsheet.html](https://htmlpreview.github.io/?https://github.com/Jeeppler/qubes-cheatsheet/blob/master/qubes-cheatsheet.html)**

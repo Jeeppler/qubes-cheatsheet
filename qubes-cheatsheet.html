@@ -16,8 +16,25 @@
 </header>
 <h2 id="qubes-cheatsheet">Qubes Cheatsheet</h2>
 <p><em>a summary of useful qubes commands</em></p>
-<p>version: 2.1</p>
+<p>version: 3.0</p>
+<h3 id="mini-glossary">Mini Glossary</h3>
+<ul>
+<li>Xen - <em>Hypervisor</em></li>
+<li>VM - <em>Virtual Machine</em></li>
+<li>Qube - <em>Qubes OS specific alias for VM</em></li>
+<li>Dom0 - <em>Priviledged Xen VM (runs Qubes Manager)</em></li>
+<li>DomU - <em>Normal Xen VM</em></li>
+<li>QWT - <em>Qubes Windows Tools</em></li>
+<li>PV - <em>Paravirtualized VM</em></li>
+<li>HVM - <em>Hardware Virtual Machine</em></li>
+<li>HVM + PV drivers - <em>HVM with PV drivers (Windows + QWT)</em></li>
+<li>GUI - <em>Graphical User Interface</em></li>
+</ul>
 <h3 id="vm-management">VM Management</h3>
+<p>:!: <em>All commands are executed in Dom0 terminal (Konsole, Terminal, Xterm etc.)</em></p>
+<h4 id="qubes-manager">qubes-manager</h4>
+<p>- <em>Graphical VM Manager</em></p>
+<p>usage: <code>qubes-manager</code></p>
 <h4 id="qvm-block">qvm-block</h4>
 <p>- <em>list/set VM PCI devices</em></p>
 <p>usage:</p>
@@ -66,7 +83,7 @@
 <p>---</p>
 <p><code>qvm-run personal xterm</code> - <em>runs xterm on personal</em></p>
 <p><code>qvm-run personal xterm --pass-io</code> - <em>runs xterm and passes all sdtin/stdout/stderr to the terminal</em></p>
-<p><code>qvm-run personal &quot;sudo dnf update&quot; --pass-io --nogui</code> - <em>pass a specific command directly to the VM</em></p>
+<p><code>qvm-run personal &quot;sudo dnf update&quot; --pass-io --nogui</code> - <em>pass a <code>dnf update</code> command directly to the VM</em></p>
 <h4 id="qvm-start">qvm-start</h4>
 <p>- <em>starts a vm</em></p>
 <p>usage: <code>qvm-start [options] &lt;vm-name&gt;</code></p>
@@ -98,26 +115,22 @@
 <p><code>sudo qubes-dom0-update qubes-windows-tools</code> - <em>install the windows tools</em></p>
 <p><code>sudo qubes-dom0-update kernel-3.19*</code> - <em>install the official Fedora kernel-3.19* with Xen support</em></p>
 <h4 id="qubes-hcl-report">qubes-hcl-report</h4>
-<p>- <em>generates a report about the hardware information</em></p>
+<p>- <em>generates a report about the system hardware information</em></p>
 <p>usage: <code>qubes-hcl-report [&lt;vm-name&gt;]</code></p>
 <p>---</p>
 <p><code>qubes-hcl-report</code> - <em>prints the hardware information on the console (terminal)</em></p>
-<p><code>qubes-hcl-report personal</code> - <em>sends the hardware information to the personal-vm under <code>/home/user</code> </em></p>
+<p><code>qubes-hcl-report personal</code> - <em>sends the hardware information to the personal-vm under <code>/home/user</code></em></p>
 <h4 id="virsh">virsh</h4>
 <p>- <em>management user tool for libvirt (hypervisor abstraction)</em></p>
 <p>usage: <code>virsh -c xen:/// &lt;command&gt; [&lt;vm-name&gt;]</code></p>
-<p><strong>Example</strong></p>
-<p><em>Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.</em></p>
-<ul>
-<li><p>In Dom0 terminal: <code>virsh -c xen:/// console personal</code></p></li>
-<li><p>username: <strong>root</strong> without a password</p></li>
-</ul>
-<p><em>(and when #1130 would be implmented the same for “user”)</em></p>
+<p>---</p>
+<p><code>virsh -c xen:/// list</code> - <em>list running VM’s with additional information</em></p>
+<p><code>virsh -c xen:/// list --all</code> - <em>list all VM’s with additional information</em></p>
+<p><code>virsh -c xen:/// dominfo personal</code> - <em>lists status of personal VM</em></p>
 <h4 id="xl">xl</h4>
 <p>- <em>Xen management tool, based on LibXenlight</em></p>
 <p>usage: <code>xl &lt;subcommand&gt; [&lt;args&gt;]</code></p>
 <p>---</p>
-<p><code>xl dmesg</code> - <em>Dom0 dmesg output (first place to look for warning or error messages)</em></p>
 <p><code>xl top</code> - <em>Monitor host and domains in realtime</em></p>
 <h3 id="domu">DomU</h3>
 <h4 id="qvm-copy-to-vm">qvm-copy-to-vm</h4>
@@ -132,19 +145,42 @@
 <li>Let’s assume we want to copy the <code>Documents</code> folder to AppVM B (e. g. your work VM)</li>
 <li>The command would be: <code>qvm-copy-to-vm work Documents</code></li>
 </ul>
+<h4 id="qvm-open-in-vm">qvm-open-in-vm</h4>
+<p>- Opens file in another VM</p>
+<p>usage: <code>qvm-open-in-vm &lt;vm-name&gt; &lt;file&gt;</code> - <em>file</em> can only be a single file</p>
+<p>---</p>
+<p><code>qvm-open-in-vm personal document.pdf</code> - <em>opens <code>document.pdf</code> in the personal VM</em></p>
+<p><code>qvm-copy-to-vm personal download.zip</code> - <em>opens <code>download.zip</code> in the personal VM</em></p>
 <h3 id="domu-and-dom0">DomU and Dom0</h3>
+<h4 id="list-qubes-commands">List Qubes commands</h4>
+<ol type="1">
+<li>Enter in console:</li>
+<li><code>qvm-*</code></li>
+<li><code>qubes*</code></li>
+<li>Press two times <code>TAB</code></li>
+</ol>
+<p>Output: List of <code>qvm-*</code> or <code>qubes*</code> commands.</p>
 <h4 id="list-installed-qubes-packages">List installed qubes packages</h4>
-<p><strong>Fedora</strong></p>
+<p><strong>Fedora Dom0</strong></p>
 <p>In VM or Dom0: <code>rpm -qa \*qubes-\*</code> - <em>list (qubes-) installed packages</em></p>
-<h3 id="copy-from-to-dom0">Copy from &amp; to Dom0</h3>
-<h4 id="dom0---vm">Dom0 -&gt; VM</h4>
+<h3 id="filesfolders-from-to-dom0">Files/Folders from &amp; to Dom0</h3>
+<h4 id="move-dom0---vm">Move Dom0 -&gt; VM</h4>
 <h5 id="qubes-3.1">Qubes 3.1+</h5>
 <p>- <em>Windows + Linux</em></p>
+<p><code>dom0</code> console: <code>qvm-move-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
+<p>---</p>
+<p><code>qvm-move-to-vm work screenshot-qubes-gui.png</code> - <em>moves <code>screenshot-qubes-gui.png</code> to the <code>personal</code> VM into the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<p><code>qvm-move-to-vm personal *.png</code> - <em>moves all <code>.png</code> to the <code>personal</code> VM into the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<p><code>qvm-move-to-vm work Pictures/</code> - <em>moves the <code>Pictures</code> folder and it’s content to the <code>personal</code> VM into the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<h4 id="copy-dom0---vm">Copy Dom0 -&gt; VM</h4>
+<h5 id="qubes-3.1-1">Qubes 3.1+</h5>
+<p>- <em>Windows + Linux</em></p>
 <p><code>dom0</code> console: <code>qvm-copy-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
-<p><strong>Example:</strong></p>
-<pre><code>qvm-copy-to-vm personal screenshot-qubes-gui.png</code></pre>
-<p>The file will be in the <code>personal</code> VM in the <code>/home/user/QubesIncoming/dom0</code> folder</p>
-<h5 id="qubes-3.1-1">Qubes &lt; 3.1</h5>
+<p>---</p>
+<p><code>qvm-copy-to-vm personal screenshot-qubes-gui.png</code> - <em>copies <code>screenshot-qubes-gui.png</code> to the <code>personal</code> VM in the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<p><code>qvm-copy-to-vm personal *.png</code> - <em>copies all <code>.png</code> to the <code>personal</code> VM in the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<p><code>qvm-copy-to-vm work Pictures/</code> - <em>copies the <code>Pictures</code> folder and it’s content to the <code>personal</code> VM in the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
+<h5 id="qubes-3.1-2">Qubes &lt; 3.1</h5>
 <p>- <em>Linux only</em></p>
 <pre><code>cat /path/to/file_in_dom0 |
  qvm-run --pass-io &lt;dst_domain&gt;
@@ -169,6 +205,42 @@ qvm-run --pass-io personal
 <li><code>CTRL+SHIFT+V</code></li>
 <li><code>CTRL+V</code></li>
 </ol>
+<h3 id="troubleshoot">Troubleshoot</h3>
+<h4 id="application-in-vm-does-not-start">Application in VM does not start</h4>
+<p><code>qvm-run personal &quot;command&quot; --pass-io</code> - <em>pass command directly to the VM. Returns an error message command fails.</em></p>
+<p><code>qvm-run personal &quot;xterm&quot; --pass-io</code> - <em>pass <code>xterm</code> command directly to the VM. Returns an error message or starts xterm.</em></p>
+<p>---</p>
+<p><code>qvm-run &lt;vmname&gt; &quot;command&quot; --pass-io --nogui</code> - <em>pass command to VM without using the GUI</em></p>
+<p><code>qvm-run personal &quot;ls&quot; --pass-io --nogui</code> - <em>pass <code>ls</code> command directly to the VM. Returns error or output.</em></p>
+<h4 id="console-in-vm">Console in VM</h4>
+<p><code>virsh -c xen:/// console &lt;vmname&gt;</code> - <em>opens console in <vmname></em></p>
+<p>---</p>
+<p><em>Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.</em></p>
+<ul>
+<li><p>In Dom0 terminal: <code>virsh -c xen:/// console personal</code></p></li>
+<li><p>username: <strong>root</strong> without a password</p></li>
+</ul>
+<p><em>(and when #1130 would be implmented the same for “user”)</em></p>
+<p>---</p>
+<p>In console mode press <code>CTRL</code> + <code>^</code> + <code>]</code> on keyboard to escape from console mode.</p>
+<h4 id="domu-log-files">DomU Log files</h4>
+<p><code>/var/log/qubes</code> - <em>log file directory</em></p>
+<p>log files per DomU VM:</p>
+<ul>
+<li><code>guid.&lt;vmname&gt;.log</code> - <em>graphical information</em></li>
+<li><code>pacat.&lt;vmname&gt;.log</code> - <em>sound information</em></li>
+<li><code>qrexec.&lt;vmname&gt;.log</code> - <em>inter VM communication information</em></li>
+<li><code>qubesdb.&lt;vmname&gt;.log</code> - <em>qubesdb information</em></li>
+</ul>
+<h4 id="get-qubes-os-version">Get Qubes OS Version</h4>
+<p><code>cat /etc/qubes-release</code> - <em>prints Qubes release in human readable form</em></p>
+<p><code>rpm -qa \*qubes-release\*</code> - <em>prints exact Qubes release number</em></p>
+<h4 id="get-xen-version">Get Xen Version</h4>
+<p><code>xl info | grep xen_version</code> - <em>prints the Xen version</em></p>
+<h4 id="qubes-xen-boot">Qubes / Xen Boot</h4>
+<p><code>dmesg</code> - <em>prints error, warning and informational messages about device drivers and the kernel during the boot process as well as when we connect a hardware to the system on the fly.</em></p>
+<p><code>xl dmesg</code> - <em>prints error, warning and informational messages created during Xen’s boot process</em></p>
+<p>:!: <em>use <code>dmesg</code> and <code>xl dmesg</code> in combination with <code>less</code>, <code>cat</code>, <code>tail</code> or <code>head</code>.</em></p>
 <h3 id="grow-disk">Grow disk</h3>
 <h4 id="qvm-grow-private">qvm-grow-private</h4>
 <p>- <em>increase private storage capacity of a specified VM</em></p>
@@ -207,7 +279,7 @@ qvm-run --pass-io personal
 <p>In Firewall VM terminal:</p>
 <pre><code>$ sudo bash
 # echo &quot;iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT&quot; &gt;&gt; /rw/config/qubes_firewall_user_script
-#chmod +x /rw/config/qubes_firewall_user_script</code></pre>
+# chmod +x /rw/config/qubes_firewall_user_script</code></pre>
 <p>for bidirectional access:</p>
 <pre><code># echo &quot;iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT&quot; &gt;&gt; /rw/config/qubes_firewall_user_script</code></pre>
 <h4 id="add-usb-wifi-card-to-sys-net-vm">Add USB Wifi card to sys-net VM</h4>
@@ -284,16 +356,10 @@ qvm-run --pass-io personal
 <li>(Re)Start Whonix-Gateway ProxyVM</li>
 <li>Start Whonix-Workstation AppVM</li>
 </ol>
-<h4 id="archlinux-minimal">Archlinux Minimal</h4>
-<p>- <em>Archlinux minimal template</em></p>
+<h4 id="archlinux">Archlinux</h4>
+<p>- <em>Archlinux</em></p>
 <p><strong>Installing the Template</strong></p>
-<ol type="1">
-<li><p>In a VM:</p>
-<pre><code>wget http://olivier.medoc.free.fr/rpm/noarch/
-qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></pre></li>
-<li>Copy RPM-Package to Dom0</li>
-<li><p>In Dom0: <code>sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm</code></p></li>
-</ol>
+<p>Use the following instructions: <a href="https://www.qubes-os.org/doc/templates/archlinux/">Archlinux Template</a></p>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <ul>
 <li>installing packages: <code>pacman -S &lt;package-name&gt; [&lt;package-name-2&gt;...&lt;package-name-n&gt;]</code></li>

@@ -1,9 +1,29 @@
 ## Qubes Cheatsheet ##
 *a summary of useful qubes commands*
 
-version: 2.1
+version: 3.0
+
+### Mini Glossary
+
+- Xen - *Hypervisor*
+- VM - *Virtual Machine*
+- Qube - *Qubes OS specific alias for VM*
+- Dom0 - *Priviledged Xen VM (runs Qubes Manager)*
+- DomU - *Normal Xen VM*
+- QWT - *Qubes Windows Tools*
+- PV - *Paravirtualized VM*
+- HVM - *Hardware Virtual Machine*
+- HVM + PV drivers - *HVM with PV drivers (Windows + QWT)*
+- GUI - *Graphical User Interface*
 
 ### VM Management
+
+:!: *All commands are executed in Dom0 terminal (Konsole, Terminal, Xterm etc.)*
+
+#### qubes-manager
+\- *Graphical VM Manager*
+
+usage: `qubes-manager`
 
 #### qvm-block
 \- *list/set VM PCI devices*
@@ -87,7 +107,7 @@ usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
 `qvm-run personal xterm --pass-io` - *runs xterm and passes all sdtin/stdout/stderr to the terminal*
 
-`qvm-run personal "sudo dnf update" --pass-io --nogui` - *pass a specific command directly to the VM*
+`qvm-run personal "sudo dnf update" --pass-io --nogui` - *pass a `dnf update` command directly to the VM*
 
 
 #### qvm-start
@@ -147,7 +167,7 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 `sudo qubes-dom0-update kernel-3.19*` - *install the official Fedora kernel-3.19\* with  Xen support*
 
 #### qubes-hcl-report
-\- *generates a report about the hardware information*
+\- *generates a report about the system hardware information*
 
 usage: `qubes-hcl-report [<vm-name>]`
 
@@ -155,22 +175,20 @@ usage: `qubes-hcl-report [<vm-name>]`
 
 `qubes-hcl-report` - *prints the hardware information on the console (terminal)*
 
-`qubes-hcl-report personal` - *sends the hardware information to the personal-vm under `/home/user` *
+`qubes-hcl-report personal` - *sends the hardware information to the personal-vm under `/home/user`*
 
 #### virsh
 \- *management user tool for libvirt (hypervisor abstraction)*
 
 usage: `virsh -c xen:/// <command> [<vm-name>]`
 
-**Example**
+\-\-\-
 
-*Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.*
+`virsh -c xen:/// list` - *list running VM's with additional information*
 
-- In Dom0 terminal: `virsh -c xen:/// console personal`
+`virsh -c xen:/// list --all` - *list all VM's with additional information*
 
-- username: **root** without a password
-
-*(and when #1130 would be implmented the same for "user")*
+`virsh -c xen:/// dominfo personal` - *lists status of personal VM*
 
 #### xl
 \- *Xen management tool, based on LibXenlight*
@@ -179,11 +197,7 @@ usage: `xl <subcommand> [<args>]`
 
 \-\-\-
 
-
-`xl dmesg` - *Dom0 dmesg output (first place to look for warning or error messages)*
-
 `xl top` - *Monitor host and domains in realtime*
-
 
 ### DomU
 
@@ -204,32 +218,66 @@ usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file
 - Let's assume we want to copy the `Documents` folder to AppVM B (e. g. your work VM)
 - The command would be: `qvm-copy-to-vm work Documents`
 
+#### qvm-open-in-vm
+\- Opens file in another VM
+
+usage: `qvm-open-in-vm <vm-name> <file>` - *file* can only be a single file
+
+\-\-\-
+
+`qvm-open-in-vm personal document.pdf` - *opens `document.pdf` in the personal VM*
+
+`qvm-copy-to-vm personal download.zip` - *opens `download.zip` in the personal VM*
+
 ### DomU and Dom0
+
+#### List Qubes commands
+
+1. Enter in console:
+  1. `qvm-*`
+  2. `qubes*`
+2. Press two times `TAB`
+
+Output: List of `qvm-*` or `qubes*` commands.
 
 #### List installed qubes packages
 
-**Fedora**
+**Fedora Dom0**
 
 In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 
 
-### Copy from & to Dom0
+### Files/Folders from & to Dom0
 
-#### Dom0 -> VM
+#### Move Dom0 -> VM
+
+##### Qubes 3.1+
+\- *Windows + Linux*
+
+`dom0` console: `qvm-move-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
+
+\-\-\-
+
+`qvm-move-to-vm work screenshot-qubes-gui.png` - *moves `screenshot-qubes-gui.png` to the `personal` VM into the `/home/user/QubesIncoming/dom0` folder*
+
+`qvm-move-to-vm personal *.png` - *moves all `.png` to the `personal` VM into the `/home/user/QubesIncoming/dom0` folder*
+
+`qvm-move-to-vm work Pictures/` - *moves the `Pictures` folder and it's content to the `personal` VM into the `/home/user/QubesIncoming/dom0` folder*
+
+#### Copy Dom0 -> VM
 
 ##### Qubes 3.1+
 \- *Windows + Linux*
 
 `dom0` console: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
 
+\-\-\-
 
-**Example:**
+`qvm-copy-to-vm personal screenshot-qubes-gui.png` - *copies `screenshot-qubes-gui.png` to the `personal` VM in the `/home/user/QubesIncoming/dom0` folder*
 
-~~~
-qvm-copy-to-vm personal screenshot-qubes-gui.png
-~~~
+`qvm-copy-to-vm personal *.png` - *copies all `.png` to the `personal` VM in the `/home/user/QubesIncoming/dom0` folder*
 
-The file will be in the `personal` VM in the `/home/user/QubesIncoming/dom0` folder
+`qvm-copy-to-vm work Pictures/` - *copies the `Pictures` folder and it's content to the `personal` VM in the `/home/user/QubesIncoming/dom0` folder*
 
 ##### Qubes < 3.1
 \- *Linux only*
@@ -270,7 +318,69 @@ qvm-run --pass-io <src_domain>
 3. `CTRL+SHIFT+V`
 4. `CTRL+V`
 
+### Troubleshoot
+
+#### Application in VM does not start
+
+`qvm-run personal "command" --pass-io` - *pass command directly to the VM. Returns an error message command fails.*
+
+`qvm-run personal "xterm" --pass-io` - *pass `xterm` command directly to the VM. Returns an error message or starts xterm.*
+
+\-\-\-
+
+`qvm-run <vmname> "command" --pass-io --nogui` - *pass command to VM without using the GUI*
+
+`qvm-run personal "ls" --pass-io --nogui` - *pass `ls` command directly to the VM. Returns error or output.*
+
+#### Console in VM
+
+`virsh -c xen:/// console <vmname>` - *opens console in <vmname>*
+
+\-\-\-
+
+*Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.*
+
+- In Dom0 terminal: `virsh -c xen:/// console personal`
+
+- username: **root** without a password
+
+*(and when #1130 would be implmented the same for "user")*
+
+\-\-\-
+
+In console mode press `CTRL` + `^` + `]` on keyboard to escape from console mode.
+
+#### DomU Log files
+
+`/var/log/qubes` - *log file directory*
+
+log files per DomU VM:
+
+- `guid.<vmname>.log` - *graphical information*
+- `pacat.<vmname>.log` - *sound information*
+- `qrexec.<vmname>.log` - *inter VM communication information*
+- `qubesdb.<vmname>.log` - *qubesdb information*
+
+#### Get Qubes OS Version
+
+`cat /etc/qubes-release` - *prints Qubes release in human readable form*
+
+`rpm -qa \*qubes-release\*` - *prints exact Qubes release number*
+
+#### Get Xen Version
+
+`xl info | grep xen_version` - *prints the Xen version*
+
+#### Qubes / Xen Boot
+
+`dmesg` - *prints error, warning and informational messages about device drivers and the kernel during the boot process as well as when we connect a hardware to the system on the fly.*
+
+`xl dmesg` - *prints error, warning and informational messages created during Xen's boot process*
+
+:!: *use `dmesg` and `xl dmesg` in combination with `less`, `cat`, `tail` or `head`.*
+
 ### Grow disk
+
 #### qvm-grow-private
 \- *increase private storage capacity of a specified VM*
 
@@ -325,7 +435,7 @@ In Firewall VM terminal:
 ~~~
 $ sudo bash
 # echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
-#chmod +x /rw/config/qubes_firewall_user_script
+# chmod +x /rw/config/qubes_firewall_user_script
 ~~~
 
 for bidirectional access:
@@ -420,20 +530,12 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 4. (Re)Start Whonix-Gateway ProxyVM
 5. Start Whonix-Workstation AppVM
 
-#### Archlinux Minimal
-\- *Archlinux minimal template*
+#### Archlinux
+\- *Archlinux*
 
 **Installing the Template**
 
-1. In a VM:
-
-    ~~~
-    wget http://olivier.medoc.free.fr/rpm/noarch/
-    qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm
-    ~~~
-
-2. Copy RPM-Package to Dom0
-3. In Dom0: `sudo rpm -i qubes-template-archlinux-minimal-3.0.3-201507281153.noarch.rpm`
+Use the following instructions: [Archlinux Template](https://www.qubes-os.org/doc/templates/archlinux/)
 
 **Updating, Searching & Installing Packages**
 
