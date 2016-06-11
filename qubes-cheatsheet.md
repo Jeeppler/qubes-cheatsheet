@@ -1,7 +1,7 @@
 ## Qubes Cheatsheet ##
 *a summary of useful qubes commands*
 
-version: 3.0
+version: 3.1
 
 ### Mini Glossary
 
@@ -140,6 +140,15 @@ usage: `qvm-kill [options] <vm-name>`
 \-\-\-
 
 `qvm-kill personal` - *pull the power cord for the personal-vm - immediate shutdown*
+
+#### qvm-trim-template
+\- *trims the disk space of a template*
+
+usage: `qvm-trim-template <template-name>`
+
+\-\-\-
+
+`qvm-trim-template debian-8` - *helpful after upgrading or removing many packages/files in the template*
 
 
 #### qvm-sync-appmenus
