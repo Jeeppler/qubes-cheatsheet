@@ -178,13 +178,20 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 #### qubes-hcl-report
 \- *generates a report about the system hardware information*
 
-usage: `qubes-hcl-report [<vm-name>]`
+usage: `qubes-hcl-report [-s] [<vm-name>]`
 
 \-\-\-
 
 `qubes-hcl-report` - *prints the hardware information on the console (terminal)*
 
 `qubes-hcl-report personal` - *sends the hardware information to the personal-vm under `/home/user`*
+
+`qubes-hcl-report -s` - *prints the hardware information on the console (terminal) and generates more detailed report*
+
+`qubes-hcl-report -s personal` - *sends the detailed hardware information report to the personal-vm*
+
+**Note:** `qubes-hcl-report -s [<vm-name>]` generates a more detailed report. This report can contain sensitive information.
+Please do not upload the report if you do not want to share those information.
 
 #### virsh
 \- *management user tool for libvirt (hypervisor abstraction)*
@@ -255,8 +262,7 @@ Output: List of `qvm-*` or `qubes*` commands.
 
 In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 
-
-### Files/Folders from & to Dom0
+### Files/Folders from and to Dom0
 
 #### Move Dom0 -> VM
 
@@ -297,15 +303,13 @@ cat /path/to/file_in_dom0 |
   'cat > /path/to/file_name_in_appvm'
 ~~~
 
-**Example:**
+\-\-\-
 
 ~~~
 @dom0 Pictures]$ cat my-screenshot.png |
 qvm-run --pass-io personal
 'cat > /home/user/my-screenshot.png'
 ~~~
-
-\-\-\-
 
 #### VM -> Dom0
 
@@ -397,7 +401,7 @@ usage: `qvm-grow-private <vm-name> <size>`
 
 **Example**
 
-* In dom0 konsole: `qvm-grow-private personal 40GB`
+* In dom0 terminal: `qvm-grow-private personal 40GB`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
 ### AppVMs and TMPFS
@@ -466,6 +470,7 @@ The bus and device number can be different than shown in this example:
 6. `qvm-pci -l sys-ne` - *check if device 00:12.2* is
 
 ### Templates
+
 #### Fedora
 \- *Fedora template specific*
 
