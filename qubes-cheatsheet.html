@@ -16,7 +16,7 @@
 </header>
 <h2 id="qubes-cheatsheet">Qubes Cheatsheet</h2>
 <p><em>a summary of useful qubes commands</em></p>
-<p>version: 3.0</p>
+<p>version: 3.1</p>
 <h3 id="mini-glossary">Mini Glossary</h3>
 <ul>
 <li>Xen - <em>Hypervisor</em></li>
@@ -101,6 +101,11 @@
 <p>usage: <code>qvm-kill [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-kill personal</code> - <em>pull the power cord for the personal-vm - immediate shutdown</em></p>
+<h4 id="qvm-trim-template">qvm-trim-template</h4>
+<p>- <em>trims the disk space of a template</em></p>
+<p>usage: <code>qvm-trim-template &lt;template-name&gt;</code></p>
+<p>---</p>
+<p><code>qvm-trim-template debian-8</code> - <em>helpful after upgrading or removing many packages/files in the template</em></p>
 <h4 id="qvm-sync-appmenus">qvm-sync-appmenus</h4>
 <p>- <em>updates desktop file templates for given StandaloneVM or TemplateVM</em></p>
 <p>usage: <code>qvm-sync-appmenus [options] &lt;vm-name&gt;</code></p>
@@ -116,10 +121,13 @@
 <p><code>sudo qubes-dom0-update kernel-3.19*</code> - <em>install the official Fedora kernel-3.19* with Xen support</em></p>
 <h4 id="qubes-hcl-report">qubes-hcl-report</h4>
 <p>- <em>generates a report about the system hardware information</em></p>
-<p>usage: <code>qubes-hcl-report [&lt;vm-name&gt;]</code></p>
+<p>usage: <code>qubes-hcl-report [-s] [&lt;vm-name&gt;]</code></p>
 <p>---</p>
 <p><code>qubes-hcl-report</code> - <em>prints the hardware information on the console (terminal)</em></p>
 <p><code>qubes-hcl-report personal</code> - <em>sends the hardware information to the personal-vm under <code>/home/user</code></em></p>
+<p><code>qubes-hcl-report -s</code> - <em>prints the hardware information on the console (terminal) and generates more detailed report</em></p>
+<p><code>qubes-hcl-report -s personal</code> - <em>sends the detailed hardware information report to the personal-vm</em></p>
+<p><strong>Note:</strong> <code>qubes-hcl-report -s [&lt;vm-name&gt;]</code> generates a more detailed report. This report can contain sensitive information. Please do not upload the report if you do not want to share those information.</p>
 <h4 id="virsh">virsh</h4>
 <p>- <em>management user tool for libvirt (hypervisor abstraction)</em></p>
 <p>usage: <code>virsh -c xen:/// &lt;command&gt; [&lt;vm-name&gt;]</code></p>
@@ -163,7 +171,7 @@
 <h4 id="list-installed-qubes-packages">List installed qubes packages</h4>
 <p><strong>Fedora Dom0</strong></p>
 <p>In VM or Dom0: <code>rpm -qa \*qubes-\*</code> - <em>list (qubes-) installed packages</em></p>
-<h3 id="filesfolders-from-to-dom0">Files/Folders from &amp; to Dom0</h3>
+<h3 id="filesfolders-from-and-to-dom0">Files/Folders from and to Dom0</h3>
 <h4 id="move-dom0---vm">Move Dom0 -&gt; VM</h4>
 <h5 id="qubes-3.1">Qubes 3.1+</h5>
 <p>- <em>Windows + Linux</em></p>
@@ -185,11 +193,10 @@
 <pre><code>cat /path/to/file_in_dom0 |
  qvm-run --pass-io &lt;dst_domain&gt;
   &#39;cat &gt; /path/to/file_name_in_appvm&#39;</code></pre>
-<p><strong>Example:</strong></p>
+<p>---</p>
 <pre><code>@dom0 Pictures]$ cat my-screenshot.png |
 qvm-run --pass-io personal
 &#39;cat &gt; /home/user/my-screenshot.png&#39;</code></pre>
-<p>---</p>
 <h4 id="vm---dom0">VM -&gt; Dom0</h4>
 <pre><code>qvm-run --pass-io &lt;src_domain&gt;
  &#39;cat /path/to/file_in_src_domain&#39; &gt;
@@ -247,7 +254,7 @@ qvm-run --pass-io personal
 <p>usage: <code>qvm-grow-private &lt;vm-name&gt; &lt;size&gt;</code></p>
 <p><strong>Example</strong></p>
 <ul>
-<li>In dom0 konsole: <code>qvm-grow-private personal 40GB</code></li>
+<li>In dom0 terminal: <code>qvm-grow-private personal 40GB</code></li>
 <li>In the personal VM: <code>sudo resize2fs /dev/xvdb</code></li>
 </ul>
 <h3 id="appvms-and-tmpfs">AppVMs and TMPFS</h3>

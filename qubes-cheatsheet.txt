@@ -3,7 +3,7 @@ Qubes Cheatsheet
 
 _a summary of useful qubes commands_
 
-version: 3.0
+version: 3.1
 
 Mini Glossary
 
@@ -165,6 +165,17 @@ usage: qvm-kill [options] <vm-name>
 qvm-kill personal - _pull the power cord for the personal-vm - immediate
 shutdown_
 
+qvm-trim-template
+
+- _trims the disk space of a template_
+
+usage: qvm-trim-template <template-name>
+
+---
+
+qvm-trim-template debian-8 - _helpful after upgrading or removing many
+packages/files in the template_
+
 qvm-sync-appmenus
 
 - _updates desktop file templates for given StandaloneVM or TemplateVM_
@@ -198,7 +209,7 @@ qubes-hcl-report
 
 - _generates a report about the system hardware information_
 
-usage: qubes-hcl-report [<vm-name>]
+usage: qubes-hcl-report [-s] [<vm-name>]
 
 ---
 
@@ -207,6 +218,16 @@ qubes-hcl-report - _prints the hardware information on the console
 
 qubes-hcl-report personal - _sends the hardware information to the
 personal-vm under /home/user_
+
+qubes-hcl-report -s - _prints the hardware information on the console
+(terminal) and generates more detailed report_
+
+qubes-hcl-report -s personal - _sends the detailed hardware information
+report to the personal-vm_
+
+NOTE: qubes-hcl-report -s [<vm-name>] generates a more detailed report.
+This report can contain sensitive information. Please do not upload the
+report if you do not want to share those information.
 
 virsh
 
@@ -289,7 +310,7 @@ FEDORA DOM0
 
 In VM or Dom0: rpm -qa \*qubes-\* - _list (qubes-) installed packages_
 
-Files/Folders from & to Dom0
+Files/Folders from and to Dom0
 
 Move Dom0 -> VM
 
@@ -342,13 +363,11 @@ Qubes < 3.1
      qvm-run --pass-io <dst_domain>
       'cat > /path/to/file_name_in_appvm'
 
-EXAMPLE:
+---
 
     @dom0 Pictures]$ cat my-screenshot.png |
     qvm-run --pass-io personal
     'cat > /home/user/my-screenshot.png'
-
----
 
 VM -> Dom0
 
@@ -449,7 +468,7 @@ usage: qvm-grow-private <vm-name> <size>
 
 EXAMPLE
 
--   In dom0 konsole: qvm-grow-private personal 40GB
+-   In dom0 terminal: qvm-grow-private personal 40GB
 -   In the personal VM: sudo resize2fs /dev/xvdb
 
 AppVMs and TMPFS

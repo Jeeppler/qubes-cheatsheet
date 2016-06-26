@@ -105,9 +105,9 @@ usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
 `qvm-run personal xterm` - *runs xterm on personal*
 
-`qvm-run --pass-io personal xterm` - *runs xterm and passes all sdtin/stdout/stderr to the terminal*
+`qvm-run personal xterm --pass-io` - *runs xterm and passes all sdtin/stdout/stderr to the terminal*
 
-`qvm-run --pass-io --nogui personal "sudo dnf update"` - *pass a `dnf update` command directly to the VM*
+`qvm-run personal "sudo dnf update" --pass-io --nogui` - *pass a `dnf update` command directly to the VM*
 
 
 #### qvm-start
@@ -447,14 +447,14 @@ In Firewall VM terminal:
 
 ~~~
 $ sudo bash
-# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes-firewall-user-script
-# chmod +x /rw/config/qubes-firewall-user-script
+# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
+# chmod +x /rw/config/qubes_firewall_user_script
 ~~~
 
 for bidirectional access:
 
 ~~~
-# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes-firewall-user-script
+# echo "iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT" >> /rw/config/qubes_firewall_user_script
 ~~~
 
 #### Add USB Wifi card to sys-net VM
@@ -464,7 +464,6 @@ The bus and device number can be different than shown in this example:
 
 1. `qvm-pci -l sys-net` - *list all attached pci devices of sys-net*
 2. `lsusb` - *e. g.* **Bus 003** *Device 003: ID 148f:2870 Ralink Technology, Corp. RT2870 Wireless Adapter*
-3. Check other devices on the same bus (the same "Bus" number) - all of them will be attached to sys-net. Don't continue if there is any device you don't want to assign.
 3. `readlink /sys/bus/usb/devices/003` - *Important Bus 003 -> 003*
 4. The result of readlink: `../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3` - *Important 00:12.2*
 5. `qvm-pci -a sys-net 00:12.2` - *attach USB device 00:12.2 to sys-net*
