@@ -171,7 +171,7 @@ usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>
 
 `sudo qubes-dom0-update` - *updates dom0*
 
-`sudo qubes-dom0-update qubes-windows-tools` - *install the windows tools*
+`sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools` - *install the windows tools (QWT)*
 
 `sudo qubes-dom0-update kernel-3.19*` - *install the official Fedora kernel-3.19\* with  Xen support*
 

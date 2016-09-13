@@ -200,7 +200,8 @@ qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>]
 
 sudo qubes-dom0-update - _updates dom0_
 
-sudo qubes-dom0-update qubes-windows-tools - _install the windows tools_
+sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools -
+_install the windows tools (QWT)_
 
 sudo qubes-dom0-update kernel-3.19* - _install the official Fedora
 kernel-3.19* with Xen support_
