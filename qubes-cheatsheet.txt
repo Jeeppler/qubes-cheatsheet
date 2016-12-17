@@ -408,7 +408,7 @@ the VM. Returns error or output._
 
 Console in VM
 
-virsh -c xen:/// console <vmname> - _opens console in _
+virsh -c xen:/// console <vmname> - _opens console in <vmname>_
 
 ---
 

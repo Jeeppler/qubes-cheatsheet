@@ -347,7 +347,7 @@ qvm-run --pass-io <src_domain>
 
 #### Console in VM
 
-`virsh -c xen:/// console <vmname>` - *opens console in <vmname>*
+`virsh -c xen:/// console <vmname>` - *opens console in `<vmname>`*
 
 \-\-\-
 
