@@ -49,7 +49,7 @@ usage: `qvm-clone [options] <existing-vm-name> <new-clone-vm-name>`
 
 \-\-\-
 
-`qvm-clone fedora-23 fedora-23-dev` - *create a clone of fedora-21 called fedora-21-dev*
+`qvm-clone fedora-23 fedora-23-dev` - *create a clone of fedora-23 called fedora-23-dev*
 
 #### qvm-firewall
 \- *manage VM's firewall rules*
