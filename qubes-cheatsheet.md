@@ -421,7 +421,7 @@ log files per DomU VM:
 
 `xl dmesg` - *prints error, warning and informational messages created during Xen's boot process*
 
-*NOTE: use `dmesg` and `xl dmesg` in combination with `less`, `cat`, `tail` or `head`.*
+*TIP: use `dmesg` and `xl dmesg` in combination with `less`, `cat`, `tail` or `head`.*
 
 ### Grow disk
 

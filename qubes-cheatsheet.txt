@@ -499,7 +499,7 @@ connect a hardware to the system on the fly._
 xl dmesg - _prints error, warning and informational messages created
 during Xen’s boot process_
 
-_NOTE: use dmesg and xl dmesg in combination with less, cat, tail or
+_TIP: use dmesg and xl dmesg in combination with less, cat, tail or
 head._
 
 Grow disk
