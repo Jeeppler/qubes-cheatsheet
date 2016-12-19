@@ -1,7 +1,7 @@
 ## Qubes Cheatsheet ##
 *a summary of useful qubes commands*
 
-version: 3.1
+version: 3.2
 
 ### Mini Glossary
 
@@ -18,7 +18,7 @@ version: 3.1
 
 ### VM Management
 
-:!: *All commands are executed in Dom0 terminal (Konsole, Terminal, Xterm etc.)*
+*NOTE: All commands are executed in `@Dom0` terminal (Konsole, Terminal, Xterm etc.)*
 
 #### qubes-manager
 \- *Graphical VM Manager*
@@ -26,7 +26,7 @@ version: 3.1
 usage: `qubes-manager`
 
 #### qvm-block
-\- *list/set VM PCI devices*
+\- *Lists/attaches VM PCI devices*
 
 usage:
 
@@ -43,7 +43,7 @@ usage:
 `qvm-block -A personal dom0:/home/user/extradisks/data.img` - *attaches an additional storage for the personal-vm*
 
 #### qvm-clone
-\- *clones an existing VM by copying all its disk files*
+\- *Clones an existing VM by copying all its disk files*
 
 usage: `qvm-clone [options] <existing-vm-name> <new-clone-vm-name>`
 
@@ -52,7 +52,7 @@ usage: `qvm-clone [options] <existing-vm-name> <new-clone-vm-name>`
 `qvm-clone fedora-23 fedora-23-dev` - *create a clone of fedora-23 called fedora-23-dev*
 
 #### qvm-firewall
-\- *manage VM's firewall rules*
+\- *Manage VM firewall rules*
 
 usage: `qvm-firewall -l [-n] <vm-name>`
 
@@ -63,7 +63,7 @@ usage: `qvm-firewall -l [-n] <vm-name>`
 `qvm-firewall -l -n fedora-23` - *displays the firewall settings for the personal-vm with port numbers*
 
 #### qvm-ls
-\- *list VMs and various information about their state*
+\- *Lists VMs and various information about their state*
 
 usage: `qvm-ls [options] <vm-name>`
 
@@ -76,7 +76,7 @@ usage: `qvm-ls [options] <vm-name>`
 `qvm-ls -d` - *show VM disk utilization statistics*
 
 #### qvm-prefs
-\- *list/set various per-VM properties*
+\- *List/set various per-VM properties*
 
 usage:
 
@@ -94,10 +94,10 @@ usage:
 
 `qvm-prefs lab-win7 -s qrexec_timeout 120` - *usefull for windows hvm based vms*
 
-`qvm-prefs lab-win7 -s default_user joanna` - *sets the login user to joanna*
+`qvm-prefs lab-win7 -s default_user joanna` - *sets the login user to `joanna`*
 
 #### qvm-run
-\- *runs a specific command on a vm*
+\- *Runs a specific command on a vm*
 
 usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
@@ -111,7 +111,7 @@ usage: `qvm-run [options] [<vm-name>] [<cmd>]`
 
 
 #### qvm-start
-\- *starts a vm*
+\- *Starts a vm*
 
 usage: `qvm-start [options] <vm-name>`
 
@@ -122,7 +122,7 @@ usage: `qvm-start [options] <vm-name>`
 `qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso` - *starts the ubuntu-vm with the ubuntu installation CD*
 
 #### qvm-shutdown
-\- *shutdowns a vm*
+\- *Stops a vm*
 
 usage: `qvm-shutdown [options] <vm-name>`
 
@@ -133,7 +133,7 @@ usage: `qvm-shutdown [options] <vm-name>`
 `qvm-shutdown --all` - *shutdowns all VM's*
 
 #### qvm-kill
-\- *kills a VM - same as pulling out the power cord - immediate shutdown*
+\- *Kills a VM - same as pulling out the power cord - immediate shutdown*
 
 usage: `qvm-kill [options] <vm-name>`
 
@@ -142,7 +142,7 @@ usage: `qvm-kill [options] <vm-name>`
 `qvm-kill personal` - *pull the power cord for the personal-vm - immediate shutdown*
 
 #### qvm-trim-template
-\- *trims the disk space of a template*
+\- *Trims the disk space of a template*
 
 usage: `qvm-trim-template <template-name>`
 
@@ -152,7 +152,7 @@ usage: `qvm-trim-template <template-name>`
 
 
 #### qvm-sync-appmenus
-\- *updates desktop file templates for given StandaloneVM or TemplateVM*
+\- *Updates desktop file templates for given StandaloneVM or TemplateVM*
 
 usage: `qvm-sync-appmenus [options] <vm-name>`
 
@@ -163,20 +163,44 @@ usage: `qvm-sync-appmenus [options] <vm-name>`
 ### Dom0
 
 #### qubes-dom0-update
-\- *updates software in dom0*
+\- *Updates or installes software in dom0*
 
-usage: `qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>]`
+usage: `qubes-dom0-update [--enablerepo][--disablerepo][--clean][--check-only][--gui][--action=*][<pkg list>]`
+
+or
+
+usage: `qubes-dom0-update`
 
 \-\-\-
 
+`qubes-dom0-update --check-only` - *checks if new dom0 updates are available*
+
 `sudo qubes-dom0-update` - *updates dom0*
+
+`sudo qubes-dom0-update --gui` - *allows to update dom0 through a graphical window*
 
 `sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools` - *install the windows tools (QWT)*
 
-`sudo qubes-dom0-update kernel-3.19*` - *install the official Fedora kernel-3.19\* with  Xen support*
+\-\-\-
+
+`sudo qubes-dom0-update --action=search <search-term>` - *searches for package in dom0 repositories*
+
+example:
+
+`sudo qubes-dom0-update --action=search qubes` - *searches for all `qubes` package in dom0 repositories*
+
+*NOTE: The tool excludes all templates (community and ITL) by default*
+
+\-\-\-
+
+`sudo qubes-dom0-update --action=info <package-name>` - *displays infos about the package*
+
+example:
+
+`sudo qubes-dom0-update --action=info qubes-core-dom0` - *displays infos about the `qubes-core-dom0` package*
 
 #### qubes-hcl-report
-\- *generates a report about the system hardware information*
+\- *Generates a report about the system hardware information*
 
 usage: `qubes-hcl-report [-s] [<vm-name>]`
 
@@ -194,7 +218,7 @@ usage: `qubes-hcl-report [-s] [<vm-name>]`
 Please do not upload the report if you do not want to share those information.
 
 #### virsh
-\- *management user tool for libvirt (hypervisor abstraction)*
+\- *Management user tool for libvirt (hypervisor abstraction)*
 
 usage: `virsh -c xen:/// <command> [<vm-name>]`
 
@@ -218,7 +242,7 @@ usage: `xl <subcommand> [<args>]`
 ### DomU
 
 #### qvm-copy-to-vm
-\- Copy file from one VM to another VM
+\- *Copy file from one VM to another VM*
 
 usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
 
@@ -235,7 +259,7 @@ usage: `qvm-copy-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file
 - The command would be: `qvm-copy-to-vm work Documents`
 
 #### qvm-open-in-vm
-\- Opens file in another VM
+\- *Opens file in another VM*
 
 usage: `qvm-open-in-vm <vm-name> <file>` - *file* can only be a single file
 
@@ -252,11 +276,12 @@ usage: `qvm-open-in-vm <vm-name> <file>` - *file* can only be a single file
 1. Enter in console:
   1. `qvm-*`
   2. `qubes*`
-2. Press two times `TAB`
+2. Press 2x times `TAB`
 
 Output: List of `qvm-*` or `qubes*` commands.
 
-#### List installed qubes packages
+#### List installed Qubes OS packages
+\- *List all installed Qubes OS packages*
 
 **Fedora Dom0**
 
@@ -334,6 +359,7 @@ qvm-run --pass-io <src_domain>
 ### Troubleshoot
 
 #### Application in VM does not start
+\- *How to get more information if applications in a VM refuse to start*
 
 `qvm-run personal "command" --pass-io` - *pass command directly to the VM. Returns an error message command fails.*
 
@@ -346,6 +372,7 @@ qvm-run --pass-io <src_domain>
 `qvm-run personal "ls" --pass-io --nogui` - *pass `ls` command directly to the VM. Returns error or output.*
 
 #### Console in VM
+\- *Attach a console to a VM*
 
 `virsh -c xen:/// console <vmname>` - *opens console in `<vmname>`*
 
@@ -363,7 +390,8 @@ qvm-run --pass-io <src_domain>
 
 In console mode press `CTRL` + `^` + `]` on keyboard to escape from console mode.
 
-#### DomU Log files
+#### AppVM Log files
+\- *Log files in AppVMs*
 
 `/var/log/qubes` - *log file directory*
 
@@ -375,27 +403,30 @@ log files per DomU VM:
 - `qubesdb.<vmname>.log` - *qubesdb information*
 
 #### Get Qubes OS Version
+\- *Get the Qubes OS release version*
 
 `cat /etc/qubes-release` - *prints Qubes release in human readable form*
 
 `rpm -qa \*qubes-release\*` - *prints exact Qubes release number*
 
 #### Get Xen Version
+\- *Display the Xen version*
 
 `xl info | grep xen_version` - *prints the Xen version*
 
-#### Qubes / Xen Boot
+#### Qubes OS / Xen Boot
+\- *Qubes OS and Xen system/kernel messages*
 
 `dmesg` - *prints error, warning and informational messages about device drivers and the kernel during the boot process as well as when we connect a hardware to the system on the fly.*
 
 `xl dmesg` - *prints error, warning and informational messages created during Xen's boot process*
 
-:!: *use `dmesg` and `xl dmesg` in combination with `less`, `cat`, `tail` or `head`.*
+*NOTE: use `dmesg` and `xl dmesg` in combination with `less`, `cat`, `tail` or `head`.*
 
 ### Grow disk
 
 #### qvm-grow-private
-\- *increase private storage capacity of a specified VM*
+\- *Increase private storage capacity of a specified VM*
 
 usage: `qvm-grow-private <vm-name> <size>`
 
@@ -404,14 +435,15 @@ usage: `qvm-grow-private <vm-name> <size>`
 * In dom0 terminal: `qvm-grow-private personal 40GB`
 * In the personal VM: `sudo resize2fs /dev/xvdb`
 
-### AppVMs and TMPFS
+### Enlarge AppVMs TMPFS
 
-Enlarge /tmp if you run out of space on the default ~200MB
+Enlarge `/tmp` if you run out of space on the default ~200MB
 
 `sudo mount -o remount,size=1024M /tmp` - *enlarge the space to 1024MB*
 
 ### Inter VM Networking
-\- *Does not expose services to the outside world!*
+
+*NOTE: Does not expose services to the outside world!*
 
 Make sure:
 
@@ -458,7 +490,7 @@ for bidirectional access:
 ~~~
 
 #### Add USB Wifi card to sys-net VM
-\* - *attach a USB Wifi card to sys-net VM*
+\- *Attach a USB Wifi card to sys-net VM*
 
 The bus and device number can be different than shown in this example:
 
@@ -473,6 +505,12 @@ The bus and device number can be different than shown in this example:
 
 #### Fedora
 \- *Fedora template specific*
+
+**Installing the Template**
+
+`sudo qubes-dom0-update qubes-template-fedora-24` - *installs the fedora-24 template*
+
+`sudo qubes-dom0-update qubes-template-fedora-23` - *installs the fedora-23 template*
 
 **Updating, Searching & Installing Packages**
 
@@ -499,15 +537,24 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 #### Fedora Minimal
 \- *Fedora minimal template*
 
+Qubes OS:
+
+`sudo qubes-dom0-update qubes-template-fedora-24-minimal` - *installs the fedora-24-minimal template*
+
+`sudo qubes-dom0-update qubes-template-fedora-23-minimal` - *installs the fedora-23-minimal template*
+
 `sudo qubes-dom0-update qubes-template-fedora-21-minimal` - *installs the fedora-21-minimal template*
 
 #### Debian
-\- *Debian templates*
+\- *Debian template*
 
 **Installing the Template**
 
-- `sudo qubes-dom0-update qubes-template-debian-7` - *Debian 7 "Wheezy"*
 - `sudo qubes-dom0-update qubes-template-debian-8` - *Debian 8 "Jessie"*
+
+Only till Qubes OS 3.1:
+
+- `sudo qubes-dom0-update qubes-template-debian-7` - *Debian 7 "Wheezy"*
 
 **Updating, Searching & Installing Packages**
 
@@ -518,20 +565,20 @@ Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable thi
 	2. `apt-get dist-upgrade`
 
 #### Qubes OS + Whonix
-\- *Whonix is an debian based OS focused on anonymity, privacy and security*
+\- *Whonix is an Debian based OS focused on anonymity, privacy and security*
 
-Whonix has two parts:
+Whonix consists of two components:
 
 1. Whonix-Gateway (uses TOR for all connections to the outside world)
 2. Whonix-Workstation (for application)
 
 **Install Whonix**
 
-Whonix-Gateway TemplateVM Binary Install @Dom0:
+Whonix-Gateway TemplateVM Binary Install `@Dom0`:
 
 `sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental`
 
-Whonix-Workstation TemplateVM Binary Install @Dom0:
+Whonix-Workstation TemplateVM Binary Install `@Dom0`:
 
 1. `export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]`
 2. `sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws`
@@ -545,9 +592,15 @@ Whonix-Workstation TemplateVM Binary Install @Dom0:
 5. Start Whonix-Workstation AppVM
 
 #### Archlinux
-\- *Archlinux*
+\- *Archlinux template*
 
 **Installing the Template**
+
+In Qubes OS 3.2:
+
+`sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-archlinux`
+
+or manually
 
 Use the following instructions: [Archlinux Template](https://www.qubes-os.org/doc/templates/archlinux/)
 
@@ -564,3 +617,15 @@ Use the following instructions: [Archlinux Template](https://www.qubes-os.org/do
 3. Convert the image to a raw format:
     * VMware: `qemu-img convert ReactOS.vmdk -O raw reactos.img`
     * VirtualBox: `qemu-img convert ReactOS.vdi -O raw reactos.img`
+
+### Qubes OS Directories
+
+#### Dom0 (Qubes OS)
+\- *Qubes OS specific directories*
+
+- `/var/log/qubes` - *Qubes OS VM log files*
+- `/var/lib/qubes` - *Qubes OS VMs and other Qubes OS specific files*
+
+### Qubes OS Repositories
+
+- [http://yum.qubes-os.org](http://yum.qubes-os.org) - *Browsable Fedora repositories*

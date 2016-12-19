@@ -3,7 +3,7 @@ Qubes Cheatsheet
 
 _a summary of useful qubes commands_
 
-version: 3.1
+version: 3.2
 
 Mini Glossary
 
@@ -20,7 +20,7 @@ Mini Glossary
 
 VM Management
 
-:!: _All commands are executed in Dom0 terminal (Konsole, Terminal,
+_NOTE: All commands are executed in @Dom0 terminal (Konsole, Terminal,
 Xterm etc.)_
 
 qubes-manager
@@ -31,7 +31,7 @@ usage: qubes-manager
 
 qvm-block
 
-- _list/set VM PCI devices_
+- _Lists/attaches VM PCI devices_
 
 usage:
 
@@ -50,7 +50,7 @@ additional storage for the personal-vm_
 
 qvm-clone
 
-- _clones an existing VM by copying all its disk files_
+- _Clones an existing VM by copying all its disk files_
 
 usage: qvm-clone [options] <existing-vm-name> <new-clone-vm-name>
 
@@ -61,7 +61,7 @@ fedora-23-dev_
 
 qvm-firewall
 
-- _manage VM’s firewall rules_
+- _Manage VM firewall rules_
 
 usage: qvm-firewall -l [-n] <vm-name>
 
@@ -75,7 +75,7 @@ personal-vm with port numbers_
 
 qvm-ls
 
-- _list VMs and various information about their state_
+- _Lists VMs and various information about their state_
 
 usage: qvm-ls [options] <vm-name>
 
@@ -89,7 +89,7 @@ qvm-ls -d - _show VM disk utilization statistics_
 
 qvm-prefs
 
-- _list/set various per-VM properties_
+- _List/set various per-VM properties_
 
 usage:
 
@@ -115,7 +115,7 @@ joanna_
 
 qvm-run
 
-- _runs a specific command on a vm_
+- _Runs a specific command on a vm_
 
 usage: qvm-run [options] [<vm-name>] [<cmd>]
 
@@ -131,7 +131,7 @@ dnf update command directly to the VM_
 
 qvm-start
 
-- _starts a vm_
+- _Starts a vm_
 
 usage: qvm-start [options] <vm-name>
 
@@ -144,7 +144,7 @@ _starts the ubuntu-vm with the ubuntu installation CD_
 
 qvm-shutdown
 
-- _shutdowns a vm_
+- _Stops a vm_
 
 usage: qvm-shutdown [options] <vm-name>
 
@@ -156,7 +156,7 @@ qvm-shutdown --all - _shutdowns all VM’s_
 
 qvm-kill
 
-- _kills a VM - same as pulling out the power cord - immediate shutdown_
+- _Kills a VM - same as pulling out the power cord - immediate shutdown_
 
 usage: qvm-kill [options] <vm-name>
 
@@ -167,7 +167,7 @@ shutdown_
 
 qvm-trim-template
 
-- _trims the disk space of a template_
+- _Trims the disk space of a template_
 
 usage: qvm-trim-template <template-name>
 
@@ -178,7 +178,7 @@ packages/files in the template_
 
 qvm-sync-appmenus
 
-- _updates desktop file templates for given StandaloneVM or TemplateVM_
+- _Updates desktop file templates for given StandaloneVM or TemplateVM_
 
 usage: qvm-sync-appmenus [options] <vm-name>
 
@@ -191,24 +191,53 @@ Dom0
 
 qubes-dom0-update
 
-- _updates software in dom0_
+- _Updates or installes software in dom0_
 
 usage:
-qubes-dom0-update [--clean][--check-only][--gui] [<yum opts>][<pkg list>]
+qubes-dom0-update [--enablerepo][--disablerepo][--clean][--check-only][--gui][--action=*][<pkg list>]
+
+or
+
+usage: qubes-dom0-update
 
 ---
 
+qubes-dom0-update --check-only - _checks if new dom0 updates are
+available_
+
 sudo qubes-dom0-update - _updates dom0_
+
+sudo qubes-dom0-update --gui - _allows to update dom0 through a
+graphical window_
 
 sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools -
 _install the windows tools (QWT)_
 
-sudo qubes-dom0-update kernel-3.19* - _install the official Fedora
-kernel-3.19* with Xen support_
+---
+
+sudo qubes-dom0-update --action=search <search-term> - _searches for
+package in dom0 repositories_
+
+example:
+
+sudo qubes-dom0-update --action=search qubes - _searches for all qubes
+package in dom0 repositories_
+
+_NOTE: The tool excludes all templates (community and ITL) by default_
+
+---
+
+sudo qubes-dom0-update --action=info <package-name> - _displays infos
+about the package_
+
+example:
+
+sudo qubes-dom0-update --action=info qubes-core-dom0 - _displays infos
+about the qubes-core-dom0 package_
 
 qubes-hcl-report
 
-- _generates a report about the system hardware information_
+- _Generates a report about the system hardware information_
 
 usage: qubes-hcl-report [-s] [<vm-name>]
 
@@ -232,7 +261,7 @@ report if you do not want to share those information.
 
 virsh
 
-- _management user tool for libvirt (hypervisor abstraction)_
+- _Management user tool for libvirt (hypervisor abstraction)_
 
 usage: virsh -c xen:/// <command> [<vm-name>]
 
@@ -259,7 +288,7 @@ DomU
 
 qvm-copy-to-vm
 
-- Copy file from one VM to another VM
+- _Copy file from one VM to another VM_
 
 usage: qvm-copy-to-vm <vm-name> <file> [<file+>] - _file_ can be a
 single file or a folder
@@ -281,7 +310,7 @@ EXAMPLE
 
 qvm-open-in-vm
 
-- Opens file in another VM
+- _Opens file in another VM_
 
 usage: qvm-open-in-vm <vm-name> <file> - _file_ can only be a single
 file
@@ -301,11 +330,13 @@ List Qubes commands
 1.  Enter in console:
 2.  qvm-*
 3.  qubes*
-4.  Press two times TAB
+4.  Press 2x times TAB
 
 Output: List of qvm-* or qubes* commands.
 
-List installed qubes packages
+List installed Qubes OS packages
+
+- _List all installed Qubes OS packages_
 
 FEDORA DOM0
 
@@ -392,6 +423,8 @@ Troubleshoot
 
 Application in VM does not start
 
+- _How to get more information if applications in a VM refuse to start_
+
 qvm-run personal "command" --pass-io - _pass command directly to the VM.
 Returns an error message command fails._
 
@@ -407,6 +440,8 @@ qvm-run personal "ls" --pass-io --nogui - _pass ls command directly to
 the VM. Returns error or output._
 
 Console in VM
+
+- _Attach a console to a VM_
 
 virsh -c xen:/// console <vmname> - _opens console in <vmname>_
 
@@ -426,7 +461,9 @@ _(and when #1130 would be implmented the same for “user”)_
 In console mode press CTRL + ^ + ] on keyboard to escape from console
 mode.
 
-DomU Log files
+AppVM Log files
+
+- _Log files in AppVMs_
 
 /var/log/qubes - _log file directory_
 
@@ -439,15 +476,21 @@ log files per DomU VM:
 
 Get Qubes OS Version
 
+- _Get the Qubes OS release version_
+
 cat /etc/qubes-release - _prints Qubes release in human readable form_
 
 rpm -qa \*qubes-release\* - _prints exact Qubes release number_
 
 Get Xen Version
 
+- _Display the Xen version_
+
 xl info | grep xen_version - _prints the Xen version_
 
-Qubes / Xen Boot
+Qubes OS / Xen Boot
+
+- _Qubes OS and Xen system/kernel messages_
 
 dmesg - _prints error, warning and informational messages about device
 drivers and the kernel during the boot process as well as when we
@@ -456,14 +499,14 @@ connect a hardware to the system on the fly._
 xl dmesg - _prints error, warning and informational messages created
 during Xen’s boot process_
 
-:!: _use dmesg and xl dmesg in combination with less, cat, tail or
+_NOTE: use dmesg and xl dmesg in combination with less, cat, tail or
 head._
 
 Grow disk
 
 qvm-grow-private
 
-- _increase private storage capacity of a specified VM_
+- _Increase private storage capacity of a specified VM_
 
 usage: qvm-grow-private <vm-name> <size>
 
@@ -472,7 +515,7 @@ EXAMPLE
 -   In dom0 terminal: qvm-grow-private personal 40GB
 -   In the personal VM: sudo resize2fs /dev/xvdb
 
-AppVMs and TMPFS
+Enlarge AppVMs TMPFS
 
 Enlarge /tmp if you run out of space on the default ~200MB
 
@@ -480,7 +523,7 @@ sudo mount -o remount,size=1024M /tmp - _enlarge the space to 1024MB_
 
 Inter VM Networking
 
-- _Does not expose services to the outside world!_
+_NOTE: Does not expose services to the outside world!_
 
 Make sure:
 
@@ -518,7 +561,7 @@ for bidirectional access:
 
 Add USB Wifi card to sys-net VM
 
-* - _attach a USB Wifi card to sys-net VM_
+- _Attach a USB Wifi card to sys-net VM_
 
 The bus and device number can be different than shown in this example:
 
@@ -537,6 +580,14 @@ Templates
 Fedora
 
 - _Fedora template specific_
+
+INSTALLING THE TEMPLATE
+
+sudo qubes-dom0-update qubes-template-fedora-24 - _installs the
+fedora-24 template_
+
+sudo qubes-dom0-update qubes-template-fedora-23 - _installs the
+fedora-23 template_
 
 UPDATING, SEARCHING & INSTALLING PACKAGES
 
@@ -566,17 +617,28 @@ Fedora Minimal
 
 - _Fedora minimal template_
 
+Qubes OS:
+
+sudo qubes-dom0-update qubes-template-fedora-24-minimal - _installs the
+fedora-24-minimal template_
+
+sudo qubes-dom0-update qubes-template-fedora-23-minimal - _installs the
+fedora-23-minimal template_
+
 sudo qubes-dom0-update qubes-template-fedora-21-minimal - _installs the
 fedora-21-minimal template_
 
 Debian
 
-- _Debian templates_
+- _Debian template_
 
 INSTALLING THE TEMPLATE
 
--   sudo qubes-dom0-update qubes-template-debian-7 - _Debian 7 “Wheezy”_
 -   sudo qubes-dom0-update qubes-template-debian-8 - _Debian 8 “Jessie”_
+
+Only till Qubes OS 3.1:
+
+-   sudo qubes-dom0-update qubes-template-debian-7 - _Debian 7 “Wheezy”_
 
 UPDATING, SEARCHING & INSTALLING PACKAGES
 
@@ -588,10 +650,10 @@ UPDATING, SEARCHING & INSTALLING PACKAGES
 
 Qubes OS + Whonix
 
-- _Whonix is an debian based OS focused on anonymity, privacy and
+- _Whonix is an Debian based OS focused on anonymity, privacy and
 security_
 
-Whonix has two parts:
+Whonix consists of two components:
 
 1.  Whonix-Gateway (uses TOR for all connections to the outside world)
 2.  Whonix-Workstation (for application)
@@ -618,9 +680,15 @@ NEXT STEPS
 
 Archlinux
 
-- _Archlinux_
+- _Archlinux template_
 
 INSTALLING THE TEMPLATE
+
+In Qubes OS 3.2:
+
+sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-archlinux
+
+or manually
 
 Use the following instructions: Archlinux Template
 
@@ -638,3 +706,16 @@ Create VM from VMware or VirtualBox images
 3.  Convert the image to a raw format:
     -   VMware: qemu-img convert ReactOS.vmdk -O raw reactos.img
     -   VirtualBox: qemu-img convert ReactOS.vdi -O raw reactos.img
+
+Qubes OS Directories
+
+Dom0 (Qubes OS)
+
+- _Qubes OS specific directories_
+
+-   /var/log/qubes - _Qubes OS VM log files_
+-   /var/lib/qubes - _Qubes OS VMs and other Qubes OS specific files_
+
+Qubes OS Repositories
+
+-   http://yum.qubes-os.org - _Browsable Fedora repositories_

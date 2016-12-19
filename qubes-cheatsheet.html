@@ -16,7 +16,7 @@
 </header>
 <h2 id="qubes-cheatsheet">Qubes Cheatsheet</h2>
 <p><em>a summary of useful qubes commands</em></p>
-<p>version: 3.1</p>
+<p>version: 3.2</p>
 <h3 id="mini-glossary">Mini Glossary</h3>
 <ul>
 <li>Xen - <em>Hypervisor</em></li>
@@ -31,12 +31,12 @@
 <li>GUI - <em>Graphical User Interface</em></li>
 </ul>
 <h3 id="vm-management">VM Management</h3>
-<p>:!: <em>All commands are executed in Dom0 terminal (Konsole, Terminal, Xterm etc.)</em></p>
+<p><em>NOTE: All commands are executed in <code>@Dom0</code> terminal (Konsole, Terminal, Xterm etc.)</em></p>
 <h4 id="qubes-manager">qubes-manager</h4>
 <p>- <em>Graphical VM Manager</em></p>
 <p>usage: <code>qubes-manager</code></p>
 <h4 id="qvm-block">qvm-block</h4>
-<p>- <em>list/set VM PCI devices</em></p>
+<p>- <em>Lists/attaches VM PCI devices</em></p>
 <p>usage:</p>
 <ul>
 <li><p><code>qvm-block -l [options]</code></p></li>
@@ -47,25 +47,25 @@
 <p>---</p>
 <p><code>qvm-block -A personal dom0:/home/user/extradisks/data.img</code> - <em>attaches an additional storage for the personal-vm</em></p>
 <h4 id="qvm-clone">qvm-clone</h4>
-<p>- <em>clones an existing VM by copying all its disk files</em></p>
+<p>- <em>Clones an existing VM by copying all its disk files</em></p>
 <p>usage: <code>qvm-clone [options] &lt;existing-vm-name&gt; &lt;new-clone-vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-clone fedora-23 fedora-23-dev</code> - <em>create a clone of fedora-23 called fedora-23-dev</em></p>
 <h4 id="qvm-firewall">qvm-firewall</h4>
-<p>- <em>manage VM’s firewall rules</em></p>
+<p>- <em>Manage VM firewall rules</em></p>
 <p>usage: <code>qvm-firewall -l [-n] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-firewall -l personal</code> - <em>displays the firewall settings for the personal-vm</em></p>
 <p><code>qvm-firewall -l -n fedora-23</code> - <em>displays the firewall settings for the personal-vm with port numbers</em></p>
 <h4 id="qvm-ls">qvm-ls</h4>
-<p>- <em>list VMs and various information about their state</em></p>
+<p>- <em>Lists VMs and various information about their state</em></p>
 <p>usage: <code>qvm-ls [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-ls</code> - <em>lists all vms</em></p>
 <p><code>qvm-ls -n</code> - <em>show network addresses assigned to VMs</em></p>
 <p><code>qvm-ls -d</code> - <em>show VM disk utilization statistics</em></p>
 <h4 id="qvm-prefs">qvm-prefs</h4>
-<p>- <em>list/set various per-VM properties</em></p>
+<p>- <em>List/set various per-VM properties</em></p>
 <p>usage:</p>
 <ul>
 <li><p><code>qvm-prefs -l [options] &lt;vm-name&gt;</code></p></li>
@@ -76,51 +76,63 @@
 <p><code>qvm-prefs win7-copy -s mac 00:16:3E:5E:6C:05</code> - <em>sets a new mac for the network card</em></p>
 <p><code>qvm-prefs lab-win7 -s qrexec_installed true</code> - <em>sets the qrexec to installed</em></p>
 <p><code>qvm-prefs lab-win7 -s qrexec_timeout 120</code> - <em>usefull for windows hvm based vms</em></p>
-<p><code>qvm-prefs lab-win7 -s default_user joanna</code> - <em>sets the login user to joanna</em></p>
+<p><code>qvm-prefs lab-win7 -s default_user joanna</code> - <em>sets the login user to <code>joanna</code></em></p>
 <h4 id="qvm-run">qvm-run</h4>
-<p>- <em>runs a specific command on a vm</em></p>
+<p>- <em>Runs a specific command on a vm</em></p>
 <p>usage: <code>qvm-run [options] [&lt;vm-name&gt;] [&lt;cmd&gt;]</code></p>
 <p>---</p>
 <p><code>qvm-run personal xterm</code> - <em>runs xterm on personal</em></p>
 <p><code>qvm-run personal xterm --pass-io</code> - <em>runs xterm and passes all sdtin/stdout/stderr to the terminal</em></p>
 <p><code>qvm-run personal &quot;sudo dnf update&quot; --pass-io --nogui</code> - <em>pass a <code>dnf update</code> command directly to the VM</em></p>
 <h4 id="qvm-start">qvm-start</h4>
-<p>- <em>starts a vm</em></p>
+<p>- <em>Starts a vm</em></p>
 <p>usage: <code>qvm-start [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-start personal</code> - <em>starts the personal-vm</em></p>
 <p><code>qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso</code> - <em>starts the ubuntu-vm with the ubuntu installation CD</em></p>
 <h4 id="qvm-shutdown">qvm-shutdown</h4>
-<p>- <em>shutdowns a vm</em></p>
+<p>- <em>Stops a vm</em></p>
 <p>usage: <code>qvm-shutdown [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-shutdown personal</code> - <em>shutdowns the personal-vm</em></p>
 <p><code>qvm-shutdown --all</code> - <em>shutdowns all VM’s</em></p>
 <h4 id="qvm-kill">qvm-kill</h4>
-<p>- <em>kills a VM - same as pulling out the power cord - immediate shutdown</em></p>
+<p>- <em>Kills a VM - same as pulling out the power cord - immediate shutdown</em></p>
 <p>usage: <code>qvm-kill [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-kill personal</code> - <em>pull the power cord for the personal-vm - immediate shutdown</em></p>
 <h4 id="qvm-trim-template">qvm-trim-template</h4>
-<p>- <em>trims the disk space of a template</em></p>
+<p>- <em>Trims the disk space of a template</em></p>
 <p>usage: <code>qvm-trim-template &lt;template-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-trim-template debian-8</code> - <em>helpful after upgrading or removing many packages/files in the template</em></p>
 <h4 id="qvm-sync-appmenus">qvm-sync-appmenus</h4>
-<p>- <em>updates desktop file templates for given StandaloneVM or TemplateVM</em></p>
+<p>- <em>Updates desktop file templates for given StandaloneVM or TemplateVM</em></p>
 <p>usage: <code>qvm-sync-appmenus [options] &lt;vm-name&gt;</code></p>
 <p>---</p>
 <p><code>qvm-sync-appmenus archlinux-template</code> - <em>useful for custom .desktop files or distributions not using dnf</em></p>
 <h3 id="dom0">Dom0</h3>
 <h4 id="qubes-dom0-update">qubes-dom0-update</h4>
-<p>- <em>updates software in dom0</em></p>
-<p>usage: <code>qubes-dom0-update [--clean][--check-only][--gui] [&lt;yum opts&gt;][&lt;pkg list&gt;]</code></p>
+<p>- <em>Updates or installes software in dom0</em></p>
+<p>usage: <code>qubes-dom0-update [--enablerepo][--disablerepo][--clean][--check-only][--gui][--action=*][&lt;pkg list&gt;]</code></p>
+<p>or</p>
+<p>usage: <code>qubes-dom0-update</code></p>
 <p>---</p>
+<p><code>qubes-dom0-update --check-only</code> - <em>checks if new dom0 updates are available</em></p>
 <p><code>sudo qubes-dom0-update</code> - <em>updates dom0</em></p>
+<p><code>sudo qubes-dom0-update --gui</code> - <em>allows to update dom0 through a graphical window</em></p>
 <p><code>sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools</code> - <em>install the windows tools (QWT)</em></p>
-<p><code>sudo qubes-dom0-update kernel-3.19*</code> - <em>install the official Fedora kernel-3.19* with Xen support</em></p>
+<p>---</p>
+<p><code>sudo qubes-dom0-update --action=search &lt;search-term&gt;</code> - <em>searches for package in dom0 repositories</em></p>
+<p>example:</p>
+<p><code>sudo qubes-dom0-update --action=search qubes</code> - <em>searches for all <code>qubes</code> package in dom0 repositories</em></p>
+<p><em>NOTE: The tool excludes all templates (community and ITL) by default</em></p>
+<p>---</p>
+<p><code>sudo qubes-dom0-update --action=info &lt;package-name&gt;</code> - <em>displays infos about the package</em></p>
+<p>example:</p>
+<p><code>sudo qubes-dom0-update --action=info qubes-core-dom0</code> - <em>displays infos about the <code>qubes-core-dom0</code> package</em></p>
 <h4 id="qubes-hcl-report">qubes-hcl-report</h4>
-<p>- <em>generates a report about the system hardware information</em></p>
+<p>- <em>Generates a report about the system hardware information</em></p>
 <p>usage: <code>qubes-hcl-report [-s] [&lt;vm-name&gt;]</code></p>
 <p>---</p>
 <p><code>qubes-hcl-report</code> - <em>prints the hardware information on the console (terminal)</em></p>
@@ -129,7 +141,7 @@
 <p><code>qubes-hcl-report -s personal</code> - <em>sends the detailed hardware information report to the personal-vm</em></p>
 <p><strong>Note:</strong> <code>qubes-hcl-report -s [&lt;vm-name&gt;]</code> generates a more detailed report. This report can contain sensitive information. Please do not upload the report if you do not want to share those information.</p>
 <h4 id="virsh">virsh</h4>
-<p>- <em>management user tool for libvirt (hypervisor abstraction)</em></p>
+<p>- <em>Management user tool for libvirt (hypervisor abstraction)</em></p>
 <p>usage: <code>virsh -c xen:/// &lt;command&gt; [&lt;vm-name&gt;]</code></p>
 <p>---</p>
 <p><code>virsh -c xen:/// list</code> - <em>list running VM’s with additional information</em></p>
@@ -142,7 +154,7 @@
 <p><code>xl top</code> - <em>Monitor host and domains in realtime</em></p>
 <h3 id="domu">DomU</h3>
 <h4 id="qvm-copy-to-vm">qvm-copy-to-vm</h4>
-<p>- Copy file from one VM to another VM</p>
+<p>- <em>Copy file from one VM to another VM</em></p>
 <p>usage: <code>qvm-copy-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
 <p>---</p>
 <p><code>qvm-copy-to-vm work Documents</code> - <em>copy the <code>Documents</code> folder to the work VM</em></p>
@@ -154,7 +166,7 @@
 <li>The command would be: <code>qvm-copy-to-vm work Documents</code></li>
 </ul>
 <h4 id="qvm-open-in-vm">qvm-open-in-vm</h4>
-<p>- Opens file in another VM</p>
+<p>- <em>Opens file in another VM</em></p>
 <p>usage: <code>qvm-open-in-vm &lt;vm-name&gt; &lt;file&gt;</code> - <em>file</em> can only be a single file</p>
 <p>---</p>
 <p><code>qvm-open-in-vm personal document.pdf</code> - <em>opens <code>document.pdf</code> in the personal VM</em></p>
@@ -165,10 +177,11 @@
 <li>Enter in console:</li>
 <li><code>qvm-*</code></li>
 <li><code>qubes*</code></li>
-<li>Press two times <code>TAB</code></li>
+<li>Press 2x times <code>TAB</code></li>
 </ol>
 <p>Output: List of <code>qvm-*</code> or <code>qubes*</code> commands.</p>
-<h4 id="list-installed-qubes-packages">List installed qubes packages</h4>
+<h4 id="list-installed-qubes-os-packages">List installed Qubes OS packages</h4>
+<p>- <em>List all installed Qubes OS packages</em></p>
 <p><strong>Fedora Dom0</strong></p>
 <p>In VM or Dom0: <code>rpm -qa \*qubes-\*</code> - <em>list (qubes-) installed packages</em></p>
 <h3 id="filesfolders-from-and-to-dom0">Files/Folders from and to Dom0</h3>
@@ -214,12 +227,14 @@ qvm-run --pass-io personal
 </ol>
 <h3 id="troubleshoot">Troubleshoot</h3>
 <h4 id="application-in-vm-does-not-start">Application in VM does not start</h4>
+<p>- <em>How to get more information if applications in a VM refuse to start</em></p>
 <p><code>qvm-run personal &quot;command&quot; --pass-io</code> - <em>pass command directly to the VM. Returns an error message command fails.</em></p>
 <p><code>qvm-run personal &quot;xterm&quot; --pass-io</code> - <em>pass <code>xterm</code> command directly to the VM. Returns an error message or starts xterm.</em></p>
 <p>---</p>
 <p><code>qvm-run &lt;vmname&gt; &quot;command&quot; --pass-io --nogui</code> - <em>pass command to VM without using the GUI</em></p>
 <p><code>qvm-run personal &quot;ls&quot; --pass-io --nogui</code> - <em>pass <code>ls</code> command directly to the VM. Returns error or output.</em></p>
 <h4 id="console-in-vm">Console in VM</h4>
+<p>- <em>Attach a console to a VM</em></p>
 <p><code>virsh -c xen:/// console &lt;vmname&gt;</code> - <em>opens console in <code>&lt;vmname&gt;</code></em></p>
 <p>---</p>
 <p><em>Why? Connect if GUI/qrexec does not work for any reason. This way you can restart/investigate a failed service.</em></p>
@@ -230,7 +245,8 @@ qvm-run --pass-io personal
 <p><em>(and when #1130 would be implmented the same for “user”)</em></p>
 <p>---</p>
 <p>In console mode press <code>CTRL</code> + <code>^</code> + <code>]</code> on keyboard to escape from console mode.</p>
-<h4 id="domu-log-files">DomU Log files</h4>
+<h4 id="appvm-log-files">AppVM Log files</h4>
+<p>- <em>Log files in AppVMs</em></p>
 <p><code>/var/log/qubes</code> - <em>log file directory</em></p>
 <p>log files per DomU VM:</p>
 <ul>
@@ -240,28 +256,31 @@ qvm-run --pass-io personal
 <li><code>qubesdb.&lt;vmname&gt;.log</code> - <em>qubesdb information</em></li>
 </ul>
 <h4 id="get-qubes-os-version">Get Qubes OS Version</h4>
+<p>- <em>Get the Qubes OS release version</em></p>
 <p><code>cat /etc/qubes-release</code> - <em>prints Qubes release in human readable form</em></p>
 <p><code>rpm -qa \*qubes-release\*</code> - <em>prints exact Qubes release number</em></p>
 <h4 id="get-xen-version">Get Xen Version</h4>
+<p>- <em>Display the Xen version</em></p>
 <p><code>xl info | grep xen_version</code> - <em>prints the Xen version</em></p>
-<h4 id="qubes-xen-boot">Qubes / Xen Boot</h4>
+<h4 id="qubes-os-xen-boot">Qubes OS / Xen Boot</h4>
+<p>- <em>Qubes OS and Xen system/kernel messages</em></p>
 <p><code>dmesg</code> - <em>prints error, warning and informational messages about device drivers and the kernel during the boot process as well as when we connect a hardware to the system on the fly.</em></p>
 <p><code>xl dmesg</code> - <em>prints error, warning and informational messages created during Xen’s boot process</em></p>
-<p>:!: <em>use <code>dmesg</code> and <code>xl dmesg</code> in combination with <code>less</code>, <code>cat</code>, <code>tail</code> or <code>head</code>.</em></p>
+<p><em>NOTE: use <code>dmesg</code> and <code>xl dmesg</code> in combination with <code>less</code>, <code>cat</code>, <code>tail</code> or <code>head</code>.</em></p>
 <h3 id="grow-disk">Grow disk</h3>
 <h4 id="qvm-grow-private">qvm-grow-private</h4>
-<p>- <em>increase private storage capacity of a specified VM</em></p>
+<p>- <em>Increase private storage capacity of a specified VM</em></p>
 <p>usage: <code>qvm-grow-private &lt;vm-name&gt; &lt;size&gt;</code></p>
 <p><strong>Example</strong></p>
 <ul>
 <li>In dom0 terminal: <code>qvm-grow-private personal 40GB</code></li>
 <li>In the personal VM: <code>sudo resize2fs /dev/xvdb</code></li>
 </ul>
-<h3 id="appvms-and-tmpfs">AppVMs and TMPFS</h3>
-<p>Enlarge /tmp if you run out of space on the default ~200MB</p>
+<h3 id="enlarge-appvms-tmpfs">Enlarge AppVMs TMPFS</h3>
+<p>Enlarge <code>/tmp</code> if you run out of space on the default ~200MB</p>
 <p><code>sudo mount -o remount,size=1024M /tmp</code> - <em>enlarge the space to 1024MB</em></p>
 <h3 id="inter-vm-networking">Inter VM Networking</h3>
-<p>- <em>Does not expose services to the outside world!</em></p>
+<p><em>NOTE: Does not expose services to the outside world!</em></p>
 <p>Make sure:</p>
 <ul>
 <li>Both VMs are connected to the same firewall VM</li>
@@ -290,7 +309,7 @@ qvm-run --pass-io personal
 <p>for bidirectional access:</p>
 <pre><code># echo &quot;iptables -I FORWARD 2 -s 10.137.2.10 -d 10.137.2.11 -j ACCEPT&quot; &gt;&gt; /rw/config/qubes_firewall_user_script</code></pre>
 <h4 id="add-usb-wifi-card-to-sys-net-vm">Add USB Wifi card to sys-net VM</h4>
-<p>* - <em>attach a USB Wifi card to sys-net VM</em></p>
+<p>- <em>Attach a USB Wifi card to sys-net VM</em></p>
 <p>The bus and device number can be different than shown in this example:</p>
 <ol type="1">
 <li><code>qvm-pci -l sys-net</code> - <em>list all attached pci devices of sys-net</em></li>
@@ -303,6 +322,9 @@ qvm-run --pass-io personal
 <h3 id="templates">Templates</h3>
 <h4 id="fedora">Fedora</h4>
 <p>- <em>Fedora template specific</em></p>
+<p><strong>Installing the Template</strong></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-24</code> - <em>installs the fedora-24 template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-23</code> - <em>installs the fedora-23 template</em></p>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <p>Fedora &gt; 21</p>
 <ul>
@@ -322,13 +344,19 @@ qvm-run --pass-io personal
 <p><code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable RPMFusion</code> - ENABLE RPMFusion, (already covers RPMFusion signing keys)</p>
 <h4 id="fedora-minimal">Fedora Minimal</h4>
 <p>- <em>Fedora minimal template</em></p>
+<p>Qubes OS:</p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-24-minimal</code> - <em>installs the fedora-24-minimal template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-23-minimal</code> - <em>installs the fedora-23-minimal template</em></p>
 <p><code>sudo qubes-dom0-update qubes-template-fedora-21-minimal</code> - <em>installs the fedora-21-minimal template</em></p>
 <h4 id="debian">Debian</h4>
-<p>- <em>Debian templates</em></p>
+<p>- <em>Debian template</em></p>
 <p><strong>Installing the Template</strong></p>
 <ul>
-<li><code>sudo qubes-dom0-update qubes-template-debian-7</code> - <em>Debian 7 “Wheezy”</em></li>
 <li><code>sudo qubes-dom0-update qubes-template-debian-8</code> - <em>Debian 8 “Jessie”</em></li>
+</ul>
+<p>Only till Qubes OS 3.1:</p>
+<ul>
+<li><code>sudo qubes-dom0-update qubes-template-debian-7</code> - <em>Debian 7 “Wheezy”</em></li>
 </ul>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <ul>
@@ -341,16 +369,16 @@ qvm-run --pass-io personal
 </ol></li>
 </ul>
 <h4 id="qubes-os-whonix">Qubes OS + Whonix</h4>
-<p>- <em>Whonix is an debian based OS focused on anonymity, privacy and security</em></p>
-<p>Whonix has two parts:</p>
+<p>- <em>Whonix is an Debian based OS focused on anonymity, privacy and security</em></p>
+<p>Whonix consists of two components:</p>
 <ol type="1">
 <li>Whonix-Gateway (uses TOR for all connections to the outside world)</li>
 <li>Whonix-Workstation (for application)</li>
 </ol>
 <p><strong>Install Whonix</strong></p>
-<p>Whonix-Gateway TemplateVM Binary Install <span class="citation" data-cites="Dom0">@Dom0</span>:</p>
+<p>Whonix-Gateway TemplateVM Binary Install <code>@Dom0</code>:</p>
 <p><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental</code></p>
-<p>Whonix-Workstation TemplateVM Binary Install <span class="citation" data-cites="Dom0">@Dom0</span>:</p>
+<p>Whonix-Workstation TemplateVM Binary Install <code>@Dom0</code>:</p>
 <ol type="1">
 <li><code>export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]</code></li>
 <li><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-ws</code></li>
@@ -364,8 +392,11 @@ qvm-run --pass-io personal
 <li>Start Whonix-Workstation AppVM</li>
 </ol>
 <h4 id="archlinux">Archlinux</h4>
-<p>- <em>Archlinux</em></p>
+<p>- <em>Archlinux template</em></p>
 <p><strong>Installing the Template</strong></p>
+<p>In Qubes OS 3.2:</p>
+<p><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-archlinux</code></p>
+<p>or manually</p>
 <p>Use the following instructions: <a href="https://www.qubes-os.org/doc/templates/archlinux/">Archlinux Template</a></p>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <ul>
@@ -383,5 +414,16 @@ qvm-run --pass-io personal
 <li>VirtualBox: <code>qemu-img convert ReactOS.vdi -O raw reactos.img</code></li>
 </ul></li>
 </ol>
+<h3 id="qubes-os-directories">Qubes OS Directories</h3>
+<h4 id="dom0-qubes-os">Dom0 (Qubes OS)</h4>
+<p>- <em>Qubes OS specific directories</em></p>
+<ul>
+<li><code>/var/log/qubes</code> - <em>Qubes OS VM log files</em></li>
+<li><code>/var/lib/qubes</code> - <em>Qubes OS VMs and other Qubes OS specific files</em></li>
+</ul>
+<h3 id="qubes-os-repositories">Qubes OS Repositories</h3>
+<ul>
+<li><a href="http://yum.qubes-os.org" class="uri">http://yum.qubes-os.org</a> - <em>Browsable Fedora repositories</em></li>
+</ul>
 </body>
 </html>
