@@ -7,7 +7,7 @@
   <title>Qubes OS Cheatsheet</title>
   <style type="text/css">code{white-space: pre;}</style>
   <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
@@ -121,7 +121,6 @@
 <p><code>qubes-dom0-update --check-only</code> - <em>checks if new dom0 updates are available</em></p>
 <p><code>sudo qubes-dom0-update</code> - <em>updates dom0</em></p>
 <p><code>sudo qubes-dom0-update --gui</code> - <em>allows to update dom0 through a graphical window</em></p>
-<p><code>sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools</code> - <em>install the windows tools (QWT)</em></p>
 <p>---</p>
 <p><code>sudo qubes-dom0-update --action=search &lt;search-term&gt;</code> - <em>searches for package in dom0 repositories</em></p>
 <p>example:</p>
@@ -175,8 +174,12 @@
 <h4 id="list-qubes-commands">List Qubes commands</h4>
 <ol type="1">
 <li>Enter in console:</li>
+</ol>
+<ul>
 <li><code>qvm-*</code></li>
 <li><code>qubes*</code></li>
+</ul>
+<ol start="2" type="1">
 <li>Press 2x times <code>TAB</code></li>
 </ol>
 <p>Output: List of <code>qvm-*</code> or <code>qubes*</code> commands.</p>
@@ -188,7 +191,7 @@
 <h4 id="move-dom0---vm">Move Dom0 -&gt; VM</h4>
 <h5 id="qubes-3.1">Qubes 3.1+</h5>
 <p>- <em>Windows + Linux</em></p>
-<p><code>dom0</code> console: <code>qvm-move-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em>file</em> can be a single file or a folder</p>
+<p><code>dom0</code> console: <code>qvm-move-to-vm &lt;vm-name&gt; &lt;file&gt; [&lt;file+&gt;]</code> - <em><code>file</code> can be a single file or a folder</em></p>
 <p>---</p>
 <p><code>qvm-move-to-vm work screenshot-qubes-gui.png</code> - <em>moves <code>screenshot-qubes-gui.png</code> to the <code>personal</code> VM into the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
 <p><code>qvm-move-to-vm personal *.png</code> - <em>moves all <code>.png</code> to the <code>personal</code> VM into the <code>/home/user/QubesIncoming/dom0</code> folder</em></p>
@@ -224,6 +227,16 @@ qvm-run --pass-io personal
 <ol start="3" type="1">
 <li><code>CTRL+SHIFT+V</code></li>
 <li><code>CTRL+V</code></li>
+</ol>
+<h3 id="install-qubes-windows-tools-qwt">Install Qubes Windows Tools (QWT)</h3>
+<ol type="1">
+<li><code>sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools</code> - <em>install the windows tools (QWT)</em></li>
+<li><code>qvm-start &lt;windows-vmname&gt;</code> - <em>starts Windows VM</em></li>
+<li>open a <code>cmd.exe</code> or <code>PowerShell</code> and type <code>bcdedit /set testsigning on</code></li>
+<li>shutdown VM</li>
+<li><code>qvm-start &lt;windows-vmname&gt; --install-windows-tools</code> - <em>starts Windows VM and inserts Qubes Windows Tools installation CD</em></li>
+<li>double click on <code>qubes-tools-WIN7x64-&lt;version&gt;.exe</code> - <em>execute and install Qubes OS Windows Tools</em></li>
+<li>restart Windows VM</li>
 </ol>
 <h3 id="troubleshoot">Troubleshoot</h3>
 <h4 id="application-in-vm-does-not-start">Application in VM does not start</h4>
@@ -323,8 +336,10 @@ qvm-run --pass-io personal
 <h4 id="fedora">Fedora</h4>
 <p>- <em>Fedora template specific</em></p>
 <p><strong>Installing the Template</strong></p>
-<p><code>sudo qubes-dom0-update qubes-template-fedora-24</code> - <em>installs the fedora-24 template</em></p>
-<p><code>sudo qubes-dom0-update qubes-template-fedora-23</code> - <em>installs the fedora-23 template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-26</code> - <em>installs the Fedora 26 template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-25</code> - <em>installs the Fedora 25 template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-24</code> - <em>installs the Fedora 24 template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-23</code> - <em>installs the Fedora 23 template</em></p>
 <p><strong>Updating, Searching &amp; Installing Packages</strong></p>
 <p>Fedora &gt; 21</p>
 <ul>
@@ -338,23 +353,20 @@ qvm-run --pass-io personal
 <li>search for a package: <code>yum search &lt;package-or-word&gt;</code></li>
 <li>updating template: <code>yum update</code></li>
 </ul>
-<p><strong>Repositories</strong></p>
-<p><em>NOTE: Does not work anymore under fedora 23</em></p>
-<p>Repositories: <code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable third party repositories</code></p>
-<p><code>Start Menu &gt;&gt; Template:Fedora 21 &gt;&gt; Package Sources &gt;&gt; Enable RPMFusion</code> - ENABLE RPMFusion, (already covers RPMFusion signing keys)</p>
 <h4 id="fedora-minimal">Fedora Minimal</h4>
 <p>- <em>Fedora minimal template</em></p>
 <p>Qubes OS:</p>
-<p><code>sudo qubes-dom0-update qubes-template-fedora-24-minimal</code> - <em>installs the fedora-24-minimal template</em></p>
-<p><code>sudo qubes-dom0-update qubes-template-fedora-23-minimal</code> - <em>installs the fedora-23-minimal template</em></p>
-<p><code>sudo qubes-dom0-update qubes-template-fedora-21-minimal</code> - <em>installs the fedora-21-minimal template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-26-minimal</code> - <em>installs the Fedora 26 minimal template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-25-minimal</code> - <em>installs the Fedora 25 minimal template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-24-minimal</code> - <em>installs the Fedora 24 minimal template</em></p>
+<p><code>sudo qubes-dom0-update qubes-template-fedora-23-minimal</code> - <em>installs the Fedora 23 minimal template</em></p>
 <h4 id="debian">Debian</h4>
 <p>- <em>Debian template</em></p>
 <p><strong>Installing the Template</strong></p>
 <ul>
 <li><code>sudo qubes-dom0-update qubes-template-debian-8</code> - <em>Debian 8 “Jessie”</em></li>
 </ul>
-<p>Only till Qubes OS 3.1:</p>
+<p>Qubes OS &lt;= 3.1:</p>
 <ul>
 <li><code>sudo qubes-dom0-update qubes-template-debian-7</code> - <em>Debian 7 “Wheezy”</em></li>
 </ul>
@@ -377,7 +389,7 @@ qvm-run --pass-io personal
 </ol>
 <p><strong>Install Whonix</strong></p>
 <p>Whonix-Gateway TemplateVM Binary Install <code>@Dom0</code>:</p>
-<p><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental</code></p>
+<p><code>sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw</code></p>
 <p>Whonix-Workstation TemplateVM Binary Install <code>@Dom0</code>:</p>
 <ol type="1">
 <li><code>export UPDATES_MAX_BYTES=$[ 4 * 1024 ** 3 ]</code></li>
@@ -404,6 +416,14 @@ qvm-run --pass-io personal
 <li>search for a package: <code>pacman -Ss &lt;package-or-word&gt;</code></li>
 <li>updating template: <code>pacman -Syyu</code></li>
 </ul>
+<h4 id="removing-templates">Removing Templates</h4>
+<p>- <em>Which were installed using the package manager</em></p>
+<p><strong><em>Remove installed template</em></strong></p>
+<p><span class="citation" data-cites="Dom0">@Dom0</span>: <code>sudo dnf remove [&lt;template-package-name&gt;]</code></p>
+<p>---</p>
+<p><code>sudo dnf remove qubes-template-debian-8</code> - <em>remove the Debian 8 VM and qubes-template-debian-8 package</em></p>
+<p><strong><em>List all installed templates</em></strong></p>
+<p><span class="citation" data-cites="Dom0">@Dom0</span>: <code>sudo dnf list installed qubes-template-*</code></p>
 <h3 id="create-vm-from-vmware-or-virtualbox-images">Create VM from VMware or VirtualBox images</h3>
 <ol type="1">
 <li>Download the image in an AppVM</li>

@@ -139,8 +139,8 @@ usage: qvm-start [options] <vm-name>
 
 qvm-start personal - _starts the personal-vm_
 
-qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso -
-_starts the ubuntu-vm with the ubuntu installation CD_
+qvm-start ubuntu --cdrom personal:/home/user/Downloads/ubuntu-14.04.iso
+- _starts the ubuntu-vm with the ubuntu installation CD_
 
 qvm-shutdown
 
@@ -209,9 +209,6 @@ sudo qubes-dom0-update - _updates dom0_
 
 sudo qubes-dom0-update --gui - _allows to update dom0 through a
 graphical window_
-
-sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools -
-_install the windows tools (QWT)_
 
 ---
 
@@ -328,9 +325,11 @@ DomU and Dom0
 List Qubes commands
 
 1.  Enter in console:
-2.  qvm-*
-3.  qubes*
-4.  Press 2x times TAB
+
+-   qvm-*
+-   qubes*
+
+2.  Press 2x times TAB
 
 Output: List of qvm-* or qubes* commands.
 
@@ -350,8 +349,8 @@ Qubes 3.1+
 
 - _Windows + Linux_
 
-dom0 console: qvm-move-to-vm <vm-name> <file> [<file+>] - _file_ can be
-a single file or a folder
+dom0 console: qvm-move-to-vm <vm-name> <file> [<file+>] - _file can be a
+single file or a folder_
 
 ---
 
@@ -418,6 +417,19 @@ _On VM B (destination):_
 
 3.  CTRL+SHIFT+V
 4.  CTRL+V
+
+Install Qubes Windows Tools (QWT)
+
+1.  sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools -
+    _install the windows tools (QWT)_
+2.  qvm-start <windows-vmname> - _starts Windows VM_
+3.  open a cmd.exe or PowerShell and type bcdedit /set testsigning on
+4.  shutdown VM
+5.  qvm-start <windows-vmname> --install-windows-tools - _starts Windows
+    VM and inserts Qubes Windows Tools installation CD_
+6.  double click on qubes-tools-WIN7x64-<version>.exe - _execute and
+    install Qubes OS Windows Tools_
+7.  restart Windows VM
 
 Troubleshoot
 
@@ -566,8 +578,8 @@ Add USB Wifi card to sys-net VM
 The bus and device number can be different than shown in this example:
 
 1.  qvm-pci -l sys-net - _list all attached pci devices of sys-net_
-2.  lsusb - _e. g._ BUS 003 _Device 003: ID 148f:2870 Ralink Technology,
-    Corp. RT2870 Wireless Adapter_
+2.  lsusb - _e. g._ BUS 003 _Device 003: ID 148f:2870 Ralink
+    Technology, Corp. RT2870 Wireless Adapter_
 3.  readlink /sys/bus/usb/devices/003 - _Important Bus 003 -> 003_
 4.  The result of readlink:
     ../../../devices/pci-0/pci0000:00/0000:00:12.2/usb3 - _Important
@@ -583,11 +595,17 @@ Fedora
 
 INSTALLING THE TEMPLATE
 
-sudo qubes-dom0-update qubes-template-fedora-24 - _installs the
-fedora-24 template_
+sudo qubes-dom0-update qubes-template-fedora-26 - _installs the Fedora
+26 template_
 
-sudo qubes-dom0-update qubes-template-fedora-23 - _installs the
-fedora-23 template_
+sudo qubes-dom0-update qubes-template-fedora-25 - _installs the Fedora
+25 template_
+
+sudo qubes-dom0-update qubes-template-fedora-24 - _installs the Fedora
+24 template_
+
+sudo qubes-dom0-update qubes-template-fedora-23 - _installs the Fedora
+23 template_
 
 UPDATING, SEARCHING & INSTALLING PACKAGES
 
@@ -603,30 +621,23 @@ Fedora <= 21
 -   search for a package: yum search <package-or-word>
 -   updating template: yum update
 
-REPOSITORIES
-
-_NOTE: Does not work anymore under fedora 23_
-
-Repositories:
-Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories
-
-Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion -
-ENABLE RPMFusion, (already covers RPMFusion signing keys)
-
 Fedora Minimal
 
 - _Fedora minimal template_
 
 Qubes OS:
 
+sudo qubes-dom0-update qubes-template-fedora-26-minimal - _installs the
+Fedora 26 minimal template_
+
+sudo qubes-dom0-update qubes-template-fedora-25-minimal - _installs the
+Fedora 25 minimal template_
+
 sudo qubes-dom0-update qubes-template-fedora-24-minimal - _installs the
-fedora-24-minimal template_
+Fedora 24 minimal template_
 
 sudo qubes-dom0-update qubes-template-fedora-23-minimal - _installs the
-fedora-23-minimal template_
-
-sudo qubes-dom0-update qubes-template-fedora-21-minimal - _installs the
-fedora-21-minimal template_
+Fedora 23 minimal template_
 
 Debian
 
@@ -636,7 +647,7 @@ INSTALLING THE TEMPLATE
 
 -   sudo qubes-dom0-update qubes-template-debian-8 - _Debian 8 “Jessie”_
 
-Only till Qubes OS 3.1:
+Qubes OS <= 3.1:
 
 -   sudo qubes-dom0-update qubes-template-debian-7 - _Debian 7 “Wheezy”_
 
@@ -662,7 +673,7 @@ INSTALL WHONIX
 
 Whonix-Gateway TemplateVM Binary Install @Dom0:
 
-sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental
+sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw
 
 Whonix-Workstation TemplateVM Binary Install @Dom0:
 
@@ -698,6 +709,23 @@ UPDATING, SEARCHING & INSTALLING PACKAGES
     pacman -S <package-name> [<package-name-2>...<package-name-n>]
 -   search for a package: pacman -Ss <package-or-word>
 -   updating template: pacman -Syyu
+
+Removing Templates
+
+- _Which were installed using the package manager_
+
+_REMOVE INSTALLED TEMPLATE_
+
+@Dom0: sudo dnf remove [<template-package-name>]
+
+---
+
+sudo dnf remove qubes-template-debian-8 - _remove the Debian 8 VM and
+qubes-template-debian-8 package_
+
+_LIST ALL INSTALLED TEMPLATES_
+
+@Dom0: sudo dnf list installed qubes-template-*
 
 Create VM from VMware or VirtualBox images
 
