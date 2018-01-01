@@ -179,8 +179,6 @@ usage: `qubes-dom0-update`
 
 `sudo qubes-dom0-update --gui` - *allows to update dom0 through a graphical window*
 
-`sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools` - *install the windows tools (QWT)*
-
 \-\-\-
 
 `sudo qubes-dom0-update --action=search <search-term>` - *searches for package in dom0 repositories*
@@ -274,8 +272,8 @@ usage: `qvm-open-in-vm <vm-name> <file>` - *file* can only be a single file
 #### List Qubes commands
 
 1. Enter in console:
-  1. `qvm-*`
-  2. `qubes*`
+  - `qvm-*`
+  - `qubes*`
 2. Press 2x times `TAB`
 
 Output: List of `qvm-*` or `qubes*` commands.
@@ -294,7 +292,7 @@ In VM or Dom0: `rpm -qa \*qubes-\*` - *list (qubes-) installed packages*
 ##### Qubes 3.1+
 \- *Windows + Linux*
 
-`dom0` console: `qvm-move-to-vm <vm-name> <file> [<file+>]` - *file* can be a single file or a folder
+`dom0` console: `qvm-move-to-vm <vm-name> <file> [<file+>]` - *`file` can be a single file or a folder*
 
 \-\-\-
 
@@ -355,6 +353,16 @@ qvm-run --pass-io <src_domain>
 
 3. `CTRL+SHIFT+V`
 4. `CTRL+V`
+
+### Install Qubes Windows Tools (QWT)
+
+1. `sudo qubes-dom0-update --enablerepo=qubes-dom0-current-testing qubes-windows-tools` - *install the windows tools (QWT)*
+2. `qvm-start <windows-vmname>` - *starts Windows VM*
+3. open a `cmd.exe` or `PowerShell` and type `bcdedit /set testsigning on`
+4. shutdown VM
+5. `qvm-start <windows-vmname> --install-windows-tools` - *starts Windows VM and inserts Qubes Windows Tools installation CD*
+6. double click on `qubes-tools-WIN7x64-<version>.exe` - *execute and install Qubes OS Windows Tools*
+7. restart Windows VM
 
 ### Troubleshoot
 
@@ -508,9 +516,13 @@ The bus and device number can be different than shown in this example:
 
 **Installing the Template**
 
-`sudo qubes-dom0-update qubes-template-fedora-24` - *installs the fedora-24 template*
+`sudo qubes-dom0-update qubes-template-fedora-26` - *installs the Fedora 26 template*
 
-`sudo qubes-dom0-update qubes-template-fedora-23` - *installs the fedora-23 template*
+`sudo qubes-dom0-update qubes-template-fedora-25` - *installs the Fedora 25 template*
+
+`sudo qubes-dom0-update qubes-template-fedora-24` - *installs the Fedora 24 template*
+
+`sudo qubes-dom0-update qubes-template-fedora-23` - *installs the Fedora 23 template*
 
 **Updating, Searching & Installing Packages**
 
@@ -526,24 +538,18 @@ Fedora <= 21
 - search for a package: `yum search <package-or-word>`
 - updating template: `yum update`
 
-**Repositories**
-
-*NOTE: Does not work anymore under fedora 23*
-
-Repositories: `Start Menu >> Template:Fedora 21 >> Package Sources >> Enable third party repositories`
-
-`Start Menu >> Template:Fedora 21 >> Package Sources >> Enable RPMFusion` - ENABLE RPMFusion, (already covers RPMFusion signing keys)
-
 #### Fedora Minimal
 \- *Fedora minimal template*
 
 Qubes OS:
 
-`sudo qubes-dom0-update qubes-template-fedora-24-minimal` - *installs the fedora-24-minimal template*
+`sudo qubes-dom0-update qubes-template-fedora-26-minimal` - *installs the Fedora 26 minimal template*
 
-`sudo qubes-dom0-update qubes-template-fedora-23-minimal` - *installs the fedora-23-minimal template*
+`sudo qubes-dom0-update qubes-template-fedora-25-minimal` - *installs the Fedora 25 minimal template*
 
-`sudo qubes-dom0-update qubes-template-fedora-21-minimal` - *installs the fedora-21-minimal template*
+`sudo qubes-dom0-update qubes-template-fedora-24-minimal` - *installs the Fedora 24 minimal template*
+
+`sudo qubes-dom0-update qubes-template-fedora-23-minimal` - *installs the Fedora 23 minimal template*
 
 #### Debian
 \- *Debian template*
@@ -552,7 +558,7 @@ Qubes OS:
 
 - `sudo qubes-dom0-update qubes-template-debian-8` - *Debian 8 "Jessie"*
 
-Only till Qubes OS 3.1:
+Qubes OS <= 3.1:
 
 - `sudo qubes-dom0-update qubes-template-debian-7` - *Debian 7 "Wheezy"*
 
@@ -576,7 +582,7 @@ Whonix consists of two components:
 
 Whonix-Gateway TemplateVM Binary Install `@Dom0`:
 
-`sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw-experimental`
+`sudo qubes-dom0-update --enablerepo=qubes-templates-community qubes-template-whonix-gw`
 
 Whonix-Workstation TemplateVM Binary Install `@Dom0`:
 
@@ -609,6 +615,21 @@ Use the following instructions: [Archlinux Template](https://www.qubes-os.org/do
 - installing packages: `pacman -S <package-name> [<package-name-2>...<package-name-n>]`
 - search for a package: `pacman -Ss <package-or-word>`
 - updating template: `pacman -Syyu`
+
+#### Removing Templates
+\- *Which were installed using the package manager*
+
+***Remove installed template***
+
+@Dom0: `sudo dnf remove [<template-package-name>]`
+
+\-\-\-
+
+`sudo dnf remove qubes-template-debian-8` - *remove the Debian 8 VM and qubes-template-debian-8 package*
+
+***List all installed templates***
+
+@Dom0: `sudo dnf list installed qubes-template-*`
 
 ### Create VM from VMware or VirtualBox images
 
