@@ -130,7 +130,9 @@ usage: `qvm-shutdown [options] <vm-name>`
 
 `qvm-shutdown personal` - *shutdowns the personal-vm*
 
-`qvm-shutdown --all` - *shutdowns all VM's*
+`qvm-shutdown --all` - *shutdowns all non-nested VM's (no wait queue)*
+
+`qvm-shudown --all --wait` - *shutdowns all VM's (shutdown is queued by the --wait option and includes nested VM's, such as sys-net and sys-firewall. (Currently only tested on Qubes 4.0.)*
 
 #### qvm-kill
 \- *Kills a VM - same as pulling out the power cord - immediate shutdown*
